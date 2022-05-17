@@ -1,36 +1,37 @@
 //This file includes functions that are called upon when the player does a specific re-occuring action within the world,
-//such as sleeping or traveling, that isn't linked specifically to a certain area like certain puzzles are.
+//such as sleeping or traveling, that isn't linked specifically to a certain area.
 
 
 void PlayerSleep()
 {
-    //This function runs an animation when the player sleeps in a bed in the world
-    //It also heals/possibly gives luck to the player depending on bed
+    //This function runs an animation when the player sleeps in a bed.
+    //This sleep function heals the player and depending on location
+    //gives them added luck
 
 
-    //Clear to a blank screen
+    //Clear the display to a blank screen
     ClearScreen();
 
     //add space for centered text
     cout << "\n\n\n\n\n\n\n\n" << endl;
     cout << "                                    ";
 
-    //run animated text, Pause for user to continue
+    //run animated text, Pause for the user to continue
     animationText = "z z Z Z";
     SlowText();
     Pause();
 
-    //Add normal gameplay screen back in
+    //Reset display to normal
     TopScreen();
     cout << "\n\n" << endl;
     cout << "You woke back up! You feel well rested." << endl;
     cout << "Your health reached full!" << endl;
 
-    //Heal the player fully for sleeping
+    //Restore player health to full
     Player.Health = Player.MaxHealth;
 
 
-    //If the player was sleeping in an Inn, give them luck
+    //When located in an inn, give the player added luck
     if(Inn == true)
     {
         cout << "The soft inn bed made you happy!" << endl;
@@ -85,7 +86,7 @@ void TravelZone()
     else if (decision == 1)
     {
 
-    //cancel Inn Purchases
+    //Reset Inn Purchases
     if(Inn == true)
     {
         Inn = false;

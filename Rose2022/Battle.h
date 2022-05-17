@@ -1,9 +1,12 @@
+//The battle file caluclates enemies, runs the battle function, runs battle displays,
+//etc.
+
 
 void CalculateEnemy()
 {
 
-    //tell the game what stats to give the enemy in battle based on who your fighting
-
+    //tell the game what stats to give the enemy in the current battle 
+    //based on who the player is fighting
 
     if(enemy == Enemy.AngryFlower)
     {
@@ -21,8 +24,14 @@ void CalculateEnemy()
         Enemy.UsingItem = true;
         Enemy.ItemHealthRegain = 3;
         Enemy.Fooddrops = 3;
-        if(cutscene.FirstEnemy == false) {Enemy.Run = false;}
-        else {Enemy.Run = true;}
+        if(cutscene.FirstEnemy == false) 
+        {
+            Enemy.Run = false;
+        }
+        else 
+        {
+            Enemy.Run = true;
+        }
 
     }
 

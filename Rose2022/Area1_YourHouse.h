@@ -1,7 +1,6 @@
-
-//This file is the code that runs the area "Your House", which you access at the beginning of the game
-//and can return to at any point.
-
+//This file contains the code for running the "Your House" area, which is accessible at the
+//beginning of the game, and can be returned to at any point. This file includes the rooms,
+//items, and actions accessible in this area.
 
 
 void Area_YourHouse()
@@ -122,7 +121,7 @@ void Area_YourHouse()
     //Kitchen
     if(gPosition == 12)
     {
-        //this function has several containers the player can take item from
+        //this function has several containers the player can take items from
 
         switch(gMove)
         {

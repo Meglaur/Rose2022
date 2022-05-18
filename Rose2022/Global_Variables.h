@@ -1,8 +1,6 @@
 //Just a bunch of freaking global variables for every instance you can think of. Its all here, probably bad coding
 //on my part, but hey, it works, and its organized, so I'm not complaining.
 
-
-
 //for some reason my initialization code is here but I ain't gonna mess with it.
 #include <iostream>
 #include <cstdlib>
@@ -17,6 +15,10 @@
 
 using namespace std;
 
+
+//area name and whether file exists or not, find a place later
+string areaName;
+bool file = false;
 
 //DIALOGUE SWITCHING VARIABLES
 int Loni = 0;
@@ -121,19 +123,6 @@ bool textswitch = false;
                 public:
                     string Rose = "Rose: ", Unknown = "???: ", Speaker, Battle, Helper, Narrator, Name;
             }Character;
-
-
-
-            //USER FILES
-            class File
-            {
-                public:
-                    string Name;
-                    bool Used;
-                    int gPosition;
-            }File1, File2, File3;
-
-
 
             //CUTSCENES
             class Cutscene

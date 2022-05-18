@@ -29,7 +29,7 @@ void Dialogue()
     {
         ClearScreen();
         TopScreen();
-        cout << "\n\n\n\n\n\n\n"; if(cutscene.tutorial == false){cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << endl;}
+        //cout << "\n\n\n\n\n\n\n";
     }
 
 
@@ -71,9 +71,6 @@ void Dialogue()
          FastText();
     }
 
-
-    //draw a few more lines to seperate any aftertext
-    cout << "\n\n" << endl;
     Pause();
 
     //return text color to normal
@@ -83,12 +80,7 @@ void Dialogue()
 void Pause()
 {
     //This Function Pauses the game until the user presses a key, useful in most cutscenes
-
-    cout << endl;
-    cout << endl;
     cin.ignore(10, '\n');
-    cout << endl;
-    cout << endl;
 }
 
 void DoublePause()

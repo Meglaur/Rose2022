@@ -385,65 +385,15 @@ void ReturntoTitleScreen()
     TitleScreen();
 }
 
-void GameSpeed()
-{
-        void FastText();
-        void FastText();
-
-        attackbar_speed = 8;
-        enemyframe_speed = 250;
-
-        ClearScreen();
-        cout << "\n\n\n\n\n\n\n                             ";
-        animationText = "Choose Your Game Speed..."; FastText();
-        animationText = "1. Turtle (Slow/Old Computer)\n2. Bunny (Medium Computer with decent speed)\n3. Cheetah(Gaming Computer)\n";
-        FastText();
-
-        switch(getch())
-        {
-        case '1':
-            decision = 1;
-            break;
-        case '2':
-            decision = 2;
-            break;
-        case '3':
-            decision = 3;
-            break;
-        }
-
-        switch(decision)
-        {
-        case 1:
-            attackbar_speed = 0;
-            enemyframe_speed = 200;
-            break;
-        case 2:
-            attackbar_speed = 4;
-            enemyframe_speed = 225;
-            break;
-        case 3:
-            attackbar_speed = 8;
-            enemyframe_speed = 250;
-            break;
-
-        }
-
-
-}
-
 void CreatorCMD()
 {
-
-    void GameSpeed();
-
 
       if(gameMode == CreatorMode)
                 {
                     cout << "What would you like to do?" << endl;
                     cout << "1. Health 2. Coins 3. Elixers 4. Location." << endl;
                     cout << "5. Damage 6. Defense 7. Access Area 8. Get Item" << endl;
-                    cout << "9. Reset Game Speed 10. Nothing" << endl;
+                    cout << "9. Nothing" << endl;
                     cin >> CreatorCommand;
 
                     switch(CreatorCommand)
@@ -542,8 +492,6 @@ void CreatorCMD()
                         break;
 
                         case 9:
-
-                            GameSpeed();
                             break;
 
                         case 10:

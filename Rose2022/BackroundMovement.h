@@ -16,44 +16,38 @@ void ControlLoop()
     void Move();
     void GameOver();
 
+    //clear variables to prevent carry-over
     Gameover = false;
+    decision = 0;
+    gMove = 0;
 
-        decision = 0;
-        gMove = 0;
-
-
-        //Run a loop where the program displays the gameplay screen, gives the player a chance
-        //to input, calculates the new position based on user input, and calculate the new
-        //display based on the user input.
-        if(Gameover == false)
-        {
-            TopScreen();
-        }
-        if(Gameover == false)
-        {
-            Move();
-        }
-        if(Gameover == false)
-        {
-            CalculatePosition();
-        }
-        if(Gameover == false)
-        {
-            CalculateDisplay();
-        }
-
-    //clear the decision and movement variables each loop to prevent carrying over
-
-
-
+    //Run a loop where the program displays the gameplay screen, gives the player a chance
+    //to input, calculates the new position based on user input, and calculate the new
+    //display based on the new position
+    if(Gameover == false)
+    {
+        TopScreen();
+    }
+    if(Gameover == false)
+    {
+        Move();
+    }
+    if(Gameover == false)
+    {
+        CalculatePosition();
+    }
+    if(Gameover == false)
+    {
+        CalculateDisplay();
+    }
 
 }
 
 void CalculatePosition()
 {
 
-    //This Function continuously runs to calculate where the player is
-    //at all times and run the corresponding function for the room their in.
+    //This Function continuously runs to calculate where the player is at at all
+    //times and runs the corresponding function for the room that they are in.
 
     void Area_YourHouse();
     void Area_Town();
@@ -83,11 +77,8 @@ void CalculatePosition()
 
 void Move()
 {
-
-
-    //This Function Allows the Player to control the game by using set of keys
-    //on the keyboard.
-
+    //This function takes the user controls and gives them their
+    //corresponding functionality
 
     void Status();
     void Save();
@@ -128,7 +119,25 @@ void Move()
                 UseItem();
                 break;
             case 'l':
-                Save(); Title_Screen = true; ReturntoTitleScreen();
+                cout << "Would you like to return to the title screen?" << endl;
+                cout << "1. Yes" << endl;
+                cout << "2. No" << endl;
+                cout << endl;
+
+                switch(_getch())
+                {
+                    case '1':
+                        decision = 1;
+                        break;
+                    case '2':
+                        decision = 2;
+                        break;
+                }
+
+                if(decision == 1) {
+                    Save(); Title_Screen = true; ReturntoTitleScreen();
+                }
+
                 break;
             case 'g':
                 if(gameMode == PlayerMode)
@@ -147,7 +156,6 @@ void Move()
             case 'f':
                 CreatorCMD();
                 break;
-
             }
 
 

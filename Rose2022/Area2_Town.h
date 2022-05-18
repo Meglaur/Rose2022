@@ -12,10 +12,6 @@ void Area_Town()
     void PlayerSleep();
 
 
-    cout << "\n\n\n\n\n\n\n\n\n";
-
-
-
     //Travel Zone - Town Gate
     if(gPosition == 2)
     {

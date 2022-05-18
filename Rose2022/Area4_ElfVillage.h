@@ -14,9 +14,6 @@ void Area_ElfVillage()
     void SlowText();
     void Cutscene_Elder1();
 
-    cout << "\n\n\n\n\n\n\n\n\n";
-
-
 
     //Village Gate
     if(gPosition == 4)

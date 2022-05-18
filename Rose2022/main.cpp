@@ -10,11 +10,7 @@
 #include "TitleScreen.h"
 #include "Activities.h"
 #include "Area2_Town.h"
-
-
-
 using namespace std;
-
 
 
 int main()
@@ -30,7 +26,6 @@ int main()
            GameOver();
        }
     }
-
 
     return 0;
 }

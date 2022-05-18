@@ -22,14 +22,12 @@ void Area_Forest()
     void DungeonWaterPuzzle();
     void DungeonFirePuzzle();
 
-    cout << "\n\n\n\n\n\n\n\n\n";
-
 
     //Travel Zone - Room.Dungeon to the Forest
     if (gPosition == 3)
     {
 
-         switch(gMove)
+        switch(gMove)
         {
 
         case 1:

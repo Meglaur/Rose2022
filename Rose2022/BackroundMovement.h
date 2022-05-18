@@ -119,7 +119,25 @@ void Move()
                 UseItem();
                 break;
             case 'l':
-                Save(); Title_Screen = true; ReturntoTitleScreen();
+                cout << "Would you like to return to the title screen?" << endl;
+                cout << "1. Yes" << endl;
+                cout << "2. No" << endl;
+                cout << endl;
+
+                switch(_getch())
+                {
+                    case '1':
+                        decision = 1;
+                        break;
+                    case '2':
+                        decision = 2;
+                        break;
+                }
+
+                if(decision == 1) {
+                    Save(); Title_Screen = true; ReturntoTitleScreen();
+                }
+
                 break;
             case 'g':
                 if(gameMode == PlayerMode)

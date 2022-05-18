@@ -1,12 +1,13 @@
-//This file includes functions that are called upon when the player does a specific re-occuring action within the world,
-//such as sleeping or traveling, that isn't linked specifically to a certain area.
+//This file includes functions that are called upon when the player does a specific
+//re-occuring action within the world, such as sleeping or traveling, that isn't 
+//linked specifically to a certain area.
 
 
 void PlayerSleep()
 {
-    //This function runs an animation when the player sleeps in a bed.
-    //This sleep function heals the player and depending on location
-    //gives them added luck
+    //This function handles the player action of sleeping in a bed,
+    //it runs an animation, heals the player fully, and based on the
+    //player location can add to the players luck.
 
 
     //Clear the display to a blank screen
@@ -86,12 +87,6 @@ void TravelZone()
     else if (decision == 1)
     {
 
-    //Reset Inn Purchases
-    if(Inn == true)
-    {
-        Inn = false;
-    }
-
     //Bring up Map Menu of currently open areas and give the player options
     Character.Speaker = Character.Rose;
     TextColor();
@@ -126,14 +121,20 @@ void TravelZone()
          gPosition = 1;
          //reset certain things upon leaving an area
           House.Desk = false;
-         break;
+          if(Inn == true)
+          {
+            Inn = false;
+          }
+          break;
       case 2:
          gPosition = 2; Debug(); Move();
          //reset certain things upon leaving an area
          Town.Bushes = false;
+         if(Inn == true)
+          {
+            Inn = false;
+          }
          break;
-
-
 
      }
     break;
@@ -171,17 +172,29 @@ void TravelZone()
         gPosition = 1;
         //RA
         House.Desk = false;
+        if(Inn == true)
+          {
+            Inn = false;
+          }
         break;
 
      case 2:
         gPosition = 2; Debug(); Move();
         //RA
         Town.Bushes = false;
+        if(Inn == true)
+          {
+            Inn = false;
+          }
         break;
 
      case 3:
         gPosition = 3; Debug(); Move();
         //RA
+        if(Inn == true)
+          {
+            Inn = false;
+          }
         break;
 
      }
@@ -206,33 +219,13 @@ void GameOver()
     void Cutscene_Prolouge();
     void ClearScreen();
 
-    //Clear Screen and display centered, animated text
-    ClearScreen();
+    //Set Game Over to true
     Gameover = true;
-    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n" << endl;
-    cout << "                                GAME OVER" << endl;
-    animationText = "--------------------------------------------------------------------------------";
-    FastText();
-    Pause();
 
-
-
-    cout << "\n\n\n" << endl;
-    cout << "                        Returning to last save point" << endl;
-    cout << "                                  ";
-    animationText = ". . .";
-    SlowText();
-    cout << endl;
-    cout << endl;
-
-
-
-    cout << "                          Press Enter to continue..." << endl;
-    DoublePause();
     //reset players health to full
     Player.Health = Player.MaxHealth;
 
-    //When the player is ready, calculate the area the player is in and bring them to the starting room in that area
+    //Calculate the area the player is in and bring them to the starting room in that area
     if(gPosition == 1 || gPosition == 11 || gPosition == 12 || gPosition == 13 || gPosition == 14 || gPosition == 15 || gPosition == 16)
     {
         gPosition = 1; CalculateDisplay();
@@ -251,16 +244,52 @@ void GameOver()
         gPosition = 4; CalculateDisplay();
     }
 
-
     CalculateDisplay();
 
-    //send the player back to the title screen.
-    if(decision == 2)
+    //Clear Screen and display centered, animated text
+    ClearScreen();
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n" << endl;
+    cout << "                                GAME OVER" << endl;
+    animationText = "--------------------------------------------------------------------------------";
+    FastText();
+    Pause();
+
+    cout << "\n\n\n" << endl;
+    cout << "                          Would you like to continue?..." << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No" << endl;
+    cout << endl;
+
+    switch(_getch())
     {
-        Title_Screen = true;
-        TitleScreen();
+      case '1':
+          decision = 1;
+          break;
+      case '2':
+          decision = 2;
+          break;
     }
 
+    if(decision == 1) {
+      cout << "\n\n\n" << endl;
+      cout << "                        Returning to last save point" << endl;
+      cout << "                                  ";
+      animationText = ". . .";
+      SlowText();
+      cout << endl;
+      cout << endl;
+
+      Gameover = false;
+      CalculateDisplay();
+      ControlLoop();
+    }
+
+    //send the player back to the title screen.
+    else
+    {
+      Title_Screen = true;
+      TitleScreen();
+    }
 
 }
 

@@ -27,9 +27,9 @@ void Cutscene_Prolouge()
     Dialogue();
     animationText = Player.Name + " wake up! \n";
     Dialogue();
-    animationText ="You must come find me, I'm trapped in some sort of dark castle and I \nneed help.";
+    animationText ="You must come find me, I'm trapped and I \nneed help.";
     Dialogue();
-    animationText =" You must wake up, and hurry! Go to Grandma. She can help you. Wake up\nand go to her!";
+    animationText ="You must wake up, and hurry! Go to Grandma. She can help you. Wake up\nand go to her!";
     Dialogue();
 
 
@@ -48,112 +48,10 @@ void Cutscene_Prolouge()
     Dialogue();
 
 
-
-
-/*
-
-    Character.Name = " ";
-    animationText = "You sit in the garden outside your house, gazing at the stars.\nBeside you your sister Rose makes a crown out of lilies.";
-    Dialogue();
-
-    Character.Name = "Rose";
-    animationText = Player.Name + "?"; Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "Yes Rose?"; Dialogue();
-
-    Character.Name = "Rose";
-    animationText = "Do you think we can go on an adventure?"; Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "How do you mean?"; Dialogue();
-
-    Character.Name = "Rose";
-    animationText = "I've never seen anything outside of the town we live in, I've\nonly heard of the world outside of it from travelers. I want to\nsee whats out there.";
-    Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "It's dangerous out there, but we could--"; Dialogue();
-
-    Character.Name = " ";
-    animationText = "You hear a booming sound, and both of you look ahead, startled.\nOutside the gate , seemingly out of thin air, appears a dark cloaked warrior\ncarrying a spear. You jump up and stand in front of Rose.";
-    Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "Who are you?!"; Dialogue();
-
-    Character.Name = " ";
-    animationText = "The hooded figure chuckles, but doesn't answer the question."; Dialogue();
-
-    Character.Name = "???";
-    animationText = "It doesn't matter who I am, only who you are. I'm looking for\nsomeone who holds a necklace very much like your own.";
-    Dialogue();
-
-    Character.Name = " ";
-    animationText = "He points his spear at Rose, specifically at the golden necklace\nthat hangs around her neck. She steps back.";
-    Dialogue();
-
-    Character.Name = "???";
-    animationText = "You must come with me."; Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "Rose Run!"; Dialogue();
-
-    Character.Name = " ";
-    animationText = "You push her away from you and charge towards the warrior, who knocks\nyou aside easily. You fall to ground, your vision turning dark around the edges.";
-    Dialogue();
-    animationText = "The warrior runs after Rose, and you hear her screaming as everything fades\nto black...";
-    Dialogue();
-    ClearScreen();
-    cout << "\n\n\n\n\n\n\n\n                                   "; animationText = "z z Z Z"; SlowText();
-
-    Character.Name = "???";
-    animationText = Player.Name + "?!"; Dialogue();
-    animationText = Player.Name + " wake up!"; Dialogue();
-    animationText = "You must tell me what happened!"; Dialogue();
-
-    Character.Name = " ";
-    animationText = "You open your eyes to find yourself in bed. For a second you think that\neverything was a dream, but a pounding headache tells you otherwise.";
-    Dialogue();
-    animationText = "Your grandmother stands above you, a concerned look on her face."; Dialogue();
-
-    Character.Name = "Grandma";
-    animationText = "I came over to say hello to you and your sister, only to find you on the\nground and her nowhere to be seen. What ever happened?!";
-    Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "We were sitting outside when a dark cloaked warrior appeared. He took Rose with him! I need to find her.";
-
-    Character.Name = " ";
-    animationText = "Grandma looks shocked, but then a serious look crosses her face."; Dialogue();
-
-    Character.Name = "Grandma";
-    animationText = "I should have known this would happen sooner or later."; Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "What?!"; Dialogue();
-
-    Character.Name = "Grandma";
-    animationText = "We must talk about it, but not yet. You are fine, but once you've\nrested you must come to me in the town, and I will tell you\neverything. For now, I am going to prepare.";
-    Dialogue();
-
-    Character.Name = " ";
-    animationText = "Grandma leaves, and while you try to get up, your head becomes foggy\nagain, and you fall back asleep.";
-    Dialogue();
-    animationText = "When you wake up again, it is morning. You need to talk to your\nGrandmother.";
-    Dialogue();
-
-
-*/
-    dirUp = "Bed";
-    dirDown = " ";
-    dirLeft = "Desk";
-    dirRight = "Hallway";
-    TopScreen();
     gPosition = 14;
     Cutscene = false;
+    miniScene_Tutorial();
 
-        miniScene_Tutorial();
 }
 
 void Cutscene_OldMan1()
@@ -172,14 +70,14 @@ void Cutscene_OldMan1()
 
 
     Character.Name = "Old Man";
-    animationText = "Well, you see I used to be quite a swordsman in my day. I took down\nmany a beast in the forest near us with my wooden sword. It has been a long \ntime since I used that sword, however.\n";
+    animationText = "Well, you see I used to be quite a swordsman in my day. I took down\nmany a beast in the forest near us with my wooden sword, though it has been a long \ntime since I've used it.\n";
     Dialogue();
-    animationText = "Since I have no use for it now I do not see a problem with lending it \nto you. However, first I must ask a favor from you. There is a relative of mine \nin the City of Jewels. I would very much like to send him a letter. I've never \nreally been able to write myself but..";
+    animationText = "Since I have no use for it now I do not see a problem with lending it \nto you. However, first I must ask a favor. There is a relative of mine in the city. \nI would like to send him a letter..but I don't know how to write.";
     Dialogue();
 
 
     Character.Name = Player.Name;
-    animationText = "I could help you with that certainly!";
+    animationText = "I could help you with that!";
     Dialogue();
 
 
@@ -209,12 +107,12 @@ void Cutscene_OldMan2()
 
 
     Character.Name = "Old Man";
-    animationText = "You brought me the paper! Thank you very much. Now all\nI ask is that you write what I ask you to. 'Dear Joseph, after\nall these years I...'";
+    animationText = "You brought me the paper! Thank you very much. Now all\nthat's left is to begin... 'Dear Joseph, after all these years...'";
     Dialogue();
     animationText = ". . . . .";
     Slowtext = true;
     Dialogue();
-    animationText = "And that should just about do it. Thank you again my\ndear. You may go upstairs and take the sword off its rack.\nDo be carfeul with it, it is quite deadly. You may also take\nfrom the chest that is upstairs as well. Inside are a few\nthings that should no doubt be of help to you on your journey.";
+    animationText = "And that should just about do it. Thank you again. \nYou may go upstairs and take the sword off its rack.\nDo be carfeul with it, it is quite deadly. You may also take\nfrom the chest that is upstairs as well. Inside are a few\nthings that should no doubt be of help to you on your journey.";
     Dialogue();
 
 
@@ -248,34 +146,17 @@ void Cutscene_GrandmaHelps()
     animationText = "Grandma I'm so glad your safe! Rose has disappeared!";
     Dialogue();
 
-
-    Character.Name = " ";
-    animationText = "Grandma looks shocked, and suddenly gives you a serious look.";
-    Dialogue();
-
-
     Character.Name = "Grandma";
     animationText = "Do you have any idea where she went?";
     Dialogue();
 
 
     Character.Name = Player.Name;
-    animationText = "No, but in a dream I heard her tell me she was trapped\nin some sort of dark castle.";
+    animationText = "No, but I think she tried to talk to me in a dream..";
     Dialogue();
-
 
     Character.Name = "Grandma";
-    animationText = "This is very serious. You must go looking for her!";
-    Dialogue();
-
-
-    Character.Name = Player.Name;
-    animationText = "I know, and I was hoping you could help.";
-    Dialogue();
-
-
-    Character.Name = "Grandma";
-    animationText = "I think I may know of a way you can find her. Talk to the elf people\nof Aiden Woods. They know a great deal about the land and might know of a \ndark castle. But you must be careful, the woods are dangerous!";
+    animationText = "I think I may know of a way you can find her. Talk to the elf people\nof Aiden Woods. Their elder knows a great deal about dream communication. \nBut you must be careful, the woods are dangerous!";
     Dialogue();
 
 
@@ -283,24 +164,13 @@ void Cutscene_GrandmaHelps()
     animationText = "Your grandmother takes a piece of paper and draws a small map.";
     Dialogue();
 
-
-    Character.Name = Player.Name;
-    animationText = "Is that where the elf people live?";
-    Dialogue();
-
-
-    Character.Name = "Grandma";
-    animationText = "Yes. The call themselves the Fira. They will most likely give you the\ninformation you seek. I used to visit them as a girl but as the woods \nbecame more dangerous I stopped going there.";
-    Dialogue();
-
-
     Character.Name = Player.Name;
     animationText = "What should I bring with me?";
     Dialogue();
 
 
     Character.Name = "Grandma";
-    animationText = "Before you head to the woods you first must get yourself a sword,\nshield, and armor. I'm sure you will be able to find those things within the\ntown and your house. When you are finished come back here and I will give\nyou the map.";
+    animationText = "Before you head to the woods you first must get yourself a sword,\nshield, and some armor. This should protect you in the dark woods. When you \nare finished come back here and I will give you the map.";
     Dialogue();
 
 
@@ -310,7 +180,6 @@ void Cutscene_GrandmaHelps()
 
     Character.Speaker = Character.Narrator;
     TextColor();
-
 
     Cutscene = false;
 
@@ -324,7 +193,7 @@ void Cutscene_GrandmasList()
 
 
     Character.Name = "Grandma";
-    animationText = "You have returned with the items I asked you for, very\ngood.Now it is time to go to the forest and meet the Fira. Be careful\nand good luck!";
+    animationText = "You have returned with the items I asked you for, very\ngood.Now it is time to go to the forest and find the elder. \nBe careful and good luck!";
     Dialogue();
 
 
@@ -355,41 +224,22 @@ void Cutscene_Elder1()
     Dialogue();
 
     Character.Name = Player.Name;
-    animationText = "Hello. I lost my sister, and I think she is being held\nsomewhere. I was wondering if you'd ever heard of a dark castle near here.";
+    animationText = "My sister has been taken and she talked to me in a dream. \nI was wondering if you could help me communicate with her.";
     Dialogue();
 
     Character.Name = "Elder";
-    animationText = "I have heard of what you speak, there are tales of a wicked\npeople called the Hiin, but I don't know the location of their land,\njust that it is far away. I know their king lives in a dark castle.";
-    Dialogue();
-    animationText = "I believe that the land is north of here, as the people we\nheard of the Hiin from were all from the north. I suggest you take the\npath to the mountains and speak to the people who live there.\nThey might know.\n";
+    animationText = "If she was able to contact you in a dream that means we can \ndo the same. However, dream communication requires certain items to work.";
     Dialogue();
 
     Character.Name = Player.Name;
-    animationText = "Those people sound scary, I hope she is alright. How do I take\nthe path?";
+    animationText = "What sort of items?";
     Dialogue();
 
     Character.Name = "Elder";
-    animationText = "There is a gate that leads to the path deep into the woods,\nhowever, unfortunately those woods have become dark and filled with monsters.\nI believe they took the key to the gate a while ago, and no one has been\naround there since.";
-    Dialogue();
+    animationText = "There is a glowing orb you can find in the dungeon deep in the \nwoods. It is protected by some sort of monster. \nThat orb contains the power you seek.";
 
     Character.Name = Player.Name;
-    animationText = "I see, I heard about the monsters that took over the Item.\nMaybe I could help you get rid of them?";
-    Dialogue();
-
-    Character.Name = "Elder";
-    animationText = "That is very brave of you. If you do wish to rid this forest\nof the monsters that plague us, you would have to defeat their leader.\nI heard a great beast lies in the old dungeon in those woods, who controls\nall the monsters.";
-    Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "I'll go there and defeat him for you. Then you can live in peace\nagain and I can continue looking for my sister.";
-    Dialogue();
-
-    Character.Name = "Elder";
-    animationText = "I cannot thank you enough, but please be careful. There have been\nadventurers from our midst that have tried and failed to take\non this task. I wish you good luck.";
-    Dialogue();
-
-    Character.Name = Player.Name;
-    animationText = "I will, and thank you for all your help!";
+    animationText = "Then I will go in search of this dungeon. Thank you for your help.";
     Dialogue();
 
     Character.Name = " ";
@@ -400,7 +250,6 @@ void Cutscene_Elder1()
     Cutscene = false;
     cutscene.Elder = true;
     Room.Dungeon = true;
-
 
 }
 
@@ -485,7 +334,7 @@ void Cutscene_DungeonBossDefeat()
     Dialogue();
     animationText = "The room begins to glow, and in a wave the darkness leaves\nthe room, disappearing from the rest of the dungeon\nand the forest around it.";
     Dialogue();
-    animationText = "You feel a sense of peace, knowing that now the people of the\nforest are safe. It is time to continue the adventure,\nand find out what happened to your sister.";
+    animationText = "The glowing orb lays in front of you, now contained in\n a gold and pearl case. Your sister awaits your call.";
     Dialogue();
 
     miniScene_DemoScreen();
@@ -561,10 +410,6 @@ void miniScene_Loni()
     animationText = "Loni steps away from the gate. The elf village is beautiful.\nIt consists of a path of forest with houses built into the trees. Some are in\nthe trunks, while an entire rope bride leads to the upper level of treetop\nbuildings.";
     Dialogue();
 
-
-
-
-    //add in a transition (black screen) with a gate sound effect.
 }
 
 void miniScene_DungeonEnter()
@@ -594,9 +439,14 @@ void miniScene_NymphAppears()
     Character.Name = " ";
     animationText = "As you enter the maze, a wave of terror passes over you. You sense\nsome sort of monster lurking in the darkness.";
     Dialogue();
-    animationText = "You turn around, and see a nymph behind you! She has leaves over her\neyes, and seems to be blind. She snarls. You'd better run!";
+    animationText = "You turn around, and see a nymph approaching from the shadows. Her\neyes are covered by leaves, and seems to be blind. She snarls.";
     Dialogue();
-
+    Character.Name = "Twisted Nymph";
+    animationText = "*snarls*";
+    Dialogue();
+    Character.Name = " ";
+    animationText = "It seems she can only tell your location by sound. You'd better find \na way to escape her";
+    Dialogue();
 
     NymphAttack = true;
     miniscene.NymphAppears = true;
@@ -719,6 +569,14 @@ void miniScene_FirstEnemy()
 
 void miniScene_Tutorial()
 {
+
+    dirUp = "     Bed";
+    dirDown = " ";
+    dirLeft = "     Desk";
+    dirRight = "     Hallway";
+    TopScreen();
+    
+
     cutscene.tutorial = true;
     Character.Name = " ";
     animationText = "Welcome to the demo! Before you start playing, here is how the game works.";

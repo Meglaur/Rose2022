@@ -14,15 +14,9 @@ void Area_YourHouse()
     void PlayerSleep();
 
 
-    //space text below gameplay screen
-    cout << "\n\n\n\n\n\n\n\n\n";
-
-
     //Entryway
     if(gPosition == 16)
     {
-
-
 
         switch(gMove)
         {

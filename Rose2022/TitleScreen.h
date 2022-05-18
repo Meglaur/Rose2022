@@ -55,7 +55,7 @@ void TitleScreenDisplay()
     void ClearScreen();
 
     ClearScreen();
-    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    cout << "\n\n\n\n\n\n\n\n";
 
 
     cout << "                          Welcome to Rose, a text" << endl;
@@ -177,16 +177,10 @@ void TitleScreenOptions()
         FastText();
         Pause();
         Title_Screen = false;
-
-        GameSpeed();
-
-
+        attackbar_speed = 8;
+        enemyframe_speed = 250;
 
         //this is where you switch around debug code
-
-
-
-
         gPosition = 38;
         Room.Boss = true;
         Player.Health = 900;
@@ -200,9 +194,6 @@ void TitleScreenOptions()
         Wings = true;
         NymphAttack = false;
         ControlLoop();
-
-
-
         break;
      case 2:
         cout << "1. Controls" << endl;
@@ -240,14 +231,26 @@ void TitleScreenOptions()
 void LoadSave()
 {
 
-    //add chapter status and health bar maybe to file screen for fanciness
-    void LoadFile1();
+    //Calculate the area the player is in and bring them to the starting room in that area
+    if(gPosition == 1 || gPosition == 11 || gPosition == 12 || gPosition == 13 || gPosition == 14 || gPosition == 15 || gPosition == 16)
+    {
+        areaName = "Your House";
+    }
 
-    LoadFile1();
-    Pause();
+    if(gPosition == 2 || gPosition == 21 || gPosition == 22 || gPosition == 23 || gPosition == 24 || gPosition == 25 || gPosition == 26 || gPosition == 27 || gPosition == 28 || gPosition == 29)
+    {
+        areaName = "Town";
+    }
+    if(gPosition == 3 || gPosition == 31 || gPosition == 32 || gPosition == 33 || gPosition == 34 || gPosition == 35 || gPosition == 351 || gPosition == 36 || gPosition == 37 || gPosition == 38 || gPosition == 39 || gPosition == 391 || gPosition == 392 || gPosition == 393 || gPosition == 394 || gPosition == 395 || gPosition == 396 || gPosition == 397 || gPosition == 398 || gPosition == 399 || gPosition == 3910 || gPosition == 3911 || gPosition == 3912 || gPosition == 3913 || gPosition == 3914 || gPosition == 3915)
+    {
+        areaName = "Forest";
+    }
+    if(gPosition == 4 || gPosition == 41 || gPosition == 42 || gPosition == 43 || gPosition == 44 || gPosition == 45 || gPosition == 46 || gPosition == 46 || gPosition == 47 || gPosition == 48 || gPosition == 49)
+    {
+        areaName = "Elf Village";
+    }
 
-
-     if(File1.Used == false && File2.Used == false & File3.Used == false)
+     if(file == false)
      {
          cout << "There is no save files loaded at this time" << endl;
          Pause();
@@ -255,75 +258,39 @@ void LoadSave()
      else
      {
 
-
-         if(File1.Used == true)
+        if(file == true)
         {
          cout << "---------------------------------------------" << endl;
-         cout << " File 1: " << File1.Name << " " << File1.gPosition << "\n" << endl;
-         HealthBar(); //add specific healthbars to users later
+         cout << " " << Player.Name << ": " << areaName << "\n" << endl;
+         HealthBar();
          cout << endl;
          cout << "---------------------------------------------" << endl;
          cout << endl;
         }
-        if(File2.Used == true)
-        {
-         cout << "---------------------------------------------" << endl;
-         cout << " File 2: " << File2.Name << "\n" << endl;
-         cout << " Chapter: " << endl; //add status something here
-         HealthBar(); //add specific healthbars to users later
-         cout << endl;
-         cout << "---------------------------------------------" << endl;
-         cout << endl;
-        }
-        if(File3.Used == true)
-        {
-         cout << "---------------------------------------------" << endl;
-         cout << " File 3: " << File3.Name << "\n" << endl;
-         cout << " Chapter: " << endl; //add status something here
-         HealthBar(); //add specific healthbars to users later
-         cout << endl;
-         cout << "---------------------------------------------" << endl;
-         cout << endl;
-        }
-
-
-        cout << endl;
-        cout << "Which file?" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        }
-        cout << endl;
-        if(decision == 1)
-        {
-            Title_Screen = false;
-            ControlLoop();
-        }
-        else if(decision == 2)
-        {
-            //same here
-        }
-        else if(decision == 3)
-        {
-            //ditto
-        }
-
 
         Pause();
 
+        cout << "Would you like to load this file?" << endl;
+        cout << "1. Yes" << endl;
+        cout << "2. No" << endl;
+        cout << endl;
 
+        switch(_getch())
+        {
+          case '1':
+          decision = 1;
+          break;
+         case '2':
+          decision = 2;
+          break;
+        }
+
+        if(decision == 1) {
+            Title_Screen = false;
+            CalculateDisplay();
+            ControlLoop();
+        }
      }
-
-
-
 }
 
 void NewGame()
@@ -331,20 +298,11 @@ void NewGame()
 
     void Cutscene_Prolouge();
     void SlowText();
-    void GameSpeed();
 
-
+    file = true;
     Title_Screen = false;
-
-
-   // ClearScreen();
-
-       /* cout << "\n\n\n\n\n\n\n                             ";
-        animationText = "Name Your Save File..."; FastText();
-        cout << "                                  ----------" << endl;
-        cout << "                                  ";
-        cin >> File1.Name;
-        File1.Used = true; */
+    attackbar_speed = 8;
+    enemyframe_speed = 250;
 
     ClearScreen();
 
@@ -353,9 +311,6 @@ void NewGame()
                 cout << "                                  ----------" << endl;
                 cout << "                                  ";
                 cin >> Player.Name;
-
-
-    GameSpeed();
 
 
     ClearScreen();
@@ -410,157 +365,4 @@ void NewGame()
 
 }
 
-void LoadFile1()
-{
 
-   /*     //fstream inFile;
-        //inFile.open("User_File1.dat", ios_base::in);
-
-
-       ifstream inFile;
-       inFile.open("C:\\C++ Code Projects\\Rose\\User_File1.dat");
-
-
-
-
-        string FileContents;
-        while(inFile.good())
-         {
-            getline(inFile, FileContents);
-            //check what kind of variable it is
-            //switch it to that variable
-            cout << FileContents << endl;
-        }
-
-
-
-
-
-        //string
-       inFile >> File1.Name;
-       inFile >> File1_Player.Name; Player.Name = File1_Player.Name;
-       //int
-       inFile >> File1_dCrown >> File1_dCrown >> File1_dStatue >> File1_eCrown >> File1_eStatue;
-       inFile >> File1_rCrown >> File1_rCrown >> File1_rStatue;
-       inFile >> File1_Room.Boss >> File1_Chest >> File1_Crank >> File1_CrownPuzzle;
-       inFile >> File1_Entrance >> File1_FountainSet1 >> File1_FountainSet2 >> File1_FountainSet3 >> File1_LeftWing >> File1_MainFountain;
-       inFile >> File1_sCrown >> File1_sStatue >> File1_Item.Coins >> File1_Item.Elixers >> File1_Item.Food;
-       inFile >> File1_Player.Damage >> File1_Player.Defense >> File1_Player.Health >> File1_Player.XP;
-       inFile >> File1_Player.MaxHealth >> File1_Player.Luck >> File1_RandomLuckValue;
-       //bool
-       inFile >> File1.Used >> File1_Crowns;
-       inFile >> File1_RightWing >> File1_Wings >> File1_Item.Daisy;
-       inFile >> File1_Item.Gate >> File1_Item.Hairpin >> File1_Item.Jewel >> File1_Item.Mushrooms;
-       inFile >>  File1_Grandmas_Items >> File1_Kuhar >> File1_NymphAttack >> File1_Item.Armor;
-       inFile >> File1_Item.Shield >> File1_Item.WoodenSword  >> File1_cutscene.Elder;
-       inFile >> File1_cutscene.End >> File1_cutscene.GrandmaHelps >> File1_cutscene.GrandmasList >> File1_cutscene.OldMan1;
-       inFile >> File1_cutscene.OldMan2 >> File1_miniscene.Aida >> File1_miniscene.Chasm >> File1_miniscene.Dam;
-       inFile >> File1_miniscene.DungeonEnter >> File1_miniscene.FirstEnemy >> File1_miniscene.Kuhar >> File1_miniscene.NymphAppears;
-       inFile >> File1_sStatus >> File1_Tiki >> File1_Town.Bushes >> File1_Item.Chest;
-       inFile >> File1_Item.Cookbook >> File1_Item.Fountain >> File1_Item.Hilda >> File1_Item.InnDesk;
-       inFile >> File1_Item.InnTable >> File1_Item.Paper >> File1_Item.Stove >> File1_Room.SwordRoom;
-       inFile >> File1_TravelStatus >> File1_Item.Book >> File1_Room.Village >> File1_Item.InnTable;
-       inFile >> File1_Item.JewelCoins >> File1_Item.Key >> File1_Item.Necklace >> File1_House.Chest;
-       inFile >> File1_House.Desk >> File1_House.Fireplace >> File1_House.Stove >> File1.Used;
-
-
-
-
-
-       Room.Boss = File1_Room.Boss;
-       Chest = File1_Chest;
-       Crank = File1_Crank;
-       CrownPuzzle = File1_CrownPuzzle;
-       Crowns = File1_Crowns;
-       dCrown = File1_dCrown;
-       dStatue = File1_dStatue;
-       eCrown = File1_eCrown;
-       Entrance = File1_Entrance;
-       eStatue = File1_eStatue;
-       FountainSet1 = File1_FountainSet1;
-       FountainSet2 = File1_FountainSet2;
-       FountainSet3 = File1_FountainSet3;
-       LeftWing = File1_LeftWing;
-       MainFountain = File1_MainFountain;
-       rCrown = File1_rCrown;
-       RightWing = File1_RightWing;
-       rStatue = File1_rStatue;
-       sCrown = File1_sCrown;
-       sStatue = File1_sStatue;
-       Wings = File1_Wings;
-       Item.Daisy = File1_Item.Daisy;
-       Item.Gate = File1_Item.Gate;
-       Item.Hairpin = File1_Item.Hairpin;
-       Item.Jewel = File1_Item.Jewel;
-       Item.Mushrooms = File1_Item.Mushrooms;
-       gPosition = File1.gPosition;
-       Grandmas_Items = File1_Grandmas_Items;
-       Kuhar = File1_Kuhar;
-       NymphAttack = File1_NymphAttack;
-       Item.Coins = File1_Item.Coins;
-       Item.Elixers = File1_Item.Elixers;
-       Item.Food = File1_Item.Food;
-       Item.Armor = File1_Item.Armor;
-       Player.Damage = File1_Player.Damage;
-       Player.Defense = File1_Player.Defense;
-       Player.Health = File1_Player.Health;
-       Player.Health = File1_Player.MaxHealth;
-       Item.Shield = File1_Item.Shield;
-       Item.WoodenSword = File1_Item.WoodenSword;
-       Player.XP = File1_Player.XP;
-       Player.Luck = File1_Player.Luck;
-       Player.Name = File1_Player.Name;
-       RandomLuckValue = File1_RandomLuckValue;
-       cutscene.Elder = File1_cutscene.Elder;
-       cutscene.End = File1_cutscene.End;
-       cutscene.GrandmaHelps = File1_cutscene.GrandmaHelps;
-       cutscene.GrandmasList = File1_cutscene.GrandmasList;
-       cutscene.OldMan1 = File1_cutscene.OldMan1;
-       cutscene.OldMan2 = File1_cutscene.OldMan2;
-       miniscene.Aida = File1_miniscene.Aida;
-       miniscene.Chasm = File1_miniscene.Chasm;
-       miniscene.Dam = File1_miniscene.Dam;
-       miniscene.DungeonEnter = File1_miniscene.DungeonEnter;
-       miniscene.FirstEnemy = File1_miniscene.FirstEnemy;
-       miniscene.Kuhar = File1_miniscene.Kuhar;
-       sStatus = File1_sStatus;
-       Tiki = File1_Tiki;
-       Town.Bushes = File1_Town.Bushes;
-       Item.Chest = File1_Item.Chest;
-       Item.Cookbook = File1_Item.Cookbook;
-       Item.Fountain = File1_Item.Fountain;
-       Item.Hilda = File1_Item.Hilda;
-       Item.InnDesk = File1_Item.InnDesk;
-       Item.InnTable = File1_Item.InnTable;
-       Item.Paper = File1_Item.Paper;
-       Item.Stove = File1_Item.Stove;
-       Room.SwordRoom = File1_Room.SwordRoom;
-       TravelStatus = File1_TravelStatus;
-       Item.Book = File1_Item.Book;
-       Room.Village = File1_Room.Village;
-       Item.InnTable = File1_Item.InnTable;
-       Item.JewelCoins = File1_Item.JewelCoins;
-       Item.Key = File1_Item.Key;
-       Item.Necklace = File1_Item.Necklace;
-       House.Chest = File1_House.Chest;
-       House.Desk = File1_House.Desk;
-       House.Fireplace = File1_House.Fireplace;
-       House.Stove = File1_House.Stove;
-       File1.Name = File1.Name;
-       File1.Used = File1.Used;
-
-
-
-
-
-
-
-
-
-        inFile.close();
-
-
-*/
-
-
-}

@@ -12,7 +12,6 @@
 #include "Area2_Town.h"
 using namespace std;
 
-
 int main()
 {
 

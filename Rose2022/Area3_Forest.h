@@ -21,751 +21,175 @@ void Area_Forest()
     void miniScene_Chasm();
     void DungeonWaterPuzzle();
     void DungeonFirePuzzle();
-
+    void GetInput();
+    void handleLake();
+    void handleStatuePuzzle();
+    void handleMushroomPatch();
+    void handleFlowerPatch();
+    void handleHairpin();
+    void handleCrowns();
+    void handleFirstFountain();
+    void handleSecondFountain();
+    void handleThirdFountain();
 
     //Travel Zone - Room.Dungeon to the Forest
-    if (gPosition == 3)
-    {
-
-        switch(gMove)
-        {
-
-        case 1:
-            if(miniscene.FirstEnemy == false)
-            {
-                miniScene_FirstEnemy();
-            }
-            else
-            {
-                enemy = Enemy.AngryFlower; RandomEnemyEncounter();
-            }
-            if(Gameover == false)
-            {
-                gPosition = 32; Debug(); Move();
-            }
-            break;
-        case 2:
-            gPosition = 31; Debug(); Move();
-            break;
-        case 3:
-            cout << "You go up to the beautiful blue lake and look in the water." << endl;
-            cout << "It's crystal clear and you can see fish swimming." << endl;
-            cout << "You could stop and swim, maybe catch some fish or look for treasure." << endl;
-            cout << "Enter the lake?" << endl;
-            cout << "1. Yes" << endl;
-            cout << "2. No" << endl;
-                             switch(_getch())
-                {
-                case '1':
-                decision = 1;
-                break;
-                case '2':
-                decision = 2;
-                break;
+    if (gPosition == 3) {
+        switch(gMove) {
+            case 1:
+                if(miniscene.FirstEnemy == false) {
+                    miniScene_FirstEnemy();
+                } else {
+                    enemy = Enemy.AngryFlower; RandomEnemyEncounter();
                 }
-            cout << endl;
-            if(decision == 1)
-            {
-
-                    if(Item.Jewel == false && Player.Luck > 8)
-                    {
-                        cout << "You go for a swim, and find a box at the bottom." << endl;
-                        cout << "Inside is some sort of strange jewel. You take it" << endl;
-                        cout << "with you. It could be valuable." << endl;
-                        Item.Jewel = true;
-                        DoublePause();
-                    }
-                    else
-                    {
-                        cout << "You go for a swim, it relaxes you and fills you" << endl;
-                        cout << "with joy." << endl;
-                        cout << "*Health + 2*" << endl;
-                        Player.Health += 2;
-                        if(Player.Health > Player.MaxHealth)
-                        {
-                            Player.Health = Player.MaxHealth;
-                        }
-                        DoublePause();
-
-                    }
-
-
-            }
-            else
-            {
-                cout << "You decide not to enter the lake." << endl;
-                DoublePause();
-            }
-            break;
-        case 4:
-            break;
-        case 5:
-            TravelZone();
-            break;
-
-
-    }
-
-
-
+                if(Gameover == false) {
+                    gPosition = 32; Debug(); Move();
+                }
+                break;
+            case 2:
+                gPosition = 31; Debug(); Move();
+                break;
+            case 3:
+                handleLake();
+                break;
+            case 4:
+                break;
+            case 5:
+                TravelZone();
+                break;
+        }
     }
 
     //Clearing
-    if(gPosition == 31)
-    {
-
-        switch(gMove)
-        {
-        case 1:
-            cout << "You go up to the mushroom patch." << endl;
-            cout << "Search for edible mushrooms?" << endl;
-            cout << "1. Yes" << endl;
-            cout << "2. No" << endl;
-            cout << endl;
-                             switch(_getch())
-                {
-                case '1':
-                decision = 1;
+    if(gPosition == 31) {
+        switch(gMove) {
+            case 1:
+                handleMushroomPatch();
                 break;
-                case '2':
-                decision = 2;
+            case 2:
+                handleFlowerPatch();
                 break;
-                }
-            cout << endl;
-            if(decision == 1)
-            {
-
-                if(Item.Mushrooms == true)
-                {
-                    cout  << "You don't see any edible mushrooms." << endl;
-                    DoublePause();
-                }
-                else
-                {
-                    cout << "You found a few edible mushrooms!" << endl;
-                    cout << "*Food + 2" << endl;
-                    Item.Mushrooms = true;
-                    Item.Food += 2;
-                    DoublePause();
-                }
-
-            }
-            else if(decision == 2)
-            {
-                cout << "You decide not to look through the mushrooms." << endl;
-                DoublePause();
-            }
-            break;
-        case 2:
-            cout << "You go up to the flower patch. There are daisies everywhere." << endl;
-            cout << endl; Pause();
-            if(Item.Daisy == false)
-            {
-                Character.Name = Player.Name;
-                animationText = "Maybe I should pick one...";
-                Dialogue();
-
-                cout << endl;
-                cout << "Take one of the daisies?\n" << endl;
-                cout << "1. Yes" << endl;
-                cout << "2. No\n" << endl;
-                                 switch(_getch())
-                {
-                case '1':
-                decision = 1;
+            case 3:
+                gPosition = 3;
                 break;
-                case '2':
-                decision = 2;
+            case 4:
+                handleHairpin();
                 break;
-                }
-                if(decision == 1)
-                {
-                    cout << "You take one of the daisies. Maybe it will come in handy." << endl;
-                    Item.Daisy = true; Pause();
-
-                }
-                else if(decision == 2)
-                {
-                    cout << "You decide not to take one of the daisies." << endl; Pause();
-                }
-            }
-            else if (Item.Daisy == true)
-            {
-                cout << "You admire them for a minute. Then go back." << endl;
-            }
-
-            Pause();
-            break;
-        case 3:
-            gPosition = 3;
-            break;
-        case 4:
-            if(Item.Hairpin == false)
-            {
-
-             cout << "You go up to the Willow Tree. There's something strange\nabout it. Investigate it?" << endl; //change that later
-             cout << "1. Yes" << endl;
-             cout << "2. No" << endl;
-             cout << endl;
-                              switch(_getch())
-                {
-                case '1':
-                decision = 1;
-                break;
-                case '2':
-                decision = 2;
-                break;
-                }
-             cout << endl;
-             if(decision == 1)
-             {
-                 cout << "You look closer at the tree. Something sparkles up\nin the branches. You climb the tree and find a silver hair pin!" << endl;
-                 cout << "\n\n" << endl;
-
-                 Pause();
-
-                 Character.Name = Player.Name;
-                 animationText = "How did this get all the way up here?";
-                 Dialogue();
-                 cout << "You got a hairpin!" << endl;
-
-                 Item.Hairpin = true;
-                 Pause();
-
-             }
-             else{cout << "You walk away" << endl; DoublePause();}
-            }
-            else
-            {
-                cout << "You go up to the willow tree. Its branches sway in the breeze." << endl;
+            case 5:
+                cout << "You look around the clearing, a beautiful breeze hits your face and" << endl;
+                cout << "you hear the sound of birds chirping." << endl;
                 Pause();
-            }
-             break;
-        case 5:
-            cout << "You look around the clearing, a beautiful breeze hits your face and" << endl;
-            cout << "you hear the sound of birds chirping." << endl;
-            Pause();
-            break;
-
-
+                break;
         }
-
     }
 
     //Dark Woods 1 (Previously called Deep Forest)
-    if(gPosition == 32)
-    {
-        switch(gMove)
-        {
-        case 1:
-            Character.Name = " ";
-            animationText = "Sign:\n\n<-- Dark Woods\n--> Elf Village\nBeware of monsters!";
-            Dialogue();
-            break;
-        case 2:
-            enemy = Enemy.AngryFlower; RandomEnemyEncounter(); gPosition = 33; Debug(); Move();
-            break;
-        case 3:
-            gPosition = 4; Debug(); Move();
-            break;
-        case 4:
-            gPosition = 3;
-            break;
-        case 5:
-            cout << "It seems the further you go into the forest, the stranger" << endl;
-            cout << "it feels." << endl;
-            Pause();
-            break;
-
-
+    if(gPosition == 32) {
+        switch(gMove) {
+            case 1:
+                Character.Name = " ";
+                animationText = "Sign:\n\n<-- Dark Woods\n--> Elf Village\nBeware of monsters!";
+                Dialogue();
+                break;
+            case 2:
+                enemy = Enemy.AngryFlower; RandomEnemyEncounter(); gPosition = 33; Debug(); Move();
+                break;
+            case 3:
+                gPosition = 4; Debug(); Move();
+                break;
+            case 4:
+                gPosition = 3;
+                break;
+            case 5:
+                cout << "It seems the further you go into the forest, the stranger" << endl;
+                cout << "it feels." << endl;
+                Pause();
+                break;
         }
     }
 
     //Dark Woods 2
-    if(gPosition == 33)
-    {
-
-
-        switch (gMove)
-        {
-        case 1:
-            cout << "You go up to a large gate leading to a bridge." << endl;
-            cout << endl;
-            if(Room.Gate == false)
-            {
-                cout << "Its sealed tight. There isn't any going through it." << endl;
+    if(gPosition == 33) {
+        switch (gMove) {
+            case 1:
+                cout << "You go up to a large gate leading to a bridge." << endl;
+                cout << endl;
+                if(Room.Gate == false) {
+                    cout << "Its sealed tight. There isn't any going through it." << endl;
+                    Pause();
+                }
+                break;
+            case 2:
+                if(Room.Dungeon == false) {
+                    Character.Name = Player.Name;
+                    animationText = "Maybe I shouldn't go in there. I have a bad feeling about it.";
+                    Dialogue();
+                } else {
+                    if (miniscene.DungeonEnter == false) {
+                        miniScene_DungeonEnter();
+                    }
+                    gPosition = 34; Debug(); Move();
+                }
+                break;
+            case 3:
+                gPosition = 32;
+                enemy = Enemy.AngryFlower;
+                RandomEnemyEncounter();
+                break;
+            case 4:
+                break;
+            case 5:
+                cout << "An eerie feeling passes over you. Being This deep in the" << endl;
+                cout <<"forest makes you uneasy and scared." << endl;
                 Pause();
-            }
-            break;
-        case 2:
-            if(Room.Dungeon == false)
-            {
-                Character.Name = Player.Name;
-                animationText = "Maybe I shouldn't go in there. I have a bad feeling about it.";
-                Dialogue();
-            }
-            else
-            {
-                if(miniscene.DungeonEnter == false) {miniScene_DungeonEnter();}
-                gPosition = 34; Debug(); Move();
-            }
-            break;
-        case 3:
-            gPosition = 32; enemy = Enemy.AngryFlower; RandomEnemyEncounter();
-            break;
-        case 4:
-            break;
-        case 5:
-            cout << "An eerie feeling passes over you. Being This deep in the" << endl;
-            cout <<"forest makes you uneasy and scared." << endl;
-            Pause();
-            break;
-
-
-
+                break;
         }
     }
 
     //Dungeon Room.Dungeon
     if(gPosition == 34)
     {
-
-        switch(gMove)
-        {
-        case 1:
-            if(CrownPuzzle == true)
-            {
-                gPosition = 35; Debug(); Move();
-            }
-            else
-            {
-                cout << "You see four beautiful statues against the wall. Go up to one?\n" << endl;
-                cout << "1. First Statue\n2. Second Statue\n3. Third Statue\n4. Fourth Statue\n5. Do nothing\n" << endl;
-                switch(_getch())
-                {
-                case '1':
-                decision = 1;
+        switch(gMove) {
+            case 1:
+                handleStatuePuzzle();
                 break;
-                case '2':
-                decision = 2;
+            case 2:
+                handleCrowns();
                 break;
-                case '3':
-                decision = 3;
-                break;
-                case '4':
-                decision = 4;
-                break;
+            case 3:
+                cout << "You see strange rune markings on the wall." << endl; Pause();
+                if(Item.Book == true) {
+                    cout << "You take out the rune book, and use it to translate.\nOn the wall is the markings 'II - 3'" << endl;
+                    Pause();
+                    if(Rune_34 == false) {
+                        cout << "Your Rune Book is updated!" << endl; Rune_34 = true;
+                    Pause();
+                    }
                 }
-                cout << endl;
-                switch(decision)
-                {
-                case 1:
-                    cout << "You go up to a statue of a beautiful woman in a dress seemingly\nmade of fire, with flames coming from her hands.\n" << endl;
-                    Pause();
-                    if(rStatue == 0)
-                    {
-                        cout << "What would you like to do?\n" << endl;
-                        if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
-                        if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
-                        if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
-                        if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
-                        cout << "5. Do Nothing\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        case '4':
-                        decision = 4;
-                        break;
-                        }
-                         cout << endl;
-                        switch(decision)
-                        {
-                        case 1:
-                            if(eCrown == 5) {cout << "You place the Emerald Crown on the womans head." << endl; DoublePause(); rStatue = 1; eCrown = 1;}
-                            break;
-                        case 2:
-                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the womans head." << endl; DoublePause(); rStatue = 1; sCrown = 1;}
-                            break;
-                        case 3:
-                            if(rCrown == 5) {cout << "You place the Ruby Crown on the womans head." << endl; DoublePause(); rCrown = 1;
-                            rStatue = 2;}
-                            break;
-                        case 4:
-                            if(dCrown == 5) {cout << "You place the Diamond Crown on the womans head." << endl; DoublePause(); rStatue = 1; dCrown = 1;}
-                            break;
-                        case 5:
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        cout << "Would you like to take the crown off the statue?\n" << endl;
-                        cout << "1.Yes\n2.No\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        }
-                        cout << endl;
-                        if(decision == 1)
-                        {
-                            if(eCrown == 1) {eCrown = 5; rStatue = 0;}
-                            if(sCrown == 1) {sCrown = 5; rStatue = 0;}
-                            if(rCrown == 1) {rCrown = 5; rStatue = 0;}
-                            if(dCrown == 1) {dCrown = 5; rStatue = 0;}
-
-                            cout << "You take the crown off the statue." << endl; Pause();
-                        }
-                    }
-                    break;
-                case 2:
-                    cout << "You go up to a statue of a handsome man with a cape that flows like water.\nHe has a trident in his hands.\n" << endl;
-                    Pause();
-                    if(sStatue == 0)
-                    {
-                        cout << "What would you like to do?\n" << endl;
-                        if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
-                        if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
-                        if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
-                        if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
-                        cout << "5. Do Nothing\n" << endl; cout << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        case '4':
-                        decision = 4;
-                        break;
-                        }
-                         cout << endl;
-                        switch(decision)
-                        {
-                        case 1:
-                            if(eCrown == 5) {cout << "You place the Emerald Crown on the mans head." << endl; DoublePause(); sStatue = 1; eCrown = 2;}
-                            break;
-                        case 2:
-                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the mans head." << endl; DoublePause(); sCrown = 2;
-                            sStatue = 2;}
-                            break;
-                        case 3:
-                            if(rCrown == 5) {cout << "You place the Ruby Crown on the mans head." << endl; DoublePause(); sStatue = 1; rCrown = 2;}
-                            break;
-                        case 4:
-                            if(dCrown == 5) {cout << "You place the Diamond Crown on the mans head." << endl; DoublePause(); sStatue = 1; dCrown = 2;}
-                            break;
-                        case 5:
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        cout << "Would you like to take the crown off the statue?\n" << endl;
-                        cout << "1.Yes\n2.No\n" << endl; cout << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        }
-                        if(decision == 1)
-                        {
-                            if(eCrown == 2) {eCrown = 5; sStatue = 0;}
-                            if(sCrown == 2) {sCrown = 5; sStatue = 0;}
-                            if(rCrown == 2) {rCrown = 5; sStatue = 0;}
-                            if(dCrown == 2) {dCrown = 5; sStatue = 0;}
-
-                            cout << "You take the crown off the statue." << endl; Pause();
-                        }
-
-                    }
-                    break;
-                case 3:
-                    cout << "You go up to a statue of a handsome man wearing some sort of contraption\nthat looks like bird wings. He looks as though he has complete control of \nthe air.\n" << endl;
-                    Pause();
-                    if(dStatue == 0)
-                    {
-                        cout << "What would you like to do?\n" << endl;
-                        if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
-                        if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
-                        if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
-                        if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
-                        cout << "5. Do Nothing\n" << endl; cout << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        case '4':
-                        decision = 4;
-                        break;
-                        }
-                        cout << endl;
-                        switch(decision)
-                        {
-                        case 1:
-                            if(eCrown == 5) {cout << "You place the Emerald Crown on the mans head." << endl;  DoublePause(); dStatue = 1; eCrown = 3;}
-                            break;
-                        case 2:
-                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the mans head." << endl; DoublePause(); dStatue = 1; sCrown = 3;}
-                            break;
-                        case 3:
-                            if(rCrown == 5) {cout << "You place the Ruby Crown on the mans head." << endl; DoublePause(); dStatue = 1; rCrown = 3;}
-                            break;
-                        case 4:
-                            if(dCrown == 5) {cout << "You place the Diamond Crown on the mans head." << endl; DoublePause(); dCrown = 3;
-                            dStatue = 2;}
-                            break;
-                        case 5:
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        cout << "Would you like to take the crown off the statue?\n" << endl;
-                        cout << "1.Yes\n2.No\n" << endl; cout << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        }
-                        if(decision == 1)
-                        {
-                            if(eCrown == 3) {eCrown = 5; dStatue = 0;}
-                            if(sCrown == 3) {sCrown = 5; dStatue = 0;}
-                            if(rCrown == 3) {rCrown = 5; dStatue = 0;}
-                            if(dCrown == 3) {dCrown = 5; dStatue = 0;}
-
-                            cout << "You take the crown off the statue." << endl; Pause();
-                        }
-
-                    }
-                    break;
-                case 4:
-                    cout << "You go up to a statue of a beautiful woman with elf ears and a necklace\nof leaves. She is sifting earth and plant life through her fingers.\n" << endl;
-                    Pause();
-                    if(eStatue == 0)
-                    {
-                        cout << "What would you like to do?\n" << endl;
-                        if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
-                        if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
-                        if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
-                        if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
-                        cout << "5. Do Nothing\n" << endl; cout << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        case '4':
-                        decision = 4;
-                        break;
-                        }
-                        cout << endl;
-                        switch(decision)
-                        {
-                        case 1:
-                            if(eCrown == 5) {cout << "You place the Emerald Crown on the womans head." << endl; DoublePause(); eCrown = 4;
-                            eStatue = 2;}
-
-                            break;
-                        case 2:
-                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the womans head." << endl; DoublePause(); eStatue = 1; sCrown = 4;}
-                            break;
-                        case 3:
-                            if(rCrown == 5) {cout << "You place the Ruby Crown on the womans head." << endl; DoublePause(); eStatue = 1; rCrown = 4;}
-                            break;
-                        case 4:
-                            if(dCrown == 5) {cout << "You place the Diamond Crown on the womans head." << endl; DoublePause(); eStatue = 1; dCrown = 4;}
-                            break;
-                        case 5:
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        cout << "Would you like to take the crown off the statue?\n" << endl;
-                        cout << "1.Yes\n2.No\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        }
-                        cout << endl;
-                        if(decision == 1)
-                        {
-                            if(eCrown == 4) {eCrown = 5; eStatue = 0;}
-                            if(sCrown == 4) {sCrown = 5; eStatue = 0;}
-                            if(rCrown == 4) {rCrown = 5; eStatue = 0;}
-                            if(dCrown == 4) {dCrown = 5; eStatue = 0;}
-
-                            cout << "You take the crown off the statue." << endl; Pause();
-                        }
-
-                    }
-                    break;
-                case 5:
-                    break;
-
+                break;
+            case 4:
+                gPosition = 33;
+                break;
+            case 5:
+                if(CrownPuzzle == false) {
+                    cout << "You have entered the dungeon, but there seems to be no way forward.\nSeveral statues stand against the back wall." << endl;
+                } else {
+                    cout << "You are at the Room.Dungeon of the  Statues with glittering crowns stand beside an open doorway." << endl;
                 }
-
-                if(rStatue == 2 && sStatue == 2 && dStatue == 2 && eStatue == 2)
-                        {
-                            Character.Name = " ";
-                            animationText = "The ground shakes and the statues begin to move.";
-                            Dialogue();
-                            animationText = "A doorway appears as the wall with the statues seperates.\n\n                   You can go through!";
-                            Dialogue();
-                            CrownPuzzle = true;
-                        }
-            }
-            break;
-        case 2:
-            if(Crowns == true)
-            {cout << "You see an empty marble shelf." << endl; Pause();}
-            else
-            {
-                cout << "You see a marble shelf with four jeweled crowns\nlaid on its surface. Each has a different gem. There is a sapphire crown,\na ruby crown, a emerald crown, and a diamond crown." << endl;
-                cout << "Take One? :\n" << endl;
-                if(eCrown == 0) {cout << "1. Emerald Crown" << endl;}
-
-                if(sCrown == 0) {cout << "2. Sapphire Crown" << endl;}
-
-                if(rCrown == 0) {cout << "3. Ruby Crown" << endl;}
-
-                if(dCrown == 0) {cout << "4. Diamond Crown" << endl;}
-
-                cout << "5. Nothing\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        case '3':
-                        decision = 3;
-                        break;
-                        case '4':
-                        decision = 4;
-                        break;
-                        }
-                cout << endl;
-                switch(decision)
-                {
-                case 1:
-                    if(eCrown == 0)
-                    {cout << "You take the Emerald Crown from the shelf." << endl; Pause(); eCrown = 5;}
-                    break;
-                case 2:
-                    if(sCrown == 0) {cout << "You take the Sapphire Crown from the shelf." << endl; Pause(); sCrown = 5;}
-                    break;
-                case 3:
-                    if(rCrown == 0) {cout << "You take the Ruby Crown from the shelf." << endl; Pause(); rCrown = 5;}
-                    break;
-                case 4:
-                    if(dCrown == 0) {cout << "You take the Diamond crown from the shelf." << endl; Pause(); dCrown = 5;}
-                    break;
-                case 5:
-                    break;
-                }
-                if(sCrown > 0 && eCrown > 0 && rCrown > 0 && dCrown > 0) {Crowns = true;}
                 Pause();
-            }
-            break;
-        case 3:
-            cout << "You see strange rune markings on the wall." << endl; Pause();
-            if(Item.Book == true)
-            {
-                cout << "You take out the rune book, and use it to translate.\nOn the wall is the markings 'II - 3'" << endl;
-                Pause();
-                if(Rune_34 == false)
-                {
-                     cout << "Your Rune Book is updated!" << endl; Rune_34 = true;
-                Pause();
-                }
-            }
-            break;
-        case 4:
-            gPosition = 33;
-            break;
-        case 5:
-            if(CrownPuzzle == false)
-            {
-                cout << "You have entered the dungeon, but there seems to be no way forward.\nSeveral statues stand against the back wall." << endl;
-            }
-            else
-            {
-                cout << "You are at the Room.Dungeon of the  Statues with glittering crowns stand beside an open doorway." << endl;
-            }
-            Pause();
-            break;
-
-
-
+                break;
         }
-
     }
 
     //Dungeon Cavern Room.Dungeon
-    if(gPosition == 35)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 35) {
+        switch(gMove) {
             case 1:
-                if(Wings == false)
-                {
+                if(Wings == false) {
                     cout << "An enormous chasm lies before you. You can see a lower rock shelf on the\nother side, and there is the outline of a maze in the distance, as well\nas a huge set of doors in the wall. You cannot cross." << endl;
                     Pause();
-                }
-                else if(Wings == true && miniscene.Chasm == false)
-                {
+                } else if (Wings == true && miniscene.Chasm == false) {
                     miniScene_Chasm(); gPosition = 38; Debug(); Move();
-                }
-                else if(Wings == true && miniscene.Chasm == true)
-                {
+                } else if(Wings == true && miniscene.Chasm == true) {
                     cout << "You strap on the mechanical wings and fly across the chasm." << endl; Pause();
                     gPosition = 38;
                     Debug(); Move();
@@ -788,172 +212,75 @@ void Area_Forest()
                 cout << "You are at the Room.Dungeon of a large cavern, with\na long rope bridge connecting to two other sides." << endl;
                 Pause();
                 cout << "You see strange rune markings on the floor." << endl; Pause();
-                if(Item.Book == true)
-                {
+                if(Item.Book == true) {
                     cout << "You take out the rune book, and use it to translate.\nOn the floor is the markings 'I - 1'" << endl;
                     Pause();
-                    if(Rune_35 == false)
-                    {
+                    if(Rune_35 == false) {
                         cout << "Your Rune Book is updated!" << endl; Rune_35 = true;
                         Pause();
                     }
-
                 }
                 break;
         }
-
     }
 
     //Water Puzzle
-    if(gPosition == 36)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 36) {
+        switch(gMove) {
             case 1:
-                if(FountainSet1 == false)
-                {
-                Character.Name = " ";
-                animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.";
-                Dialogue();
-                FountainSet = 1;
-                DungeonWaterPuzzle();
-                if(minigame_win == true)
-                {
-                    FountainSet1 = true;
-                    if(FountainSet3 == true && FountainSet1 == true)
-                        {
-                            MainFountain = true;
-                            animationText = "The Golden Fountains glow, you may be able to interact\nwith them now!";
-                            Dialogue();
-                        }
-                }
-                }
-                else {cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();}
+                handleFirstFountain();
                 break;
             case 2:
-                if(FountainSet2 == false && MainFountain == true)
-                {
-                minigame_win = false;
-                Character.Name = " ";
-                animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.\nThe pedestal has something written on it.";
-                Dialogue();
-                animationText = "'The Order of the Four Fountains is hidden throughout the dungeon, figure it\nout and you may continue.'";
-                Dialogue();
-                FountainSet = 2;
-                FountainOrder = 1321;
-                cout << "What is the answer?" << endl;
-                cin >> FountainGuess;
-                if(FountainGuess == FountainOrder)
-                {
-                            animationText = "The fountains all turn on. You guessed correctly!";
-                            Dialogue();
-                            minigame_win = true;
-                }
-                else
-                {
-                    animationText = "Nothing Happens...";
-                    Dialogue();
-                }
-                if(minigame_win == true)
-                {
-                    FountainSet2 = true;
-                    animationText = "The floor rumbles and in the middle of the room a pedestal\nrises from the ground. On it is what seems to be half of a pair\nof wings. You take it with you.";
-                    Dialogue();
-                    LeftWing = true;
-
-                    //if all pre maze puzzles are complete, give the player the wings item
-                    if(LeftWing == true && RightWing == true)
-                    {
-                            animationText = "You put the two wings pieces together, you now have wings!.";
-                            Dialogue();
-                            Wings = true;
-                    }
-                }
-
-
-                }
-                else if (MainFountain == true) {cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();}
-                else {cout << "Four Golden fountains are before you, but they don't seem to be working." << endl; Pause();}
+                handleSecondFountain();
                 break;
             case 3:
                 enemy = Enemy.Skeleton; RandomEnemyEncounter();
                 gPosition = 35;
                 break;
             case 4:
-                if(FountainSet3 == false)
-                {
-                Character.Name = " ";
-                animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.";
-                Dialogue();
-                FountainSet = 3;
-                DungeonWaterPuzzle();
-                    if(minigame_win == true)
-                    {
-                        FountainSet3 = true;
-                        if(FountainSet3 == true && FountainSet1 == true)
-                        {
-                            MainFountain = true;
-                            animationText = "The Golden Fountains glow, you may be able to interact\nwith them now!";
-                            Dialogue();
-                        }
-                    }
-                }
-                else {cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();}
+                handleThirdFountain();
                 break;
             case 5:
                 cout << "You are standing on a platform surrounded by water. Each wall has\na set of four fountains, with a pedestal in the middle before each wall." << endl; Pause();
                 cout << "You see strange rune markings on the floor." << endl; Pause();
-            if(Item.Book == true)
-            {
+            if(Item.Book == true) {
                 cout << "You take out the rune book, and use it to translate.\nOn the floor is the markings 'III - 2'" << endl;
                 Pause();
-                if(Rune_36 == false)
-                {
+                if(Rune_36 == false) {
                     cout << "Your Rune Book is updated!" << endl; Rune_36 = true;
                     Pause();
                 }
-
             }
             break;
-
         }
-
     }
 
     //Fire Puzzle
-    if(gPosition == 37)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 37) {
+        switch(gMove) {
             case 1:
-            cout << "You see strange rune markings on the wall." << endl; Pause();
-            if(Item.Book == true)
-            {
-                cout << "You take out the rune book, and use it to translate.\nOn the wall is the markings 'IV - 1'" << endl;
-                Pause();
-                if(Rune_37 == false)
-                {
-                    cout << "Your Rune Book is updated!" << endl; Rune_37 = true;
+                cout << "You see strange rune markings on the wall." << endl; Pause();
+                if(Item.Book == true) {
+                    cout << "You take out the rune book, and use it to translate.\nOn the wall is the markings 'IV - 1'" << endl;
                     Pause();
+                    if(Rune_37 == false) {
+                        cout << "Your Rune Book is updated!" << endl; Rune_37 = true;
+                        Pause();
+                    }
                 }
-
-            }
-            break;
+                break;
             case 2:
                 enemy = Enemy.Skeleton; RandomEnemyEncounter();
                 gPosition = 35;
                 break;
             case 3:
                 cout << "You walk towards a path with pillars of fire erupting\nin intervals blocking the way." << endl; Pause();
-                DungeonFirePuzzle(); if(minigame_win == true)
-                {
-
+                DungeonFirePuzzle(); 
+                if(minigame_win == true) {
                     animationText = "On the pillar is what seems to be half of a pair\nof wings. You take it with you.";
                     Dialogue();
                     RightWing = true;
-
-                    if(LeftWing == true && RightWing == true)
-                        {
+                    if(LeftWing == true && RightWing == true) {
                             animationText = "You put the two wings pieces together, you now have wings!.";
                             Dialogue();
                             Wings = true;
@@ -970,43 +297,39 @@ void Area_Forest()
     }
 
     //Dungeon Cavern Back End
-    if(gPosition == 38)
-    {
-
-        switch(gMove)
-        {
+    if(gPosition == 38) {
+        switch(gMove) {
             case 1:
                 if(miniscene.NymphAppears == false) {miniScene_NymphAppears();}
                 gPosition = 39; Debug(); Move();
                 break;
             case 2:
-                if(Room.Boss == true)
-                {
+                if(Room.Boss == true) {
                     cout << "Would you like to enter the Boss Room?\n" << endl;
                     cout << "1. Yes" << endl;
                     cout << "2. No\n" << endl;
 
+                    GetInput();
 
-                    switch(getch()) {case '1': decision = 1; break; case '2': decision = 2; break;}
-
-                    if(decision == 1) {Cutscene_DungeonBossApproach();}
-
-                }
-                else
-                {
+                    if(decision == 1) {
+                        Cutscene_DungeonBossApproach();
+                    }
+                } else {
                     cout << "You go up a winding path to an enormous door with intricate carvings\nIt is sealed shut, but has a strange leaf shaped hole in\nthe center. You feel more uneasy than ever being near\nthis room." << endl;
                     Pause();
                 }
                 break;
             case 3:
-                if(Item.Key == false) {cout << "You see a locked chest." << endl; Pause();}
-                else if(Item.Key == true && Dungeon.Chest == false)
-                {
+                if(Item.Key == false) {
+                    cout << "You see a locked chest." << endl; 
+                    Pause();
+                } else if (Item.Key == true && Dungeon.Chest == false) {
                     cout << "You try using the key you got from Tiki, and the chest opens!\nInside you find elixers!" << endl;
                     cout << "*Elixers + 5*\n*Luck + 2*" << endl; Pause(); Item.Elixers += 5; Player.Luck += 2; RandomLuckValue += 1;
                     Dungeon.Chest = true;
+                } else if (Item.Key == true && Dungeon.Chest == true) {
+                    cout << "You see an empty chest." << endl; Pause();
                 }
-                else if (Item.Key == true && Dungeon.Chest == true) {cout << "You see an empty chest." << endl; Pause();}
                 break;
             case 4:
                 gPosition = 35;
@@ -1018,43 +341,33 @@ void Area_Forest()
         }
     }
 
-//Dungeon Maze Rooms
-//{
-
-
     //Dungeon Maze Room.Dungeon (Position 39)
-    if(gPosition == 39)
-    {
-        switch(gMove)
-        {
-        case 1:
-            //soft code
-            cout << "You go forward, the grass making your footsteps all but inaudible." << endl; Pause();
-            gPosition = 394; Debug(); Move();
-           break;
-        case 2:
+    if(gPosition == 39) {
+        switch(gMove) {
+            case 1:
+                cout << "You go forward, the grass making your footsteps all but inaudible." << endl; Pause();
+                gPosition = 394; Debug(); Move();
             break;
-        case 3:
-            cout << "You turn right, and pass under a willow tree, its leaves rustle gently." << endl; Pause();
-            gPosition = 391; Debug(); Move();
-            break;
-        case 4:
-            enemy = Enemy.Skeleton; RandomEnemyEncounter();
-            gPosition = 38;
-            break;
-        case 5:
-            cout << "You are at the Room.Dungeon of a maze of pathways." << endl;
-            Pause();
-            break;
+            case 2:
+                break;
+            case 3:
+                cout << "You turn right, and pass under a willow tree, its leaves rustle gently." << endl; Pause();
+                gPosition = 391; Debug(); Move();
+                break;
+            case 4:
+                enemy = Enemy.Skeleton; RandomEnemyEncounter();
+                gPosition = 38;
+                break;
+            case 5:
+                cout << "You are at the Room.Dungeon of a maze of pathways." << endl;
+                Pause();
+                break;
         }
-
-        }
+    }
 
     //Dungeon Maze Position 391
-    if(gPosition== 391)
-    {
-        switch(gMove)
-        {
+    if(gPosition== 391) {
+        switch(gMove) {
             case 1:
                 cout << "You go forward, and see a bear sleeping in the hallway. You walk around the\nbear, it shifts slightly, but remains asleep." << endl; Pause();
                 gPosition = 395; Debug(); Move();
@@ -1073,20 +386,17 @@ void Area_Forest()
             case 5:
                 cout << "You are in the midst of a maze of pathways." << endl;
                 break;
-
         }
     }
 
     //Dungeon Maze Position 392
-    if(gPosition == 392)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 392) {
+        switch(gMove) {
             case 1:
                 cout << "You go forward, and walk through the puddles. They\nmake splashing sounds as you go!" << endl; Pause();
                 NymphFollow();
                 gPosition = 396; Debug(); Move();
-              break;
+                break;
             case 2:
                 cout << "You go left, and continue over the dead leaves. They make loud\ncrunching sounds as you walk!" << endl; Pause();
                 NymphFollow();
@@ -1104,14 +414,11 @@ void Area_Forest()
                 Pause();
                 break;
         }
-
     }
 
     //Dungeon Maze Position 393
-    if(gPosition == 393)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 393) {
+        switch(gMove) {
             case 1:
                 cout << "You continue forward, going through a hallway of rose bushes.\nYour pricked by one of the thorns!" << endl; Pause();
                 Character.Name = Player.Name; animationText = "Oww!!"; Dialogue();
@@ -1132,14 +439,11 @@ void Area_Forest()
                 Pause();
                 break;
         }
-
     }
 
     //Dungeon Maze Position 394
-    if(gPosition == 394)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 394) {
+        switch(gMove) {
             case 1:
                 cout << "You walk through the seemingly ordinary path, and the walls begin moving!\nYou run out before they close, making a lot of noise. They reopen." << endl; Pause();
                 NymphFollow();
@@ -1164,11 +468,9 @@ void Area_Forest()
     }
 
     //Dungeon Maze Position 395
-    if(gPosition == 395)
-    {
-        switch(gMove)
-            {
-                case 1:
+    if(gPosition == 395) {
+        switch(gMove) {
+            case 1:
                 cout << "You take a running headstart and make the jump, making a loud noise\nas you land." << endl; Pause();
                 NymphFollow();
                 gPosition = 399; Debug(); Move();
@@ -1190,16 +492,12 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
             }
-
     }
 
     //Dungeon Maze Position 396
-    if(gPosition == 396)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 396) {
+        switch(gMove) {
             case 1:
                 cout << "You walk through the flower bed, the flowers are soft under your feet." << endl; Pause();
                 gPosition = 3910; Debug(); Move();
@@ -1222,16 +520,12 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
-
         }
     }
 
     //Dungeon Maze Position 397
-    if(gPosition == 397)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 397) {
+        switch(gMove) {
             case 1:
                 cout << "You walk through the seemingly ordinary path. Nothing happens." << endl; Pause();
                 gPosition = 3911; Debug(); Move();
@@ -1246,28 +540,22 @@ void Area_Forest()
                 {
                 cout << "You find a crank. It looks old, but might have some use." << endl; Pause();
                 cout << "Take the crank?\n\n1. Yes\n2. No\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
+
+                GetInput();
+
+                switch(decision)
+                {
+                    case 1:
+                        cout << "You take the crank." << endl; DoublePause();
+                        Crank = true;
                         break;
-                        case '2':
-                        decision = 2;
+                    case 2:
+                        cout << "You decide not to take the crank." << endl; DoublePause();
                         break;
-                        }
-                cout << endl;
-                    switch(decision)
-                    {
-                        case 1:
-                            cout << "You take the crank." << endl; DoublePause();
-                            Crank = true;
-                            break;
-                        case 2:
-                            cout << "You decide not to take the crank." << endl; DoublePause();
-                            break;
-                    }
                 }
-                else{cout << "You see an empty space. You picked up the crank from here." << endl; Pause();}
+                } else {
+                    cout << "You see an empty space. You picked up the crank from here." << endl; Pause();
+                }
                 break;
             case 4:
                 cout << "You continue forward, going through a hallway of rose bushes.\nYour pricked by one of the thorns!" << endl; Pause();
@@ -1279,16 +567,12 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
         }
     }
 
     //Dungeon Maze Position 398
-    if(gPosition == 398)
-    {
-
-        switch(gMove)
-        {
+    if(gPosition == 398) {
+        switch(gMove) {
             case 1:
                 cout << "You wade through a pool of water to reach the other side. You\nmake splashing sounds as you cross through!" << endl; Pause();
                 NymphFollow();
@@ -1311,14 +595,11 @@ void Area_Forest()
                 Pause();
                 break;
         }
-
     }
 
     //Dungeon Maze Position 399
-    if(gPosition == 399)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 399) {
+        switch(gMove) {
             case 1:
                 cout << "You walk across the bank of sand. Its soft under your feet." << endl; Pause();
                 gPosition = 3913; Debug(); Move();
@@ -1347,10 +628,8 @@ void Area_Forest()
     }
 
     //Dungeon Maze Position 3910
-    if(gPosition == 3910)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 3910) {
+        switch(gMove) {
             case 1:
                 cout << "You pass by an old abandoned cottage as you travel through the area.\nNothing happens, but you wonder how the building got there." << endl; Pause();
                 gPosition = 3914; Debug(); Move();
@@ -1380,15 +659,12 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
         }
     }
 
     //Dungeon Maze Position 3911
-    if(gPosition == 3911)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 3911) {
+        switch(gMove) {
             case 1:
                 cout << "You walk through a field of wheat. It feels peaceful." << endl; Pause();
                 gPosition = 3915; Debug(); Move();
@@ -1414,62 +690,46 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
         }
     }
 
     //Dungeon Maze Position 3912
     if(gPosition == 3912)
     {
-            switch(gMove)
-            {
-                case 1:
-                    if(miniscene.Dam == false)
-                    {
-                        cout << "You see a cave that seems to lead both left and right and surrounds\nthe maze. A stream trickles from an panel in the wall that is cracked open.\nThere seems to be a machine next to you that would open it further,\nbut its missing something." << endl;
-                        Pause();
-                        if(Crank == true)
-                         {
-                           cout << "Use Crank?\n\n1.Yes\n2.No\n" << endl;
-                        switch(_getch())
-                        {
-                        case '1':
-                        decision = 1;
-                        break;
-                        case '2':
-                        decision = 2;
-                        break;
-                        }
-                           switch(decision) {case 1: miniScene_Dam(); break; case 2: cout << "You decide not to use the crank."; DoublePause(); break; }
-                         }
-
-                    }
-                    else{cout << "You see a waterfall leading into a river. The sound\nof rushing water fills your ears, drowning out all other sounds." << endl; Pause();}
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    cout << "You walk through a pathway filled with hanging lanterns. Its beautiful." << endl; Pause();
-                    gPosition = 3913; Debug(); Move();
-                    break;
-                case 4:
-                    cout << "You wade through a pool of water to reach the other side. You\nmake splashing sounds as you cross through!" << endl; Pause();
-                    NymphFollow();
-                    gPosition = 398;
-                    break;
-                case 5:
-                    cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
+        switch(gMove)
+        {
+            case 1:
+                if(miniscene.Dam == false) {
+                    cout << "You see a cave that seems to lead both left and right and surrounds\nthe maze. A stream trickles from an panel in the wall that is cracked open.\nThere seems to be a machine next to you that would open it further,\nbut its missing something." << endl;
                     Pause();
-                    break;
-            }
-
+                    if(Crank == true) {
+                        cout << "Use Crank?\n\n1.Yes\n2.No\n" << endl;
+                        GetInput();
+                        switch(decision) {case 1: miniScene_Dam(); break; case 2: cout << "You decide not to use the crank."; DoublePause(); break; }
+                    }
+                } else {cout << "You see a waterfall leading into a river. The sound\nof rushing water fills your ears, drowning out all other sounds." << endl; Pause();}
+                break;
+            case 2:
+                break;
+            case 3:
+                cout << "You walk through a pathway filled with hanging lanterns. Its beautiful." << endl; Pause();
+                gPosition = 3913; Debug(); Move();
+                break;
+            case 4:
+                cout << "You wade through a pool of water to reach the other side. You\nmake splashing sounds as you cross through!" << endl; Pause();
+                NymphFollow();
+                gPosition = 398;
+                break;
+            case 5:
+                cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
+                Pause();
+                break;
+        }
     }
 
     //Dungeon Maze Position 3913
-    if(gPosition == 3913)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 3913) {
+        switch(gMove) {
             case 1:
                 break;
             case 2:
@@ -1493,10 +753,8 @@ void Area_Forest()
     }
 
     //Dungeon Maze Position 3914
-    if(gPosition == 3914)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 3914) {
+        switch(gMove) {
             case 1:
                break;
             case 2:
@@ -1516,15 +774,12 @@ void Area_Forest()
                 cout << "You are in the midst of a maze of pathways. A\nmonster lurks in the darkness." << endl;
                 Pause();
                 break;
-
         }
     }
 
     //Dungeon Maze Position 3915
-    if(gPosition == 3915)
-    {
-        switch(gMove)
-        {
+    if(gPosition == 3915) {
+        switch(gMove) {
             case 1:
                 break;
             case 2:
@@ -1542,21 +797,13 @@ void Area_Forest()
                 Pause();
                 break;
         }
-
     }
-
-//}
 }
 
-
-
-
-//The Puzzles  - - - - - -
-
-//Earth Puzzle
 void NymphFollow()
 {
     void ForestNymphKillsYou();
+    void GetInput();
 
     if(miniscene.Dam == false)
     {
@@ -1632,6 +879,7 @@ void NymphFollow()
 void ForestNymphKillsYou()
 {
     void GameOver();
+    void GameInput();
 
 
     Character.Name = " ";
@@ -1644,12 +892,10 @@ void ForestNymphKillsYou()
 
 }
 
-
-//Water Puzzle
 void DungeonWaterPuzzle()
 {
     void TopScreen();
-
+    void GetInput();
 
 
     //Reset the minigame
@@ -1756,15 +1002,9 @@ void DungeonWaterPuzzle()
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n" << endl;
     cout << "Would you like to guess the order of the fountains?\n" << endl;
     cout << "1. Yes\n2. No\n" << endl;
-    switch(_getch())
-        {
-            case '1':
-            decision = 1;
-            break;
-            case '2':
-            decision = 2;
-            break;
-        }
+
+    GetInput();
+
     cout << endl;
     switch(decision)
     {
@@ -1791,17 +1031,13 @@ void DungeonWaterPuzzle()
 
 }
 
-
-
-
-//Fire Puzzle
-
 void DungeonFirePuzzle()
 {
 
     void FirePuzzleScreen();
     void FirePuzzleMovement();
     void GameOver();
+    void GetInput();
 
 
     minigame_win = false;
@@ -1841,7 +1077,7 @@ void DungeonFirePuzzle()
 void FirePuzzleScreen()
 {
     void HealthBar();
-
+    void GetInput();
 
     ClearScreen();
     HealthBar();
@@ -1897,6 +1133,7 @@ void FirePuzzleMovement()
 {
 
     void Move();
+    void GetInput();
 
     if(kbhit())
           {
@@ -1947,3 +1184,490 @@ void FirePuzzleMovement()
 
     }
 }
+
+void handleLake() {
+
+    void GetInput();
+    void DoublePause();
+
+    cout << "You go up to the beautiful blue lake and look in the water." << endl;
+    cout << "It's crystal clear and you can see fish swimming." << endl;
+    cout << "You could stop and swim, maybe catch some fish or look for treasure." << endl;
+    cout << "Enter the lake?" << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No" << endl;
+
+    GetInput();
+
+    if(decision == 1) {
+
+        if(Item.Jewel == false && Player.Luck > 8) {
+            cout << "You go for a swim, and find a box at the bottom." << endl;
+            cout << "Inside is some sort of strange jewel. You take it" << endl;
+            cout << "with you. It could be valuable." << endl;
+            Item.Jewel = true;
+            DoublePause();
+        }
+        else {
+            cout << "You go for a swim, it relaxes you and fills you" << endl;
+            cout << "with joy." << endl;
+            cout << "*Health + 2*" << endl;
+            Player.Health += 2;
+            if(Player.Health > Player.MaxHealth) {
+                Player.Health = Player.MaxHealth;
+            }
+            DoublePause();
+        }
+    }
+    else {
+        cout << "You decide not to enter the lake." << endl;
+        DoublePause();
+    }
+}
+
+void handleStatuePuzzle() {
+
+    void GetInput();
+    void Pause();
+    void Debug();
+    void Move();
+    void Dialogue();
+
+    if(CrownPuzzle == true) {
+        gPosition = 35;
+        Debug(); 
+        Move();
+    } else {
+        cout << "You see four beautiful statues against the wall. Go up to one?\n" << endl;
+        cout << "1. First Statue\n2. Second Statue\n3. Third Statue\n4. Fourth Statue\n5. Do nothing\n" << endl;
+        
+        GetInput();
+
+        switch(decision)
+        {
+            case 1:
+                cout << "You go up to a statue of a beautiful woman in a dress seemingly\nmade of fire, with flames coming from her hands.\n" << endl;
+                Pause();
+                if(rStatue == 0) {
+                    cout << "What would you like to do?\n" << endl;
+                    if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
+                    if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
+                    if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
+                    if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
+                    cout << "5. Do Nothing\n" << endl;
+
+                    GetInput();
+
+                    switch(decision) {
+                        case 1:
+                            if(eCrown == 5) {cout << "You place the Emerald Crown on the womans head." << endl; DoublePause(); rStatue = 1; eCrown = 1;}
+                            break;
+                        case 2:
+                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the womans head." << endl; DoublePause(); rStatue = 1; sCrown = 1;}
+                            break;
+                        case 3:
+                            if(rCrown == 5) {cout << "You place the Ruby Crown on the womans head." << endl; DoublePause(); rCrown = 1;
+                            rStatue = 2;}
+                            break;
+                        case 4:
+                            if(dCrown == 5) {cout << "You place the Diamond Crown on the womans head." << endl; DoublePause(); rStatue = 1; dCrown = 1;}
+                            break;
+                        case 5:
+                            break;
+                    }
+                } else {
+                    cout << "Would you like to take the crown off the statue?\n" << endl;
+                    cout << "1.Yes\n2.No\n" << endl;
+
+                    GetInput();
+
+                    if(decision == 1) {
+                        if(eCrown == 1) {eCrown = 5; rStatue = 0;}
+                        if(sCrown == 1) {sCrown = 5; rStatue = 0;}
+                        if(rCrown == 1) {rCrown = 5; rStatue = 0;}
+                        if(dCrown == 1) {dCrown = 5; rStatue = 0;}
+
+                        cout << "You take the crown off the statue." << endl; Pause();
+                    }
+                }
+                break;
+            case 2:
+                cout << "You go up to a statue of a handsome man with a cape that flows like water.\nHe has a trident in his hands.\n" << endl;
+                Pause();
+                if(sStatue == 0) {
+                    cout << "What would you like to do?\n" << endl;
+                    if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
+                    if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
+                    if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
+                    if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
+                    cout << "5. Do Nothing\n" << endl; cout << endl;
+
+                    GetInput();
+
+                    switch(decision) {
+                        case 1:
+                            if(eCrown == 5) {cout << "You place the Emerald Crown on the mans head." << endl; DoublePause(); sStatue = 1; eCrown = 2;}
+                            break;
+                        case 2:
+                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the mans head." << endl; DoublePause(); sCrown = 2;
+                            sStatue = 2;}
+                            break;
+                        case 3:
+                            if(rCrown == 5) {cout << "You place the Ruby Crown on the mans head." << endl; DoublePause(); sStatue = 1; rCrown = 2;}
+                            break;
+                        case 4:
+                            if(dCrown == 5) {cout << "You place the Diamond Crown on the mans head." << endl; DoublePause(); sStatue = 1; dCrown = 2;}
+                            break;
+                        case 5:
+                            break;
+                    }
+                } else {
+                    cout << "Would you like to take the crown off the statue?\n" << endl;
+                    cout << "1.Yes\n2.No\n\n" << endl;
+
+                    GetInput();
+
+                    if(decision == 1) {
+                        if(eCrown == 2) {eCrown = 5; sStatue = 0;}
+                        if(sCrown == 2) {sCrown = 5; sStatue = 0;}
+                        if(rCrown == 2) {rCrown = 5; sStatue = 0;}
+                        if(dCrown == 2) {dCrown = 5; sStatue = 0;}
+
+                        cout << "You take the crown off the statue." << endl; Pause();
+                    }
+                }
+                break;
+            case 3:
+                cout << "You go up to a statue of a handsome man wearing some sort of contraption\nthat looks like bird wings. He looks as though he has complete control of \nthe air.\n" << endl;
+                Pause();
+                if(dStatue == 0) {
+                    cout << "What would you like to do?\n" << endl;
+                    if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
+                    if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
+                    if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
+                    if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
+                    cout << "5. Do Nothing\n\n" << endl;
+
+                    GetInput();
+
+                    switch(decision) {
+                        case 1:
+                            if(eCrown == 5) {cout << "You place the Emerald Crown on the mans head." << endl;  DoublePause(); dStatue = 1; eCrown = 3;}
+                            break;
+                        case 2:
+                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the mans head." << endl; DoublePause(); dStatue = 1; sCrown = 3;}
+                            break;
+                        case 3:
+                            if(rCrown == 5) {cout << "You place the Ruby Crown on the mans head." << endl; DoublePause(); dStatue = 1; rCrown = 3;}
+                            break;
+                        case 4:
+                            if(dCrown == 5) {cout << "You place the Diamond Crown on the mans head." << endl; DoublePause(); dCrown = 3;
+                            dStatue = 2;}
+                            break;
+                        case 5:
+                            break;
+                    }
+                } else {
+                    cout << "Would you like to take the crown off the statue?\n" << endl;
+                    cout << "1.Yes\n2.No\n" << endl; cout << endl;
+
+                    GetInput();
+
+                    if(decision == 1) {
+                        if(eCrown == 3) {eCrown = 5; dStatue = 0;}
+                        if(sCrown == 3) {sCrown = 5; dStatue = 0;}
+                        if(rCrown == 3) {rCrown = 5; dStatue = 0;}
+                        if(dCrown == 3) {dCrown = 5; dStatue = 0;}
+
+                        cout << "You take the crown off the statue." << endl; Pause();
+                    }
+                }
+                break;
+            case 4:
+                cout << "You go up to a statue of a beautiful woman with elf ears and a necklace\nof leaves. She is sifting earth and plant life through her fingers.\n" << endl;
+                Pause();
+                if(eStatue == 0) {
+                    cout << "What would you like to do?\n" << endl;
+                    if(eCrown == 5) {cout << "1. Use Emerald Crown\n" << endl;}
+                    if(sCrown == 5) {cout << "2. Use Sapphire Crown\n" << endl;}
+                    if(rCrown == 5) {cout << "3. Use Ruby Crown\n" << endl;}
+                    if(dCrown == 5) {cout << "4. Use Diamond Crown\n" << endl;}
+                    cout << "5. Do Nothing\n" << endl; cout << endl;
+
+                    GetInput();
+
+                    switch(decision) {
+                        case 1:
+                            if(eCrown == 5) {cout << "You place the Emerald Crown on the womans head." << endl; DoublePause(); eCrown = 4;
+                            eStatue = 2;}
+                            break;
+                        case 2:
+                            if(sCrown == 5) {cout << "You place the Sapphire Crown on the womans head." << endl; DoublePause(); eStatue = 1; sCrown = 4;}
+                            break;
+                        case 3:
+                            if(rCrown == 5) {cout << "You place the Ruby Crown on the womans head." << endl; DoublePause(); eStatue = 1; rCrown = 4;}
+                            break;
+                        case 4:
+                            if(dCrown == 5) {cout << "You place the Diamond Crown on the womans head." << endl; DoublePause(); eStatue = 1; dCrown = 4;}
+                            break;
+                        case 5:
+                            break;
+                    }
+                } else {
+                    cout << "Would you like to take the crown off the statue?\n" << endl;
+                    cout << "1.Yes\n2.No\n" << endl;
+
+                    GetInput();
+
+                    if(decision == 1) {
+                        if(eCrown == 4) {eCrown = 5; eStatue = 0;}
+                        if(sCrown == 4) {sCrown = 5; eStatue = 0;}
+                        if(rCrown == 4) {rCrown = 5; eStatue = 0;}
+                        if(dCrown == 4) {dCrown = 5; eStatue = 0;}
+
+                        cout << "You take the crown off the statue." << endl; Pause();
+                    }
+                }
+                break;
+            case 5:
+                break;
+            }
+
+            if(rStatue == 2 && sStatue == 2 && dStatue == 2 && eStatue == 2) {
+                Character.Name = " ";
+                animationText = "The ground shakes and the statues begin to move.";
+                Dialogue();
+                animationText = "A doorway appears as the wall with the statues seperates.\n\n                   You can go through!";
+                Dialogue();
+                CrownPuzzle = true;
+            }
+    }
+}
+
+void handleMushroomPatch() {
+
+    void GetInput();
+    void DoublePause();
+
+    cout << "You go up to the mushroom patch." << endl;
+    cout << "Search for edible mushrooms?" << endl;
+    cout << "1. Yes" << endl;
+    cout << "2. No\n" << endl;
+
+    GetInput();
+
+    if(decision == 1) {
+        if(Item.Mushrooms == true) {
+            cout  << "You don't see any edible mushrooms." << endl;
+            DoublePause();
+        } else {
+            cout << "You found a few edible mushrooms!" << endl;
+            cout << "*Food + 2" << endl;
+            Item.Mushrooms = true;
+            Item.Food += 2;
+            DoublePause();
+        }
+    } else if(decision == 2) {
+        cout << "You decide not to look through the mushrooms." << endl;
+        DoublePause();
+    }
+}
+
+void handleFlowerPatch() {
+
+    void Pause();
+    void Dialogue();
+    void GetInput();
+
+    cout << "You go up to the flower patch. There are daisies everywhere.\n" << endl;
+    Pause();
+    if(Item.Daisy == false) {
+        Character.Name = Player.Name;
+        animationText = "Maybe I should pick one...";
+        Dialogue();
+
+        cout << "\nTake one of the daisies?\n" << endl;
+        cout << "1. Yes" << endl;
+        cout << "2. No\n" << endl;
+
+        GetInput();
+
+        if(decision == 1) {
+            cout << "You take one of the daisies. Maybe it will come in handy." << endl;
+            Item.Daisy = true; Pause();
+
+        } else if(decision == 2) {
+            cout << "You decide not to take one of the daisies." << endl; Pause();
+        }
+    } else if (Item.Daisy == true) {
+        cout << "You admire them for a minute. Then go back." << endl;
+    }
+    Pause();
+}
+
+void handleHairpin() {
+
+    void GetInput();
+    void Pause();
+    void Dialogue();
+
+    if(Item.Hairpin == false) {
+        cout << "You go up to the Willow Tree. There's something strange\nabout it. Investigate it?" << endl; //change that later
+        cout << "1. Yes" << endl;
+        cout << "2. No" << endl;
+        cout << endl;
+        
+        GetInput();
+
+        if(decision == 1) {
+            cout << "You look closer at the tree. Something sparkles up\nin the branches. You climb the tree and find a silver hair pin!" << endl;
+            cout << "\n\n" << endl;
+
+            Pause();
+
+            Character.Name = Player.Name;
+            animationText = "How did this get all the way up here?";
+            Dialogue();
+            cout << "You got a hairpin!" << endl;
+
+            Item.Hairpin = true;
+            Pause();
+        } else {
+            cout << "You walk away" << endl; DoublePause();
+        }
+    } else {
+        cout << "You go up to the willow tree. Its branches sway in the breeze." << endl;
+        Pause();
+    }
+}
+
+void handleCrowns() {
+
+    void GetInput();
+    void Pause();
+
+    if(Crowns == true) {
+        cout << "You see an empty marble shelf." << endl; Pause();
+    } else {
+        cout << "You see a marble shelf with four jeweled crowns\nlaid on its surface. Each has a different gem. There is a sapphire crown,\na ruby crown, a emerald crown, and a diamond crown." << endl;
+        cout << "Take One? :\n" << endl;
+        if(eCrown == 0) {cout << "1. Emerald Crown" << endl;}
+
+        if(sCrown == 0) {cout << "2. Sapphire Crown" << endl;}
+
+        if(rCrown == 0) {cout << "3. Ruby Crown" << endl;}
+
+        if(dCrown == 0) {cout << "4. Diamond Crown" << endl;}
+
+        cout << "5. Nothing\n" << endl;
+
+        GetInput();
+
+        switch(decision) {
+            case 1:
+                if(eCrown == 0)
+                {cout << "You take the Emerald Crown from the shelf." << endl; Pause(); eCrown = 5;}
+                break;
+            case 2:
+                if(sCrown == 0) {cout << "You take the Sapphire Crown from the shelf." << endl; Pause(); sCrown = 5;}
+                break;
+            case 3:
+                if(rCrown == 0) {cout << "You take the Ruby Crown from the shelf." << endl; Pause(); rCrown = 5;}
+                break;
+            case 4:
+                if(dCrown == 0) {cout << "You take the Diamond crown from the shelf." << endl; Pause(); dCrown = 5;}
+                break;
+            case 5:
+                break;
+        }
+        if(sCrown > 0 && eCrown > 0 && rCrown > 0 && dCrown > 0) {Crowns = true;}
+        Pause();
+    }
+}
+
+void handleFirstFountain() {
+
+    void Dialogue();
+    void DungeonWaterPuzzle();
+
+    if(FountainSet1 == false) {
+        Character.Name = " ";
+        animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.";
+        Dialogue();
+        FountainSet = 1;
+        DungeonWaterPuzzle();
+        if(minigame_win == true) {
+            FountainSet1 = true;
+            if(FountainSet3 == true && FountainSet1 == true)
+                {
+                    MainFountain = true;
+                    animationText = "The Golden Fountains glow, you may be able to interact\nwith them now!";
+                    Dialogue();
+                }
+        }
+    } else {
+        cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();
+    }
+}
+
+void handleSecondFountain() {
+
+    void Dialogue();
+
+    if (FountainSet2 == false && MainFountain == true) {
+        minigame_win = false;
+        Character.Name = " ";
+        animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.\nThe pedestal has something written on it.";
+        Dialogue();
+        animationText = "'The Order of the Four Fountains is hidden throughout the dungeon, figure it\nout and you may continue.'";
+        Dialogue();
+        FountainSet = 2;
+        FountainOrder = 1321;
+        cout << "What is the answer?" << endl;
+        cin >> FountainGuess;
+        if(FountainGuess == FountainOrder) {
+            animationText = "The fountains all turn on. You guessed correctly!";
+            Dialogue();
+            minigame_win = true;
+        } else {
+            animationText = "Nothing Happens...";
+            Dialogue();
+        }
+        if(minigame_win == true)
+        {
+            FountainSet2 = true;
+            animationText = "The floor rumbles and in the middle of the room a pedestal\nrises from the ground. On it is what seems to be half of a pair\nof wings. You take it with you.";
+            Dialogue();
+            LeftWing = true;
+
+            //if all pre maze puzzles are complete, give the player the wings item
+            if(LeftWing == true && RightWing == true) {
+                    animationText = "You put the two wings pieces together, you now have wings!.";
+                    Dialogue();
+                    Wings = true;
+            }
+        }
+    }
+    else if (MainFountain == true) {cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();}
+    else {cout << "Four Golden fountains are before you, but they don't seem to be working." << endl; Pause();}
+}
+
+void handleThirdFountain() {
+    if(FountainSet3 == false) {
+        Character.Name = " ";
+        animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.";
+        Dialogue();
+        FountainSet = 3;
+        DungeonWaterPuzzle();
+            if(minigame_win == true) {
+                FountainSet3 = true;
+                if(FountainSet3 == true && FountainSet1 == true) {
+                    MainFountain = true;
+                    animationText = "The Golden Fountains glow, you may be able to interact\nwith them now!";
+                    Dialogue();
+                }
+            }
+    }
+    else {cout << "The fountains are all on, they feel cool to stand near." << endl; Pause();}
+}
+

@@ -518,6 +518,45 @@ void miniScene_Kuhar()
 
 }
 
+void miniScene_Kuhar02() {
+
+    void Dialogue();
+    
+    Character.Name = " ";
+    animationText = "You approach Kuhar and hand him the cookbook. He looks\necstatic.";
+    Dialogue();
+
+    Character.Name = "Kuhar";
+    animationText = "Kuhar: Thank you thank you thank you thank you\nthank you!!!! Now I can finally pursue my dream!";
+    Dialogue();
+
+    Character.Name = Player.Name;
+    animationText = "Your very welcome!";
+    Dialogue();
+
+    Character.Name = " ";
+    animationText = "Kuhar starts cooking up a storm. He waves for you to sit down.\nYou sit at the table and wait for him to finish.";
+    Dialogue();
+
+    Character.Name = "Kuhar";
+    animationText = "I made you a Elf Cake! The recipe came out just\nas I hoped it would!";
+    Dialogue();
+
+    Character.Name = " ";
+    animationText = "Kuhar hands you the Elf Cake. You eat it, it's delicious! You feel\nkind of strange though...";
+    Dialogue();
+
+    Character.Name = "Kuhar";
+    animationText = "It gives the person who eats it more Attack Power!";
+    Dialogue();
+
+    Character.Name = " ";
+    animationText = "Your damage increased by 2!";
+    Dialogue();
+
+    Player.Damage += 2; Kuhar = true;
+}
+
 void miniScene_Aida()
 {
     Character.Name = "Aida";

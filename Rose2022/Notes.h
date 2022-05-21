@@ -263,3 +263,13 @@ Area Two______ Town
 
 
 
+
+
+    /*//wtf is this when did i write this is it actually working
+    if(textpause = true) //this is a current buffer barrier to prevent enter in animation text being used as the next gmove or pause.
+    {
+       if(textswitch == false) { Pause(); animationpause = true;}
+       else{textswitch = false;}
+    }
+    */
+    //animationPause();

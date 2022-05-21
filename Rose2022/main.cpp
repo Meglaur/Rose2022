@@ -1,6 +1,5 @@
 //This is the basic file that runs the game based on all the other files here. It states the order in which the game is played/things happen
 //in general.
-
 #include "Global_Variables.h"
 #include "TextFunctions.h"
 #include "Battle.h"
@@ -14,18 +13,16 @@ using namespace std;
 
 int main()
 {
+	OpeningtheGame();
 
-    OpeningtheGame();
+	while (cutscene.End == false)
+	{
+		ControlLoop();
+		if (Player.Health <= 0)
+		{
+			GameOver();
+		}
+	}
 
-    while(cutscene.End == false)
-    {
-        ControlLoop();
-        if(Player.Health <= 0)
-       {
-           GameOver();
-       }
-    }
-
-    return 0;
+	return 0;
 }
-

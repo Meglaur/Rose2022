@@ -6,6 +6,7 @@ void CalculateEnemy()
 	//tell the game what stats to give the enemy in the current battle 
 	//based on who the player is fighting
 
+
 	if (enemy == Enemy.AngryFlower)
 	{
 		Enemy.Name = "Angry Flower";
@@ -59,10 +60,10 @@ void CalculateEnemy()
 		Enemy.MaxHealth = 15;
 		Enemy.UsingItem = false;
 		Enemy.Stages = 4;
-		Boss = true;
+		bossBattle = true;
 		Enemy.Run = false;
 
-		switch (BossStage)
+		switch (bossStage)
 		{
 			case 1:
 				Enemy.DefenseGame = 3;
@@ -107,13 +108,13 @@ void BattleMove()
 	switch (_getch())
 	{
 		case 'a':
-			eMove = 1;
+			menuDirection = 1;
 			break;
 		case 'd':
-			eMove = 2;
+			menuDirection = 2;
 			break;
 		case '\r':
-			eMove = 3;
+			menuDirection = 3;
 			break;
 		case 'g':
 			if (gameMode == PlayerMode)
@@ -155,17 +156,17 @@ void BattleScreen()
 
 void BattleDisplay()
 {
-	if (ePosition == 1)
+	switch (menuPosition)
 	{
-		cout << "               --------" << endl;
-	}
-	else if (ePosition == 2)
-	{
-		cout << "                                 -------" << endl;
-	}
-	else if (ePosition == 3)
-	{
-		cout << "                                                    -------" << endl;
+		case 1:
+			cout << "               --------" << endl;
+			break;
+		case 2:
+			cout << "                                 -------" << endl;
+			break;
+		case 3:
+			cout << "                                                    -------" << endl;
+			break;
 	}
 
 	cout << "\n\n" << endl;
@@ -178,49 +179,48 @@ void BattleMenu()
 	void BattleAttack();
 	void BattleOptions();
 
-	if (ePosition == 1)
+	switch (menuPosition) 
 	{
-		switch (eMove)
-		{
-			case 1:
-				ePosition = 3;
-				break;
-			case 2:
-				ePosition = 2;
-				break;
-			case 3:
-				BattleAttack();
-				break;
-		}
-	}
-	else if (ePosition == 2)
-	{
-		switch (eMove)
-		{
-			case 1:
-				ePosition = 1;
-				break;
-			case 2:
-				ePosition = 3;
-				break;
-			case 3:
-				BattleItems();
-				break;
-		}
-	}
-	else if (ePosition == 3)
-	{
-		switch (eMove)
-		{
-			case 1:
-				ePosition = 2;
-				break;
-			case 2:
-				ePosition = 1;
-				break;
-			case 3:
-				BattleOptions();
-		}
+		case 1:
+			switch (menuDirection)
+			{
+				case 1:
+					menuPosition = 3;
+					break;
+				case 2:
+					menuPosition = 2;
+					break;
+				case 3:
+					BattleAttack();
+					break;
+			}
+			break;
+		case 2:
+			switch (menuDirection)
+			{
+				case 1:
+					menuPosition = 1;
+					break;
+				case 2:
+					menuPosition = 3;
+					break;
+				case 3:
+					BattleItems();
+					break;
+			}
+			break;
+		case 3:
+			switch (menuDirection)
+			{
+				case 1:
+					menuPosition = 2;
+					break;
+				case 2:
+					menuPosition = 1;
+					break;
+				case 3:
+					BattleOptions();
+			}
 	}
 }
 
@@ -233,7 +233,7 @@ void BattleLoop()
 	void Enemy_Turn();
 	void GameOver();
 
-	if (eTurn == true)
+	if (enemyTurn == true)
 	{
 		Enemy_Turn();
 	}
@@ -270,13 +270,13 @@ void Battle()
 	CalculateEnemy();
 	EnemyApproach();
 
-	ePosition = 1;
-	Boss = false;
-	eTurn = false;
-	Battle_Run = false;
+	menuPosition = 1;
+	bossBattle = false;
+	enemyTurn = false;
+	battleRunOption = false;
 	Enemy.Health = Enemy.MaxHealth;
 
-	while (Enemy.Health > 0 && Battle_Run == false)
+	while (Enemy.Health > 0 && battleRunOption == false)
 	{
 		BattleLoop();
 		if (Player.Health <= 0)
@@ -303,12 +303,12 @@ void BossBattle()
 	void Cutscene_DungeonBossApproach();
 	void Cutscene_DungeonBossDefeat();
 
-	BossStage = 1;
+	bossStage = 1;
 	CalculateEnemy();
-	ePosition = 1;
-	Boss = true;
-	eTurn = false;
-	Battle_Run = false;
+	menuPosition = 1;
+	bossBattle = true;
+	enemyTurn = false;
+	battleRunOption = false;
 	Enemy.Health = Enemy.MaxHealth;
 
 	while (Enemy.Health > 0)
@@ -320,11 +320,11 @@ void BossBattle()
 			break;
 		}
 
-		if (Enemy.Health <= 0 && BossStage < Enemy.Stages)
+		if (Enemy.Health <= 0 && bossStage < Enemy.Stages)
 		{
 			if (enemy == Enemy.Boss)
 			{
-				switch (BossStage)
+				switch (bossStage)
 				{
 					case 1:
 						Cutscene = true;
@@ -346,25 +346,22 @@ void BossBattle()
 						break;
 				}
 
-				eTurn = false;
+				enemyTurn = false;
 			}
 
-			BossStage += 1;
+			bossStage += 1;
 			Enemy.Health = Enemy.MaxHealth;
 			CalculateEnemy();	//this is there so defense minigame can change, within enemy info if statement
 			//declare what minigame to use based on what stage of the battle your in.
 		}
 	}
 
-	if (Player.Health > 0 && Enemy.Health <= 0 && BossStage == Enemy.Stages)
+	if (Player.Health > 0 && Enemy.Health <= 0 && bossStage == Enemy.Stages)
 	{
 		if (enemy == Enemy.Boss)
 		{
-			if (enemy == Enemy.Boss)
-			{
-				Cutscene_DungeonBossDefeat();
-				Boss = false;
-			}
+			Cutscene_DungeonBossDefeat();
+			bossBattle = false;
 		}
 	}
 }
@@ -386,9 +383,9 @@ void EnemyHealthBar()
 
 void RandomEnemyEncounter()
 {
-	RandomEncounter = Player.Health + Item.Coins + Item.Luck + Player.MaxHealth + Player.Defense + Player.Damage + Player.XP;
+	randomEncounter = Player.Health + Item.Coins + Item.Luck + Player.MaxHealth + Player.Defense + Player.Damage + Player.XP;
 
-	if (RandomEncounter % 2 == 0)
+	if (randomEncounter % 2 == 0)
 	{
 		Battle();
 	}
@@ -402,17 +399,17 @@ void BattleAttack()
 	TextColor();
 	AttackMiniGame1();
 
-	if (Battle_Attack == 2)
+	switch (battleAttack) 
 	{
-		Player.Hit = Player.Damage - Enemy.Defense;
-	}
-	else if (Battle_Attack == 1)
-	{
-		Player.Hit = Player.Damage - Enemy.Defense - 1;
-	}
-	else if (Battle_Attack == 0)
-	{
-		Player.Hit = 0;
+		case 0:
+			Player.Hit = 0;
+			break;
+		case 1:
+			Player.Hit = Player.Damage - Enemy.Defense - 1;
+			break;
+		case 2:
+			Player.Hit = Player.Damage - Enemy.Defense;
+			break;
 	}
 
 	cout << "You did " << Player.Hit << " damage!" << endl;
@@ -420,7 +417,7 @@ void BattleAttack()
 	Pause();
 
 	Enemy.Health -= Player.Hit;
-	eTurn = true;
+	enemyTurn = true;
 }
 
 void BattleOptions()
@@ -475,14 +472,14 @@ void BattleRun()
 
 	if (decision == 1)
 	{
-		if (Boss == false)
+		if (bossBattle == false)
 		{
 			cout << "You run from the enemy!" << endl;
 			cout << "You lost some XP from running" << endl;
 			cout << "*XP - 11*" << endl;
 			Pause();
 			Player.XP -= 11;
-			Battle_Run = true;
+			battleRunOption = true;
 		}
 		else
 		{
@@ -527,7 +524,7 @@ void BattleItems()
 				}
 
 				Item.Elixers -= 1;
-				eTurn = true;
+				enemyTurn = true;
 			}
 			else
 			{
@@ -549,7 +546,7 @@ void BattleItems()
 				}
 
 				Item.Food -= 1;
-				eTurn = true;
+				enemyTurn = true;
 			}
 			else
 			{
@@ -580,7 +577,7 @@ void Enemy_Turn()
 
 	if (Enemy.Health % 2 == 0 && Player.Health % 2 == 1)
 	{
-		RandomLuckValue += 1;
+		randomLuckValue += 1;
 	}
 
 	if (Enemy.Health < 6 && Enemy.ItemUsed == false && Enemy.UsingItem == true)
@@ -588,12 +585,12 @@ void Enemy_Turn()
 		Enemy.Item = true;
 	}
 
-	if (Player.Luck > 5 && RandomLuckValue % 2 == 0)
+	if (Player.Luck > 5 && randomLuckValue % 2 == 0)
 	{
-		RandomLuckValue += 1;
+		randomLuckValue += 1;
 		cout << "The Enemy is attacking, but it misses!" << endl;
 		Pause();
-		eTurn = false;
+		enemyTurn = false;
 	}
 	else if (Enemy.Item == false)
 	{
@@ -621,7 +618,7 @@ void Enemy_Turn()
 				DefendMiniGame6();
 		}
 
-		if (Battle_Block == 0)
+		if (battleBlock == 0)
 		{
 			Enemy.Hit = Enemy.Damage - Player.Defense;
 			if (Enemy.Hit <= 0)
@@ -631,30 +628,12 @@ void Enemy_Turn()
 
 			Player.Health -= Enemy.Hit;
 
-			if (Enemy.DefenseGame == 2)
-			{
-				ClearScreen();
-				cout << "\n\n\n\n\n\n" << endl;
-				cout << "                 Hit A with correct timing to block the attack!" << endl;
-				cout << "\n\n" << endl;
-				cout << "\n\n\n\n\n" << endl;
-				cout << "                                     ^ " << endl;
-				cout << "                                     ^ " << endl;
-				cout << "                                   ----- " << endl;
-				cout << "                                    | |  " << endl;
-				cout << "                                    | | " << endl;
-				cout << "                                    | | " << endl;
-				cout << "                                    | | " << endl;
-				cout << "                                    | | " << endl;
-				cout << "                                    \\ / " << endl;
-			}
-
 			cout << "\n\n" << endl;
 			cout << "                          ";
 			cout << " You lost " << Enemy.Hit << " health!" << endl;
 			Pause();
 		}
-		else if (Battle_Block == 1)
+		else if (battleBlock == 1)
 		{
 			Enemy.Hit = 0;
 			if (Enemy.Hit <= 0)
@@ -687,12 +666,12 @@ void Enemy_Turn()
 		Enemy.ItemUsed = true;
 	}
 
-	if (Battle_Defend == true)
+	if (battleDefend == true)
 	{
 		Player.Defense -= 2;
 	}
 
-	eTurn = false;
+	enemyTurn = false;
 }
 
 void BattleDefeat()
@@ -735,34 +714,34 @@ void BattleDefend()
 {
 	cout << "You decide to defend this turn!" << endl;
 	cout << "*Defense + 2 for one turn*" << endl;
-	Battle_Defend = true;
+	battleDefend = true;
 	Player.Defense += 2;
 	DoublePause();
-	eTurn = true;
+	enemyTurn = true;
 }
 
 void AttackMiniGame1()
 {
 	void ClearScreen();
 
-	Battle_Attack = 3;
-	aPosition = 1;
+	battleAttack = 3;
+	slideBarPosition = 1;
 
-	while (Battle_Attack == 3)
+	while (battleAttack == 3)
 	{
 		ClearScreen();
 		cout << "\n\n\n\n\n\n\n\n\n                   Press spacebar with the right timing!" << endl;
 		cout << "                           ";
-		aPosition += 1;
+		slideBarPosition += 1;
 
-		if (aPosition >= 21)
+		if (slideBarPosition >= 21)
 		{
-			aPosition = 1;
+			slideBarPosition = 1;
 		}
 
 		HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-		switch (aPosition)
+		switch (slideBarPosition)
 		{
 			case 1:
 				cout << "|------";
@@ -776,7 +755,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -792,7 +771,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -808,7 +787,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -824,7 +803,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -840,7 +819,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -856,7 +835,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -872,7 +851,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 1;
+					battleAttack = 1;
 				}
 
 				break;
@@ -888,7 +867,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 1;
+					battleAttack = 1;
 				}
 
 				break;
@@ -904,7 +883,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 2;
+					battleAttack = 2;
 				}
 
 				break;
@@ -920,7 +899,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 2;
+					battleAttack = 2;
 				}
 
 				break;
@@ -936,7 +915,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 2;
+					battleAttack = 2;
 				}
 
 				break;
@@ -952,7 +931,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 1;
+					battleAttack = 1;
 				}
 
 				break;
@@ -968,7 +947,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 1;
+					battleAttack = 1;
 				}
 
 				break;
@@ -984,7 +963,7 @@ void AttackMiniGame1()
 				cout << "------" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1000,7 +979,7 @@ void AttackMiniGame1()
 				cout << "|-----" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1016,7 +995,7 @@ void AttackMiniGame1()
 				cout << "-|----" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1032,7 +1011,7 @@ void AttackMiniGame1()
 				cout << "--|---" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1048,7 +1027,7 @@ void AttackMiniGame1()
 				cout << "---|--" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1064,7 +1043,7 @@ void AttackMiniGame1()
 				cout << "----|-" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1080,7 +1059,7 @@ void AttackMiniGame1()
 				cout << "-----|" << endl;
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Attack = 0;
+					battleAttack = 0;
 				}
 
 				break;
@@ -1094,21 +1073,17 @@ void AttackMiniGame1()
 	}
 }
 
-//FLOWER SEEDS DEFENSE
 void DefendMiniGame1()
 {
-	dPosition = 1;
-	Battle_Block = 5;
+	//Flower Defense
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	cout << "\n\n\n\n\n\n" << endl;
 	cout << "           Hit the spacebar with correct timing to block the attack!" << endl;
-	cout << "\n\n" << endl;
-
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << "\n\n\n\n\n" << endl;
 	cout << "          _                                 " << endl;
 	cout << "        _/ \\/\\                            " << endl;
 	cout << "       | \\_|_/__                           " << endl;
@@ -1122,18 +1097,18 @@ void DefendMiniGame1()
 
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(1000);	//This sleep shows the beginning picture of the enemy attack and holds for 1 second
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 9)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 9)
 		{
 			Sleep(100);	//This sleep waits a milisecond before telling you you've missed your shot to block
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
@@ -1143,13 +1118,10 @@ void DefendMiniGame1()
 
 		Sleep(enemyframe_speed);	//This sleep waits a small time between each frame
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          _                                 " << endl;
+				cout << "\n\n\n          _                                 " << endl;
 				cout << "        _/ \\/\\                            " << endl;
 				cout << "       | \\_|_/__                           " << endl;
 				cout << "       /\\/||\\__/                          " << endl;
@@ -1163,18 +1135,12 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 2:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "         __                                 " << endl;
+				cout << "\n\n\n\n\n\n         __                                 " << endl;
 				cout << "        _\\ \\                              " << endl;
 				cout << "       _\\_\\_\\                            " << endl;
 				cout << "      /__/||                                " << endl;
@@ -1188,18 +1154,12 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 3:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "       ___                                   " << endl;
+				cout << "\n\n\n\n\n\n       ___                                   " << endl;
 				cout << "       \\_\\\\_                              " << endl;
 				cout << "       /_|_-\\                               " << endl;
 				cout << "      _\\___ \\|                             " << endl;
@@ -1213,18 +1173,12 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 4:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "         __                                 " << endl;
+				cout << "\n\n\n\n\n\n         __                                 " << endl;
 				cout << "        _\\ \\                              " << endl;
 				cout << "       _\\_\\_\\                            " << endl;
 				cout << "      /__/||                                " << endl;
@@ -1237,18 +1191,12 @@ void DefendMiniGame1()
 				Sleep(30);
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 5:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1261,19 +1209,13 @@ void DefendMiniGame1()
 				Sleep(30);
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 6:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1287,19 +1229,13 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 7:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1312,19 +1248,13 @@ void DefendMiniGame1()
 				Sleep(30);
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 8:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1347,19 +1277,13 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
 
 			case 9:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1372,18 +1296,12 @@ void DefendMiniGame1()
 				Sleep(30);
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
 			case 10:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "          __                                 " << endl;
+				cout << "\n\n\n\n\n\n          __                                 " << endl;
 				cout << "      ___/ /_                                " << endl;
 				cout << "     _\\_\\_/_/_                             " << endl;
 				cout << "     \\__/ -\\_/                             " << endl;
@@ -1397,22 +1315,21 @@ void DefendMiniGame1()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
-
 		}
 	}
 }
 
-//SKELETON SWORD DEFENSE
 void DefendMiniGame2()
 {
+	//skeleton defense
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	dPosition = 1;
-	Battle_Block = 5;
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	cout << "\n\n\n\n\n\n" << endl;
 	cout << "           Hit the spacebar with correct timing to block the attack!" << endl;
@@ -1432,40 +1349,38 @@ void DefendMiniGame2()
 
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(1000);
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 6)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 6)
 		{
 			Sleep(100);
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
 		cout << "\n\n\n\n\n\n" << endl;
-		cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-		cout << "\n\n" << endl;
+		cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n" << endl;
 
 		Sleep(enemyframe_speed);
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 2:
-				cout << endl;
-				cout << "                          " << "  _ " << endl;
+				cout << "\n                          " << "  _ " << endl;
 				cout << "                          " << " | \\ " << endl;
 				cout << "                          " << "  \\  \\ " << endl;
 				cout << "                          " << "   \\  \\ " << endl;
@@ -1479,7 +1394,7 @@ void DefendMiniGame2()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1494,7 +1409,7 @@ void DefendMiniGame2()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1521,7 +1436,7 @@ void DefendMiniGame2()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
@@ -1541,7 +1456,7 @@ void DefendMiniGame2()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1550,25 +1465,21 @@ void DefendMiniGame2()
 	}
 }
 
-//OWL Defense
 void DefendMiniGame3()
 {
+	//Owl defense
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	dPosition = 1;
-	Battle_Block = 5;
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	cout << "\n\n\n\n\n\n" << endl;
-	cout << "           Hit the spacebar with correct timing to block the attack!" << endl;
-	cout << "\n\n" << endl;
-
+	cout << "           Hit the spacebar with correct timing to block the attack!\n\n\n" << endl;
 	cout << "            _____               ______               _____         " << endl;
 	cout << "           |     \\___          /      \\          ___/     |      " << endl;
 	cout << "                     \\____      )  (      ____/                 " << endl;
 	cout << "                          \\___ \\  \\/  / ___/                    " << endl;
-	cout << "                                 ----                              " << endl;
-	cout << endl;
-	cout << endl;
+	cout << "                                 ----                              \n\n" << endl;
 	cout << "                     \\__                         __/              " << endl;
 	cout << "                                 U   U                             " << endl;
 	cout << "                               U   U   U                           " << endl;
@@ -1579,18 +1490,18 @@ void DefendMiniGame3()
 
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(enemyframe_speed);
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 8)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 8)
 		{
 			Sleep(250);
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
@@ -1600,13 +1511,13 @@ void DefendMiniGame3()
 
 		Sleep(150);
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1615,9 +1526,7 @@ void DefendMiniGame3()
 				cout << "           |     \\___          /      \\          ___/     |      " << endl;
 				cout << "                     \\____      )  (      ____/                 " << endl;
 				cout << "                          \\___ \\  \\/  / ___/                    " << endl;
-				cout << "                                 ----                              " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                 ----                              \n\n" << endl;
 				cout << "                     \\__                         __/              " << endl;
 				cout << "                                 U   U                             " << endl;
 				cout << "                               U   U   U                           " << endl;
@@ -1629,7 +1538,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1652,7 +1561,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1668,9 +1577,7 @@ void DefendMiniGame3()
 				cout << "                     /       /  U   U   U  \\      \\        " << endl;
 				cout << "                    /    /                    \\    \\       " << endl;
 				cout << "                                 \\    /	                  " << endl;
-				cout << "                  ___/	         _    _           \\___       " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                  ___/	         _    _           \\___       \n\n" << endl;
 				cout << "                         ______          _______             " << endl;
 				cout << "                         _____/          \\_____              " << endl;
 				cout << "                         \\____            ____/              " << endl;
@@ -1680,7 +1587,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1696,8 +1603,7 @@ void DefendMiniGame3()
 				cout << "                /            /  U   U   U  \\           \\   " << endl;
 				cout << "                ___                                  ___     " << endl;
 				cout << "                                 \\    /                     " << endl;
-				cout << "                                 _    _                      " << endl;
-				cout << endl;
+				cout << "                                 _    _                      \n" << endl;
 				cout << "                   ______                      _______             " << endl;
 				cout << "                   \\_____                      _____/              " << endl;
 				cout << "                    ____/                      \\____              " << endl;
@@ -1707,7 +1613,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1717,15 +1623,12 @@ void DefendMiniGame3()
 				cout << "           |     \\___          /      \\          ___/     |      " << endl;
 				cout << "                     \\____      )  (      ____/                 " << endl;
 				cout << "                          \\___ \\  \\/  / ___/                    " << endl;
-				cout << "                                 ----                              " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                 ----                              \n\n" << endl;
 				cout << "                     \\__                         __/              " << endl;
 				cout << "                                 U   U                             " << endl;
 				cout << "                               U   U   U                           " << endl;
 				cout << "                                \\    /                            " << endl;
-				cout << "                                _    _                             " << endl;
-				cout << endl;
+				cout << "                                _    _                             \n" << endl;
 				cout << "                        ______          _______             " << endl;
 				cout << "                        _____/          \\_____              " << endl;
 				cout << "                        \\____            ____/              " << endl;
@@ -1735,7 +1638,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1745,15 +1648,12 @@ void DefendMiniGame3()
 				cout << "           |     \\___          /      \\          ___/     |      " << endl;
 				cout << "                     \\____      )  (      ____/                 " << endl;
 				cout << "                          \\___ \\  \\/  / ___/                    " << endl;
-				cout << "                                 ----                              " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                 ----                              \n\n" << endl;
 				cout << "                     \\__                         __/              " << endl;
 				cout << "                                 U   U                             " << endl;
 				cout << "                               U   U   U                           " << endl;
 				cout << "                                \\    /                            " << endl;
-				cout << "                                _    _                             " << endl;
-				cout << endl;
+				cout << "                                _    _                             \n" << endl;
 				cout << "                            ______   _______             " << endl;
 				cout << "                            _____/  \\_____              " << endl;
 				cout << "                           \\____    ____/              " << endl;
@@ -1771,7 +1671,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
@@ -1781,15 +1681,12 @@ void DefendMiniGame3()
 				cout << "           |     \\___          /      \\          ___/     |      " << endl;
 				cout << "                     \\____      )  (      ____/                 " << endl;
 				cout << "                          \\___ \\  \\/  / ___/                    " << endl;
-				cout << "                                 ----                              " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                 ----                              \n\n" << endl;
 				cout << "                     \\__                         __/              " << endl;
 				cout << "                                 U   U                             " << endl;
 				cout << "                               U   U   U                           " << endl;
 				cout << "                                \\    /                            " << endl;
-				cout << "                                _    _                             " << endl;
-				cout << endl;
+				cout << "                                _    _                             \n" << endl;
 				cout << "                               ______               " << endl;
 				cout << "                               _____/                " << endl;
 				cout << "                              \\____                " << endl;
@@ -1799,7 +1696,7 @@ void DefendMiniGame3()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1808,18 +1705,16 @@ void DefendMiniGame3()
 	}
 }
 
-//TURTLE DEFENSE
 void DefendMiniGame4()
 {
+	//turtle defense 
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	dPosition = 1;
-	Battle_Block = 5;
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	cout << "\n\n\n\n\n\n" << endl;
-	cout << "           Hit the spacebar with correct timing to block the attack!" << endl;
-	cout << "\n\n" << endl;
-
+	cout << "           Hit the spacebar with correct timing to block the attack!\n\n\n" << endl;
 	cout << "                                           _____________                      " << endl;
 	cout << "                                         _/___/_______/ \\_                   " << endl;
 	cout << "                                       _/    /  |    /    \\_                 " << endl;
@@ -1832,34 +1727,33 @@ void DefendMiniGame4()
 	cout << "                                        |__              |__                  " << endl;
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(1000);
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 10)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 10)
 		{
 			Sleep(100);
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
 		cout << "\n\n\n\n\n\n" << endl;
-		cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-		cout << "\n\n" << endl;
+		cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n" << endl;
 
 		Sleep(enemyframe_speed);
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1878,7 +1772,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1898,7 +1792,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1917,7 +1811,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1936,7 +1830,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1955,7 +1849,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1975,7 +1869,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -1994,7 +1888,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -2021,7 +1915,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
@@ -2040,7 +1934,7 @@ void DefendMiniGame4()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -2049,29 +1943,17 @@ void DefendMiniGame4()
 	}
 }
 
-//DRAGON DEFENSE
 void DefendMiniGame5()
 {
+	//dragon defense
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	dPosition = 1;
-	Battle_Block = 5;
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	ClearScreen();
 	cout << "\n\n\n\n\n\n" << endl;
-	cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-	cout << "\n\n" << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << endl;
 	cout << "                              \\_|                      " << endl;
 	cout << "                             / -\\                      " << endl;
 	cout << "                      /\\_    |/\\__                    " << endl;
@@ -2091,43 +1973,31 @@ void DefendMiniGame5()
 
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(1000);
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 7)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 7)
 		{
 			Sleep(100);
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
 		cout << "\n\n\n\n\n\n" << endl;
-		cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-		cout << "\n\n" << endl;
+		cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n" << endl;
 
 		Sleep(enemyframe_speed);
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
-
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                              \\_|                      " << endl;
+;
+				cout << "\n\n\n\n\n\n\n\n\n\n\n                              \\_|                      " << endl;
 				cout << "                             / -\\                      " << endl;
 				cout << "                      /\\_    |/\\__                    " << endl;
 				cout << "                    _/   \\   \\\\                      " << endl;
@@ -2147,20 +2017,12 @@ void DefendMiniGame5()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 2:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "  ___________                                                                " << endl;
+				cout << "\n\n\n\n\n\n\n\n  ___________                                                                " << endl;
 				cout << "  \\___       \\___            _  -                                          " << endl;
 				cout << "      \\_	 \\___	      \\_|                                              " << endl;
 				cout << "    |   \\__          \\___     / -\\                                        " << endl;
@@ -2173,16 +2035,13 @@ void DefendMiniGame5()
 				cout << "                \\       /    _/                                             " << endl;
 				cout << "            __   \\     /  __/                                               " << endl;
 				cout << "           / \\\\_//\\___/ \\/                                               " << endl;
-				cout << "        \\_/              \\_\\                                               " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "        \\_/              \\_\\                                               \n\n\n" << endl;
 				cout << "                                                     @                       " << endl;
 				Sleep(30);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -2209,26 +2068,18 @@ void DefendMiniGame5()
 				cout << "                  	//                                                        " << endl;
 				cout << "                   \\\\                                                      " << endl;
 				cout << "                  	//                                                        " << endl;
-				cout << "                   \\\\_/                                                    " << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                   \\\\_/                                                    \n\n" << endl;
 				cout << "                                                     @                       " << endl;
 				Sleep(30);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 4:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "  ___________                                                                " << endl;
+				cout << "\n\n\n\n\n\n  ___________                                                                " << endl;
 				cout << "  \\___       \\___            _  -                                          " << endl;
 				cout << "      \\_	 \\___	      \\_|                                              " << endl;
 				cout << "    |   \\__          \\___     / -\\                                        " << endl;
@@ -2244,16 +2095,13 @@ void DefendMiniGame5()
 				cout << "                      	//              \\    \\                              " << endl;
 				cout << "                       \\\\                                                  " << endl;
 				cout << "                      	//                                                    " << endl;
-				cout << "                    \\\\_/                                                   " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                    \\\\_/                                                   \n\n\n" << endl;
 				cout << "                                                     @                       " << endl;
 				Sleep(30);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -2280,10 +2128,7 @@ void DefendMiniGame5()
 				cout << "                    \\\\                 |    \\                  " << endl;
 				cout << "                   	//                 |      \\                  " << endl;
 				cout << "                    \\_/                \\       \\               " << endl;
-				cout << "                                         \\       \\              " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                         \\       \\              \n\n\n" << endl;
 				cout << "                                                     ";
 
 				SetConsoleTextAttribute(color, 12);
@@ -2297,19 +2142,13 @@ void DefendMiniGame5()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
 
 			case 6:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "  ___________                                                                " << endl;
+				cout << "\n\n\n\n\n\n  ___________                                                                " << endl;
 				cout << "  \\___       \\___            _  -                                          " << endl;
 				cout << "      \\_	 \\___	      \\_|                                              " << endl;
 				cout << "    |   \\__          \\___     / -\\                                        " << endl;
@@ -2327,14 +2166,13 @@ void DefendMiniGame5()
 				cout << "                      	//               |     \\                             " << endl;
 				cout << "                    \\\\_/                 \\      \\                        " << endl;
 				cout << "                                          \\       \\                        " << endl;
-				cout << "                                           \\        \\                      " << endl;
-				cout << endl;
+				cout << "                                           \\        \\                      \n" << endl;
 				cout << "                                                     @                       " << endl;
 				Sleep(30);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
@@ -2370,7 +2208,7 @@ void DefendMiniGame5()
 				Sleep(30);
 
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
@@ -2379,258 +2217,129 @@ void DefendMiniGame5()
 	}
 }
 
-//WYRM DEFENSE
 void DefendMiniGame6()
 {
+	//wyrm defense
 	HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	dPosition = 1;
-	Battle_Block = 5;
+	defenseGamePosition = 1;
+	battleBlock = 5;
 
 	ClearScreen();
 	cout << "\n\n\n\n\n\n" << endl;
-	cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-	cout << "\n\n" << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n\n\n\n\n\n\n\n\n" << endl;
 	cout << "                                     _____                      " << endl;
 	cout << "                                    / ___ \\      ----           " << endl;
-	cout << "                                ___/ /___\\ \\____//__\\\\_____     " << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << "                                ___/ /___\\ \\____//__\\\\_____     \n\n\n\n\n\n\n\n\n" << endl;
 	cout << "___________________________@_______________________________     " << endl;
 
 	if (GetKeyState(' ') &0x8000)
 	{
-		Battle_Block = 0;
+		battleBlock = 0;
 	}
 
 	Sleep(1000);
 
-	while (Battle_Block == 5)
+	while (battleBlock == 5)
 	{
-		dPosition += 1;
-		if (dPosition > 13)
+		defenseGamePosition += 1;
+		if (defenseGamePosition > 13)
 		{
 			Sleep(90);
-			Battle_Block = 0;
+			battleBlock = 0;
 		}
 
 		ClearScreen();
 		cout << "\n\n\n\n\n\n" << endl;
-		cout << "                 Hit spacebar with correct timing to block the attack!" << endl;
-		cout << "\n\n" << endl;
+		cout << "                 Hit spacebar with correct timing to block the attack!\n\n\n" << endl;
 
 		Sleep(enemyframe_speed);
 
-		switch (dPosition)
+		switch (defenseGamePosition)
 		{
 			case 1:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                     _____                      " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                     _____                      " << endl;
 				cout << "                                    / ___ \\      ----           " << endl;
-				cout << "                                ___/ /___\\ \\____//__\\\\_____     " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                ___/ /___\\ \\____//__\\\\_____     \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 2:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                     _____                         " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                     _____                         " << endl;
 				cout << "                                    / ___ \\      ---              " << endl;
-				cout << "                                ___/ /___\\ \\____//_________      " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                ___/ /___\\ \\____//_________      \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 3:
 
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                     _____                         " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                     _____                         " << endl;
 				cout << "                                    / ___ \\       _               " << endl;
-				cout << "                                ___/ /___\\ \\____//_________      " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                ___/ /___\\ \\____//_________      \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 4:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                     _____                       " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                     _____                       " << endl;
 				cout << "                                    / ____\\                     " << endl;
-				cout << "                                ___/ /___________________        " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                ___/ /___________________        \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 5:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                                                 " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                                                 " << endl;
 				cout << "                                    __                           " << endl;
-				cout << "                                ___/ /___________________        " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                ___/ /___________________        \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 6:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "\n\n\n\n\n\n\n\n                                                                 " << endl;
 				cout << "                                                                 " << endl;
-				cout << "                                                                 " << endl;
-				cout << "                                _________________________        " << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << "                                _________________________        \n\n\n\n\n\n\n\n\n" << endl;
 				cout << "_______________________________@___________________________     " << endl;
 				Sleep(40);
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 7:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                                                 " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                                                 " << endl;
 				cout << "                                                                 " << endl;
 				cout << "      ___                          _________________________     " << endl;
 				cout << "    _//i |                                                       " << endl;
@@ -2643,21 +2352,13 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 8:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                                                                 " << endl;
+				cout << "\n\n\n\n\n\n\n\n                                                                 " << endl;
 				cout << "                                                                 " << endl;
 				cout << "       \\_                                                       " << endl;
 				cout << "       \\_\\____                                                 " << endl;
@@ -2673,20 +2374,12 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 			case 9:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "              _ \\_ \\_                                            " << endl;
+				cout << "\n\n\n\n\n\n\n\n              _ \\_ \\_                                            " << endl;
 				cout << "           __/|___\\__\\                                           " << endl;
 				cout << "         _/___/    - |            _________________________        " << endl;
 				cout << "       _/_/     __/\\__\\                                          " << endl;
@@ -2702,19 +2395,13 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 10:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "             _______                                             " << endl;
+				cout << "\n\n\n\n\n\n             _______                                             " << endl;
 				cout << "           _/_______\\                                           " << endl;
 				cout << "         _/_/)      \\\\_                                        " << endl;
 				cout << "       _/_/(   ___    | __     _________________________        " << endl;
@@ -2732,19 +2419,13 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 11:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "               _______                                             " << endl;
+				cout << "\n\n\n\n\n\n               _______                                             " << endl;
 				cout << "             _/_______\\                                           " << endl;
 				cout << "           _/_/)()( \\\\_                                        " << endl;
 				cout << "          |_/(   __    ||     _________________________           " << endl;
@@ -2762,19 +2443,13 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;
 
 			case 12:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "               _______                                             " << endl;
+				cout << "\n\n\n\n\n\n               _______                                             " << endl;
 				cout << "             _/_______\\                                           " << endl;
 				cout << "           _/_/)()()\\\\_                                        " << endl;
 				cout << "          |_/(   __    ||     _________________________           " << endl;
@@ -2800,19 +2475,13 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 1;
+					battleBlock = 1;
 				}
 
 				break;
 
 			case 13:
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << "                _______                                              " << endl;
+				cout << "\n\n\n\n\n\n                _______                                              " << endl;
 				cout << "               /_______\\                                            " << endl;
 				cout << "             _/)()() \\\\                                          " << endl;
 				cout << "           _/(  ___)  ||         _________________________         " << endl;
@@ -2830,7 +2499,7 @@ void DefendMiniGame6()
 
 				if (GetKeyState(' ') &0x8000)
 				{
-					Battle_Block = 0;
+					battleBlock = 0;
 				}
 
 				break;

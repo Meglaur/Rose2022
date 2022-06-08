@@ -21,54 +21,48 @@ bool slowText = false;
 bool fastText = false;
 
 //DIALOGUE SWITCHING VARIABLES
-int Loni = 0;
+int loniDialogueCount = 0;
 
 //Cutscenes playing status variables
-bool Grandmas_Items = false;
+bool grandmasItems = false;
 
 //Battle Randomizer Variables
-int RandomEncounter;
-int BossStage;
+int randomEncounter;
+int bossStage = 1;
+bool bossBattle = false;
 
 //RANDOM USEFUL REOCURRING VARIABLES
-int LoopNumber;
+int loopNumber;
 int decision;
 bool movement = false;
-int RandomLuckValue;
+int randomLuckValue;
 
 //MINIGAME VARIABLES
-bool minigame_win = false;
-bool exitminigame = false;
+bool minigameWin = false;
+bool exitMinigame = false;
 
 //MENU VARIABLES
-bool Title_Screen = true;
-int fPosition, fMove, dPosition, ePosition, aPosition;
+bool titleScreen = true;
+int menuPosition, menuDirection, defenseGamePosition, slideBarPosition;
 
 //game progress checkpoint status
-int sStatus;
-
-//current available areas to travel based on game progress
-int TravelStatus = 1;
+int progressStatus;
 
 //activites statuses
-bool Inn = false;
+bool roomPurchase = false;
 
 //Battle Decision/Backround Variables
-int BattleChoice;
-bool eTurn = false;
+bool enemyTurn = false;
 
 //attack minigame variables
-int Battle_Attack;
+int battleAttack;
 
 //defense minigame variables
-int Battle_Block;
+int battleBlock;
 
 //battle statuses
-bool eBattleTurn = false, BattleEvent = false;
-bool Battle_Run = false;
-bool Boss = false;
-bool Battle_Defend = false;
-int eMove;
+bool battleRunOption = false;
+bool battleDefend = false;
 
 //CONVERSION VARIABLES
 string food = "food", coins = "coins", luck = "luck", elixers = "elixers", enemy;
@@ -162,7 +156,7 @@ Enemy;
 class Container
 {
 	public:
-		bool Stove, Chest, Fireplace, Desk, Fountain, InnDesk, InnTable, Bushes, Hilda, JewelCoins;
+		bool Stove, Chest, Fireplace, Desk, Fountain, roomPurchaseDesk, roomPurchaseTable, Bushes, Hilda, JewelCoins;
 
 }
 
@@ -182,7 +176,7 @@ Item;
 class RoomAccess
 {
 	public:
-		bool SwordRoom, Gate, Boss, Dungeon, Village;
+		bool SwordRoom, Gate, boss, Dungeon, Village;
 }
 
 Room;

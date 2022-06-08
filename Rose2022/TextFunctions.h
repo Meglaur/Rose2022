@@ -27,7 +27,7 @@ void Dialogue()
 		Character.Speaker = Player.Name;
 	}
 
-	if (Character.Name == " " || Character.Name == "Old Man" || Character.Name == "Grandma" || Character.Name == "Hilda" || Character.Name == "Elder" || Character.Name == "Loni" || Character.Name == "Shopkeeper" || Character.Name == "Innkeeper" || Character.Name == "Kuhar" || Character.Name == "Aida" || Character.Name == "Tiki")
+	if (Character.Name == " " || Character.Name == "Old Man" || Character.Name == "Grandma" || Character.Name == "Hilda" || Character.Name == "Elder" || Character.Name == "Loni" || Character.Name == "Shopkeeper" || Character.Name == "roomPurchasekeeper" || Character.Name == "Kuhar" || Character.Name == "Aida" || Character.Name == "Tiki")
 	{
 		Character.Speaker = Character.Narrator;
 	}

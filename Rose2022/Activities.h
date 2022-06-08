@@ -26,13 +26,13 @@ void PlayerSleep()
 	//Restore player health to full
 	Player.Health = Player.MaxHealth;
 
-	//When located in an inn, give the player added luck
-	if (Inn == true)
+	//When located in an roomPurchase, give the player added luck
+	if (roomPurchase == true)
 	{
-		cout << "The soft inn bed made you happy!" << endl;
+		cout << "The soft roomPurchase bed made you happy!" << endl;
 		cout << "*Luck + 1*" << endl;
 		Player.Luck += 1;
-		RandomLuckValue += 1;
+		randomLuckValue += 1;
 	}
 
 	Pause();
@@ -42,7 +42,7 @@ void TravelZone()
 {
 	//This function brings up a menu when the player chooses to travel. The player
 	//can see a small map of the world and choose the location they want to go
-	//to. It also resets certain variables upon leaving areas, including Inn
+	//to. It also resets certain variables upon leaving areas, including roomPurchase
 	//Statuses
 
 	void Debug();
@@ -53,11 +53,11 @@ void TravelZone()
 	//Ask the player if they are sure they want to leave the area they are in.
 	cout << "Leave the Area?";
 
-	//If the player purchased a room in the inn and never used it, warn the player
+	//If the player purchased a room in the roomPurchase and never used it, warn the player
 	//that they will lose their purchase upon leaving.
-	if (Inn == true)
+	if (roomPurchase == true)
 	{
-		cout << " Warning: Leaving the area will make you unable\nto use the inn.";
+		cout << " Warning: Leaving the area will make you unable\nto use the roomPurchase.";
 	}
 
 	cout << endl;
@@ -67,21 +67,15 @@ void TravelZone()
 
 	GetInput();
 
-	//if the player chooses not to leave, display this message and do nothing
-	if (decision == 2)
-	{
-		cout << "You decided not to leave the area." << endl;
-		DoublePause();
-	}
-	else if (decision == 1)
+	if (decision == 1)
 	{
 		animationText = "\nGo Where? :\n";
 		scrollText();
 
 		//Only display the parts on the map currently accessible to the player
-		switch (TravelStatus)
+
+		if (progressStatus < 3)
 		{
-			case 1:
 				cout << "           _______________ " << endl;
 				cout << "           |             | " << endl;
 				cout << "           |    2.Town   | " << endl;
@@ -90,37 +84,9 @@ void TravelZone()
 				cout << " __" << endl;
 				cout << "|  | 1.House - - - - - - - - - " << endl;
 				cout << " -- " << endl;
-
-				GetInput();
-
-				switch (decision)
-				{
-					case 1:
-						gPosition = 1;
-						//reset certain things upon leaving an area
-						House.Desk = false;
-						if (Inn == true)
-						{
-							Inn = false;
-						}
-
-						break;
-					case 2:
-						gPosition = 2;
-						Debug();
-						Move();
-						//reset certain things upon leaving an area
-						Town.Bushes = false;
-						if (Inn == true)
-						{
-							Inn = false;
-						}
-
-						break;
-				}
-
-				break;
-			case 2:
+		}
+		else
+		{
 				cout << "                                        _______" << endl;
 				cout << "                                        |     |" << endl;
 				cout << "               _______________         |      |" << endl;
@@ -136,50 +102,57 @@ void TravelZone()
 				cout << "                                   |	      |" << endl;
 				cout << "                                   |    |     |" << endl;
 				cout << "                                   -----|-------" << endl;
+
 				if (Room.Village == true)
-					cout << "                                        Elf Village" << endl;
-
-				GetInput();
-
-				switch (decision)
 				{
-					case 1:
-						gPosition = 1;
-						House.Desk = false;
-						if (Inn == true)
-						{
-							Inn = false;
-						}
+					cout << "                                        Elf Village" << endl;
+				}
+		}
 
-						break;
-					case 2:
-						gPosition = 2;
-						Debug();
-						Move();
-						Town.Bushes = false;
-						if (Inn == true)
-						{
-							Inn = false;
-						}
+		GetInput();
 
-						break;
+		switch (decision)
+			{
+				case 1:
+					gPosition = 1;
+					House.Desk = false;
+					if (roomPurchase == true)
+					{
+						roomPurchase = false;
+					}
 
-					case 3:
+					break;
+				case 2:
+					gPosition = 2;
+					Debug();
+					Move();
+					Town.Bushes = false;
+					if (roomPurchase == true)
+					{
+						roomPurchase = false;
+					}
+
+					break;
+				case 3:
+					if (progressStatus >= 3)
+					{
 						gPosition = 3;
 						Debug();
 						Move();
-						//RA
-						if (Inn == true)
+						if (roomPurchase == true)
 						{
-							Inn = false;
+							roomPurchase = false;
 						}
+					}
 
-						break;
-				}
-
-				break;
+					break;
+			}
+		} 
+		else
+		{
+			cout << "You decided not to leave the area." << endl;
+			DoublePause();
 		}
-	}
 }
 
 void GameOver()
@@ -227,8 +200,7 @@ void GameOver()
 	cout << "\n\n\n" << endl;
 	cout << "                          Would you like to continue?..." << endl;
 	cout << "1. Yes" << endl;
-	cout << "2. No" << endl;
-	cout << endl;
+	cout << "2. No\n" << endl;
 
 	GetInput();
 
@@ -240,15 +212,13 @@ void GameOver()
 		animationText = ". . .";
 		slowText = true;
 		scrollText();
-		cout << endl;
-		cout << endl;
 		Gameover = false;
 		CalculateDisplay();
 		ControlLoop();
 	}
 	else
 	{
-		Title_Screen = true;
+		titleScreen = true;
 		TitleScreen();
 	}
 }

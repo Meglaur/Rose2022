@@ -8,10 +8,10 @@ void TitleScreen()
 	void TitleScreenMenu();
 	void TitleScreenMove();
 
-	Title_Screen = true;
-	fPosition = 1;
+	titleScreen = true;
+	menuPosition = 1;
 
-	while (Title_Screen == true)
+	while (titleScreen == true)
 	{
 		TitleScreenDisplay();
 		TitleScreenDisplayBar();
@@ -22,17 +22,17 @@ void TitleScreen()
 
 void TitleScreenDisplayBar()
 {
-	if (fPosition == 1)
+	if (menuPosition == 1)
 	{
 		cout << "               ----------" << endl;
 	}
 
-	if (fPosition == 2)
+	if (menuPosition == 2)
 	{
 		cout << "                                  -----------" << endl;
 	}
 
-	if (fPosition == 3)
+	if (menuPosition == 3)
 	{
 		cout << "                                                       ---------" << endl;
 	}
@@ -61,19 +61,19 @@ void TitleScreenMove()
 	switch (_getch())
 	{
 		case 'a':
-			fMove = 1;
+			menuDirection = 1;
 			break;
 		case 'A':
-			fMove = 1;
+			menuDirection = 1;
 			break;
 		case 'd':
-			fMove = 2;
+			menuDirection = 2;
 			break;
 		case 'D':
-			fMove = 2;
+			menuDirection = 2;
 			break;
 		case '\r':
-			fMove = 3;
+			menuDirection = 3;
 			break;
 	}
 }
@@ -84,45 +84,45 @@ void TitleScreenMenu()
 	void NewGame();
 	void LoadSave();
 
-	if (fPosition == 1)
+	if (menuPosition == 1)
 	{
-		switch (fMove)
+		switch (menuDirection)
 		{
 			case 1:
-				fPosition = 3;
+				menuPosition = 3;
 				break;
 			case 2:
-				fPosition = 2;
+				menuPosition = 2;
 				break;
 			case 3:
 				NewGame();
 				break;
 		}
 	}
-	else if (fPosition == 2)
+	else if (menuPosition == 2)
 	{
-		switch (fMove)
+		switch (menuDirection)
 		{
 			case 1:
-				fPosition = 1;
+				menuPosition = 1;
 				break;
 			case 2:
-				fPosition = 3;
+				menuPosition = 3;
 				break;
 			case 3:
 				LoadSave();
 				break;
 		}
 	}
-	else if (fPosition == 3)
+	else if (menuPosition == 3)
 	{
-		switch (fMove)
+		switch (menuDirection)
 		{
 			case 1:
-				fPosition = 2;
+				menuPosition = 2;
 				break;
 			case 2:
-				fPosition = 1;
+				menuPosition = 1;
 				break;
 			case 3:
 				TitleScreenOptions();
@@ -148,16 +148,16 @@ void TitleScreenOptions()
 			animationText = "Entering Debug Mode";
 			scrollText();
 			Pause();
-			Title_Screen = false;
+			titleScreen = false;
 			attackbar_speed = 8;
 			enemyframe_speed = 250;
 
 			//this is where you switch around debug code
 			gPosition = 38;
-			Room.Boss = true;
+			Room.boss = true;
 			Player.Health = 900;
 			Player.Damage = 20;
-			TravelStatus = 2;
+			progressStatus = 3;
 			Item.Coins = 110;
 			Room.Village = true;
 			Room.SwordRoom = true;
@@ -192,6 +192,9 @@ void TitleScreenOptions()
 
 void LoadSave()
 {
+
+    void GetInput();
+    
 	//Calculate the area the player is in and bring them to the starting room in that area
 	if (gPosition == 1 || gPosition == 11 || gPosition == 12 || gPosition == 13 || gPosition == 14 || gPosition == 15 || gPosition == 16)
 	{
@@ -234,22 +237,13 @@ void LoadSave()
 
 		cout << "Would you like to load this file?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
-		switch (_getch())
-		{
-			case '1':
-				decision = 1;
-				break;
-			case '2':
-				decision = 2;
-				break;
-		}
+		GetInput();
 
 		if (decision == 1)
 		{
-			Title_Screen = false;
+			titleScreen = false;
 			CalculateDisplay();
 			ControlLoop();
 		}
@@ -263,7 +257,7 @@ void NewGame()
 	void GetInput();
 
 	file = true;
-	Title_Screen = false;
+	titleScreen = false;
 	attackbar_speed = 8;
 	enemyframe_speed = 250;
 
@@ -301,7 +295,7 @@ void NewGame()
 	ClearScreen();
 	cout << "\n\n\n\n\n\n\n";
 	cout << "                      ";
-	animationText = "Beginning Game Now..Good Luck!";
+	animationText = "BegroomPurchaseing Game Now..Good Luck!";
 	scrollText();
 	cout << "                                 ";
 

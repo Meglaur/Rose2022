@@ -9,14 +9,14 @@ void Area_Town()
 	void handleFountain();
 	void handleTownShop();
 	void handleTownShopDialogue();
-	void handleTownInnDialogue();
+	void handleTownroomPurchaseDialogue();
 	void handleOldMan();
 	void handleFire();
 	void handleGrandma();
 	void handleHilda();
 	void handleTownChest();
-	void handleTownInn();
-	void handleTownInnBed();
+	void handleTownroomPurchase();
+	void handleTownroomPurchaseBed();
 	void handleSword();
 	void handleTownBookshelf();
 
@@ -133,16 +133,16 @@ void Area_Town()
 		}
 	}
 
-	//Prancing Pony Inn
+	//Prancing Pony roomPurchase
 	if (gPosition == 24)
 	{
 		switch (gMove)
 		{
 			case 1:
-				handleTownInn();
+				handleTownroomPurchase();
 				break;
 			case 2:
-				if (Inn == true)
+				if (roomPurchase == true)
 				{
 					gPosition = 25;
 					Debug();
@@ -161,25 +161,25 @@ void Area_Town()
 				gPosition = 21;
 				break;
 			case 5:
-				handleTownInnDialogue();
+				handleTownroomPurchaseDialogue();
 		}
 	}
 
-	//InnRoom
+	//roomPurchaseRoom
 	if (gPosition == 25)
 	{
 		switch (gMove)
 		{
 			case 1:
-				handleTownInnBed();
+				handleTownroomPurchaseBed();
 				break;
 			case 2:
-				if (Town.InnTable == false)
+				if (Town.roomPurchaseTable == false)
 				{
-					cout << "You go up to the table in the room. The Innkeeper left a meal on it for you." << endl;
+					cout << "You go up to the table in the room. The roomPurchasekeeper left a meal on it for you." << endl;
 					cout << "*Food + 2*" << endl;
 					Item.Food += 2;
-					Town.InnTable = true;
+					Town.roomPurchaseTable = true;
 				}
 				else
 				{
@@ -189,10 +189,10 @@ void Area_Town()
 				Pause();
 				break;
 			case 3:
-				if (Inn == false)
+				if (roomPurchase == false)
 				{
-					Character.Name = "Innkeeper";
-					animationText = "Innkeeper: Thank you for staying the night. Come again!";
+					Character.Name = "roomPurchasekeeper";
+					animationText = "roomPurchasekeeper: Thank you for staying the night. Come again!";
 					Dialogue();
 				}
 
@@ -240,8 +240,7 @@ void Area_Town()
 			case 5:
 				cout << "You look around the room, the Old Man sits in a chair near the fireplace, and" << endl;
 				cout << "pictures and weapons hang decoratively around the room. You see antlers and" << endl;
-				cout << "monster horns displayed on one wall." << endl;
-				cout << endl;
+				cout << "monster horns displayed on one wall.\n" << endl;
 				Pause();
 				Character.Name = Player.Name;
 				animationText = "He must have been quite a fighter.";
@@ -346,8 +345,7 @@ void handleFountain()
 		cout << "Throw a coin into the fountain?" << endl;
 		cout << endl;
 		cout << "1: Yes" << endl;
-		cout << "2: No" << endl;
-		cout << endl;
+		cout << "2: No\n" << endl;
 
 		GetInput();
 
@@ -357,7 +355,7 @@ void handleFountain()
 				cout << "You threw a coin into the fountain. It falls to the bottom." << endl;
 				cout << "*Luck + 1*";
 				Player.Luck += 1;
-				RandomLuckValue += 1;
+				randomLuckValue += 1;
 				Item.Coins -= 1;
 				Town.Fountain = true;
 				Pause();
@@ -480,7 +478,7 @@ void handleTownShop()
 				Item.Coins -= 20;
 				if (Item.Shield == true && Item.Armor == true && Item.WoodenSword == true)
 				{
-					Grandmas_Items = true;
+					grandmasItems = true;
 					Character.Name = Player.Name;
 					animationText = "I got all of the things Grandma wanted me to collect! I'd better go back \nto her.";
 					Dialogue();
@@ -500,32 +498,31 @@ void handleTownShop()
 	Pause();
 }
 
-void handleTownInn()
+void handleTownroomPurchase()
 {
 	void Debug();
 	void GetInput();
 	void Pause();
 
-	Character.Name = "Innkeeper";
-	animationText = "Innkeeper: Would you like to stay the night? - 5 coins";
+	Character.Name = "roomPurchasekeeper";
+	animationText = "roomPurchasekeeper: Would you like to stay the night? - 5 coins";
 	Dialogue();
-	cout << endl;
-	cout << "               1. Yes                       2.No" << endl;
+	cout << "\n               1. Yes                       2.No" << endl;
 
 	GetInput();
 
 	switch (decision)
 	{
 		case 1:
-			if (Item.Coins >= 5 && Inn == false)
+			if (Item.Coins >= 5 && roomPurchase == false)
 			{
-				Inn = true;
-				Town.InnTable = false;
-				animationText = "Innkeeper: Heres the key to your room, you'll find it upstairs.";
+				roomPurchase = true;
+				Town.roomPurchaseTable = false;
+				animationText = "roomPurchasekeeper: Heres the key to your room, you'll find it upstairs.";
 				Dialogue();
 				Item.Coins -= 5;
 			}
-			else if (Inn == true)
+			else if (roomPurchase == true)
 			{
 				cout << "You already have a room!" << endl;
 				Pause();
@@ -539,7 +536,7 @@ void handleTownInn()
 			Pause();
 			break;
 		case 2:
-			animationText = "Innkeeper: If you change you mind come on back.\n";
+			animationText = "roomPurchasekeeper: If you change you mind come on back.\n";
 			Dialogue();
 			break;
 	}
@@ -555,7 +552,7 @@ void handleTownShopDialogue()
 	Dialogue();
 	cout << "1. What do you sell?" << endl;
 	cout << "2. Can you tell me how to get coins?" << endl;
-	cout << "3. Nothing" << endl;
+	cout << "3. Nothing\n" << endl;
 
 	GetInput();
 
@@ -576,33 +573,30 @@ void handleTownShopDialogue()
 	Pause();
 }
 
-void handleTownInnDialogue()
+void handleTownroomPurchaseDialogue()
 {
 	void Dialogue();
 	void GetInput();
 	void Dialogue();
 
-	Character.Name = "Innkeeper";
-	animationText = "Innkeeper: How can I help you?";
+	Character.Name = "roomPurchasekeeper";
+	animationText = "roomPurchasekeeper: How can I help you?";
 	Dialogue();
 	cout << "1. Can I buy a room?" << endl;
 	cout << "2. Got any Rumors?" << endl;
-	cout << "3. Nothing" << endl;
-	cout << endl;
+	cout << "3. Nothing\n" << endl;
 
 	GetInput();
 
 	switch (decision)
 	{
 		case 1:
-			animationText = "Innkeeper: I can rent you the room for the night if you come up to the counter.";
+			animationText = "roomPurchasekeeper: I can rent you the room for the night if you come up to the counter.";
 			Dialogue();
-			cout << endl;
 			break;
 		case 2:
-			animationText = "Innkeeper: I heard that the old man used to be a great swordsman. And Hilda is\nknown for rewarding those who will listen to her stories.";
+			animationText = "roomPurchasekeeper: I heard that the old man used to be a great swordsman. And Hilda is\nknown for rewarding those who will listen to her stories.";
 			Dialogue();
-			cout << endl;
 			break;
 	}
 
@@ -652,8 +646,7 @@ void handleFire()
 	void Pause();
 	void GetInput();
 
-	cout << "You go up to the wood stove." << endl;
-	cout << endl;
+	cout << "You go up to the wood stove.\n" << endl;
 	if (Town.Stove == true)
 	{
 		cout << "The fire is roaring." << endl;
@@ -664,8 +657,7 @@ void handleFire()
 		cout << endl;
 		cout << "Stoke the fire?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -674,7 +666,7 @@ void handleFire()
 			cout << "You stoked the fire. It fills you with warmth." << endl;
 			cout << "-Luck + 1-" << endl;
 			Player.Luck += 1;
-			RandomLuckValue += 1;
+			randomLuckValue += 1;
 			Town.Stove = true;
 			Pause();
 		}
@@ -699,13 +691,13 @@ void handleGrandma()
 		Cutscene_GrandmaHelps();
 		cutscene.GrandmaHelps = true;
 	}
-	else if (cutscene.GrandmasList == false && Grandmas_Items == false)
+	else if (cutscene.GrandmasList == false && grandmasItems == false)
 	{
 		Character.Name = "Grandma";
 		animationText = "Before you go to the forest you must first collect the items I \nhave told you about. The Sword, The Shield, and The Armor.";
 		Dialogue();
 	}
-	else if (cutscene.GrandmasList == false && Grandmas_Items == true)
+	else if (cutscene.GrandmasList == false && grandmasItems == true)
 	{
 		Cutscene_GrandmasList();
 		cutscene.GrandmasList = true;
@@ -788,19 +780,19 @@ void handleTownChest()
 	DoublePause();
 }
 
-void handleTownInnBed()
+void handleTownroomPurchaseBed()
 {
 	void GetInput();
 	void Pause();
 	void PlayerSleep();
 
-	if (Inn == true)
+	if (roomPurchase == true)
 	{
 		cout << "You go up to the bed, it looks comfortable." << endl;
 		cout << "Go to sleep?" << endl;
 		cout << "(You will not be able to re-enter the room after leaving once you do)" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -808,8 +800,8 @@ void handleTownInnBed()
 		{
 			case 1:
 				PlayerSleep();
-				Inn = false;
-				Town.InnTable = false;
+				roomPurchase = false;
+				Town.roomPurchaseTable = false;
 				break;
 			case 2:
 				cout << "You decide not to sleep." << endl;
@@ -846,7 +838,7 @@ void handleSword()
 			Character.Name = Player.Name;
 			animationText = "I got all of the things Grandma wanted me to collect! I'd better go back \nto her.";
 			Dialogue();
-			Grandmas_Items = true;
+			grandmasItems = true;
 		}
 
 		Pause();
@@ -868,7 +860,7 @@ void handleTownBookshelf()
 		scrollText();
 		cout << "Most of the books are boring, but you see an interesting cookbook.\nTake it?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 

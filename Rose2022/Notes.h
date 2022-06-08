@@ -7,25 +7,25 @@ Current luck value placements are, when an enemy misses + 1, when its an enemies
 health is even and your health odd, when you get any sort of luck
 
        inFile >> File1.Name >> File1.Used >> File1_Player.Name >> File1.gPosition;
-       inFile  >> File1_Room.Boss >> File1_Chest >> File1_Crank >> File1_CrownPuzzle;
+       inFile  >> File1_Room.boss >> File1_Chest >> File1_Crank >> File1_CrownPuzzle;
        inFile >> File1_Crowns >> File1_dCrown >> File1_dCrown >> File1_dStatue;
        inFile >> File1_eCrown >> File1_Room.Dungeon >> File1_eStatue >> File1_FountainSet1;
        inFile >> File1_FountainSet2 >> File1_FountainSet3 >> File1_LeftWing >> File1_MainFountain;
        inFile >> File1_rCrown >> File1_rCrown >> File1_rStatue >> File1_RightWing;
        inFile >> File1_sCrown >> File1_sStatue >> File1_Wings >> File1_Item.Daisy;
        inFile >> File1_Item.Gate >> File1_Item.Hairpin >> File1_Item.Jewel >> File1_Item.Mushrooms;
-       inFile >>  File1_Grandmas_Items >> File1_Kuhar;
+       inFile >>  File1_grandmasItems >> File1_Kuhar;
        inFile >> File1_NymphAttack >> File1_Item.Coins >> File1_Item.Elixers >> File1_Item.Food;
        inFile >> File1_Item.Armor >> File1_Player.Damage >> File1_Player.Defense >> File1_Player.Health;
        inFile >> File1_Player.MaxHealth >> File1_Item.Shield >> File1_Item.WoodenSword >> File1_Player.XP;
-       inFile >> File1_Player.Luck >> File1_RandomLuckValue >> File1_cutscene.Elder;
+       inFile >> File1_Player.Luck >> File1_randomLuckValue >> File1_cutscene.Elder;
        inFile >> File1_cutscene.End >> File1_cutscene.GrandmaHelps >> File1_cutscene.GrandmasList >> File1_cutscene.OldMan1;
        inFile >> File1_cutscene.OldMan2 >> File1_miniscene.Aida >> File1_miniscene.Chasm >> File1_miniscene.Dam;
        inFile >> File1_miniscene.DungeonEnter >> File1_miniscene.FirstEnemy >> File1_miniscene.Kuhar >> File1_miniscene.NymphAppears;
-       inFile >> File1_sStatus >> File1_Tiki >> File1_Town.Bushes >> File1_Item.Chest;
-       inFile >> File1_Item.Cookbook >> File1_Item.Fountain >> File1_Item.Hilda >> File1_Item.InnDesk;
-       inFile >> File1_Item.InnTable >> File1_Item.Paper >> File1_Item.Stove >> File1_Room.SwordRoom;
-       inFile >> File1_TravelStatus >> File1_Item.Book >> File1_Room.Village >> File1_Item.InnTable;
+       inFile >> File1_progressStatus >> File1_Tiki >> File1_Town.Bushes >> File1_Item.Chest;
+       inFile >> File1_Item.Cookbook >> File1_Item.Fountain >> File1_Item.Hilda >> File1_Item.roomPurchaseDesk;
+       inFile >> File1_Item.roomPurchaseTable >> File1_Item.Paper >> File1_Item.Stove >> File1_Room.SwordRoom;
+       inFile >> File1_travelStatus >> File1_Item.Book >> File1_Room.Village >> File1_Item.roomPurchaseTable;
        inFile >> File1_Item.JewelCoins >> File1_Item.Key >> File1_Item.Necklace >> File1_House.Chest;
        inFile >> File1_House.Desk >> File1_House.Fireplace >> File1_House.Stove >> File1.Used;
 
@@ -253,7 +253,7 @@ Area Two______ Town
 21 - Main Square
 22 - Shop
 23 - House Path
-24 - Inn
+24 - roomPurchase
 25 - Upstairs Room in in which you can sleep (only unlocked when bought a night stay)
 26 - Old Mans House
 27 - Upstairs Room in old mans house with sword and chest of collectives
@@ -273,3 +273,102 @@ Area Two______ Town
     }
     */
     //animationPause();
+
+
+
+
+    	switch (enemy) 
+	{
+		case Enemy.AngryFlower:
+			Enemy.Name = "Angry Flower";
+			Enemy.Health = 10;
+			Enemy.Damage = 3;
+			Enemy.Defense = 0;
+			Enemy.Approach = "                      An angry flower approaches you!";
+			Enemy.Defeat = "You defeat the rabid flower, and it falls to the ground.";
+			Enemy.Drops = food;
+			Enemy.DropText = "Flower Seeds";
+			Enemy.XP = 97;
+			Enemy.MaxHealth = 10;
+			Enemy.DefenseGame = 1;
+			Enemy.UsingItem = true;
+			Enemy.ItemHealthRegain = 3;
+			Enemy.Fooddrops = 3;
+			if (cutscene.FirstEnemy == false)
+			{
+				Enemy.Run = false;
+			}
+			else
+			{
+				Enemy.Run = true;
+			}
+
+		case Enemy.Skeleton:
+			Enemy.Name = "Mossy Skeleton";
+			Enemy.Health = 12;
+			Enemy.Damage = 3;
+			Enemy.Defense = 0;
+			Enemy.Approach = "              A skeleton covered in moss approaches you!\n\n                          He looks angry!!!";
+			Enemy.Defeat = "You defeat the skeleton. Its bones clatter to the ground.";
+			Enemy.Drops = elixers;
+			Enemy.DropText = "       Coins";
+			Enemy.XP = 115;
+			Enemy.MaxHealth = 12;
+			Enemy.DefenseGame = 2;
+			Enemy.UsingItem = true;
+			Enemy.ItemHealthRegain = 3;
+			Enemy.Coindrops = 5;
+			Enemy.Run = true;
+
+		case Enemy.Boss:
+			Enemy.Name = "Elemental Ghost";
+			Enemy.Health = 15;
+			Enemy.Damage = 3;
+			Enemy.Defense = 0;
+			Enemy.XP = 1000;
+			Enemy.MaxHealth = 15;
+			Enemy.UsingItem = false;
+			Enemy.Stages = 4;
+			Boss = true;
+			Enemy.Run = false;
+
+			switch (bossStage)
+			{
+				case 1:
+					Enemy.DefenseGame = 3;
+					break;
+				case 2:
+					Enemy.DefenseGame = 4;
+					break;
+				case 3:
+					Enemy.DefenseGame = 5;
+					break;
+				case 4:
+					Enemy.DefenseGame = 6;
+					break;
+			}
+
+
+
+
+
+
+            			if (Enemy.DefenseGame == 2)
+			{
+				ClearScreen();
+				cout << "\n\n\n\n\n\n" << endl;
+				cout << "                 Hit A with correct timing to block the attack!" << endl;
+				cout << "\n\n" << endl;
+				cout << "\n\n\n\n\n" << endl;
+				cout << "                                     ^ " << endl;
+				cout << "                                     ^ " << endl;
+				cout << "                                   ----- " << endl;
+				cout << "                                    | |  " << endl;
+				cout << "                                    | | " << endl;
+				cout << "                                    | | " << endl;
+				cout << "                                    | | " << endl;
+				cout << "                                    | | " << endl;
+				cout << "                                    \\ / " << endl;
+			}
+
+            was in the if block = 0 section of enemy turn.

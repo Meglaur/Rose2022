@@ -4,10 +4,10 @@
 
 void ControlLoop()
 {
-	//This Function runs Move(); and CalculatePosition(); in a loop, effectively letting
+	//This Function runs Move(); and CalculatmenuPosition(); in a loop, effectively letting
 	//the player move around while the computer calculates where they are with every movement.
 	//It is the main loop that runs the game.
-	void CalculatePosition();
+	void CalculatmenuPosition();
 	void CalculateDisplay();
 	void Move();
 	void GameOver();
@@ -32,7 +32,7 @@ void ControlLoop()
 
 	if (Gameover == false)
 	{
-		CalculatePosition();
+		CalculatmenuPosition();
 	}
 
 	if (Gameover == false)
@@ -41,7 +41,7 @@ void ControlLoop()
 	}
 }
 
-void CalculatePosition()
+void CalculatmenuPosition()
 {
 	//This Function continuously runs to calculate where the player is at at all
 	//times and runs the corresponding function for the room that they are in.
@@ -124,7 +124,7 @@ void Move()
 			if (decision == 1)
 			{
 				Save();
-				Title_Screen = true;
+				titleScreen = true;
 				ReturntoTitleScreen();
 			}
 

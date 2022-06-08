@@ -364,7 +364,7 @@ void Area_Forest()
 				cout << "You walk towards a path with pillars of fire erupting\nin intervals blocking the way." << endl;
 				Pause();
 				DungeonFirePuzzle();
-				if (minigame_win == true)
+				if (minigameWin == true)
 				{
 					animationText = "On the pillar is what seems to be half of a pair\nof wings. You take it with you.";
 					Dialogue();
@@ -403,7 +403,7 @@ void Area_Forest()
 				Move();
 				break;
 			case 2:
-				if (Room.Boss == true)
+				if (Room.boss == true)
 				{
 					cout << "Would you like to enter the Boss Room?\n" << endl;
 					cout << "1. Yes" << endl;
@@ -436,7 +436,7 @@ void Area_Forest()
 					Pause();
 					Item.Elixers += 5;
 					Player.Luck += 2;
-					RandomLuckValue += 1;
+					randomLuckValue += 1;
 					Dungeon.Chest = true;
 				}
 				else if (Item.Key == true && Dungeon.Chest == true)
@@ -1315,7 +1315,7 @@ void DungeonWaterPuzzle()
 	void GetInput();
 
 	//Reset the minigame
-	minigame_win = false;
+	minigameWin = false;
 	FountainCycle = 1;
 
 	//Switch the order of the puzzle based on which set of fountains the player is at
@@ -1441,7 +1441,7 @@ void DungeonWaterPuzzle()
 				animationText = "The fountains all turn on. You guessed correctly!";
 				Dialogue();
 				Pause();
-				minigame_win = true;
+				minigameWin = true;
 			}
 			else
 			{
@@ -1462,29 +1462,29 @@ void DungeonFirePuzzle()
 	void GameOver();
 	void GetInput();
 
-	minigame_win = false;
-	exitminigame = false;
+	minigameWin = false;
+	exitMinigame = false;
 	//need something to constantly run a screen where pathway is shown and fire is spurting in intervals
 	//need character to be able to move between using awsd space by space (371 372 373 etc)
-	//need logic running so that if character moves during fire they get hit, lose health, and return to beginning
+	//need logic running so that if character moves during fire they get hit, lose health, and return to begroomPurchaseing
 
 	FirePuzzle_PillarsON = true;
 
-	while (minigame_win == false && exitminigame == false)
+	while (minigameWin == false && exitMinigame == false)
 	{
 		FirePuzzleScreen();
 		FirePuzzleMovement();
 
 		if (Player.Health <= 0)
 		{
-			exitminigame = true;
+			exitMinigame = true;
 			GameOver();
 		}
 
 		if (gPosition == 373 && RightWing == false)
 		{
-			minigame_win = true;
-			exitminigame = true;
+			minigameWin = true;
+			exitMinigame = true;
 			gPosition = 37;
 		}
 	}
@@ -1590,7 +1590,7 @@ void FirePuzzleMovement()
 				}
 				else if (gMove == 2)
 				{
-					exitminigame = true;
+					exitMinigame = true;
 				}
 
 				break;
@@ -1656,7 +1656,7 @@ void handleLake()
 	cout << "You could stop and swim, maybe catch some fish or look for treasure." << endl;
 	cout << "Enter the lake?" << endl;
 	cout << "1. Yes" << endl;
-	cout << "2. No" << endl;
+	cout << "2. No\n" << endl;
 
 	GetInput();
 
@@ -1855,8 +1855,7 @@ void handleStatuePuzzle()
 						cout << "4. Use Diamond Crown\n" << endl;
 					}
 
-					cout << "5. Do Nothing\n" << endl;
-					cout << endl;
+					cout << "5. Do Nothing\n\n" << endl;
 
 					GetInput();
 
@@ -2024,8 +2023,7 @@ void handleStatuePuzzle()
 				else
 				{
 					cout << "Would you like to take the crown off the statue?\n" << endl;
-					cout << "1.Yes\n2.No\n" << endl;
-					cout << endl;
+					cout << "1.Yes\n2.No\n\n" << endl;
 
 					GetInput();
 
@@ -2087,8 +2085,7 @@ void handleStatuePuzzle()
 						cout << "4. Use Diamond Crown\n" << endl;
 					}
 
-					cout << "5. Do Nothing\n" << endl;
-					cout << endl;
+					cout << "5. Do Nothing\n\n" << endl;
 
 					GetInput();
 
@@ -2255,13 +2252,13 @@ void handleFlowerPatch()
 			Pause();
 
 		}
-		else if (decision == 2)
+		else
 		{
 			cout << "You decide not to take one of the daisies." << endl;
 			Pause();
 		}
 	}
-	else if (Item.Daisy == true)
+	else
 	{
 		cout << "You admire them for a minute. Then go back." << endl;
 	}
@@ -2279,8 +2276,7 @@ void handleHairpin()
 	{
 		cout << "You go up to the Willow Tree. There's something strange\nabout it. Investigate it?" << endl;	//change that later
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -2413,7 +2409,7 @@ void handleFirstFountain()
 		Dialogue();
 		FountainSet = 1;
 		DungeonWaterPuzzle();
-		if (minigame_win == true)
+		if (minigameWin == true)
 		{
 			FountainSet1 = true;
 			if (FountainSet3 == true && FountainSet1 == true)
@@ -2437,7 +2433,7 @@ void handleSecondFountain()
 
 	if (FountainSet2 == false && MainFountain == true)
 	{
-		minigame_win = false;
+		minigameWin = false;
 		Character.Name = " ";
 		animationText = "You see a set of four fountains, with a marble pedestal\nbefore you. It glows faintly.\nThe pedestal has something written on it.";
 		Dialogue();
@@ -2451,7 +2447,7 @@ void handleSecondFountain()
 		{
 			animationText = "The fountains all turn on. You guessed correctly!";
 			Dialogue();
-			minigame_win = true;
+			minigameWin = true;
 		}
 		else
 		{
@@ -2459,7 +2455,7 @@ void handleSecondFountain()
 			Dialogue();
 		}
 
-		if (minigame_win == true)
+		if (minigameWin == true)
 		{
 			FountainSet2 = true;
 			animationText = "The floor rumbles and in the middle of the room a pedestal\nrises from the ground. On it is what seems to be half of a pair\nof wings. You take it with you.";
@@ -2496,7 +2492,7 @@ void handleThirdFountain()
 		Dialogue();
 		FountainSet = 3;
 		DungeonWaterPuzzle();
-		if (minigame_win == true)
+		if (minigameWin == true)
 		{
 			FountainSet3 = true;
 			if (FountainSet3 == true && FountainSet1 == true)

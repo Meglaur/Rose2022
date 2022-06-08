@@ -22,7 +22,7 @@ void Cutscene_Prolouge()
 {
 	void miniScene_Tutorial();
 	Cutscene = true;
-	sStatus = 1;
+	progressStatus = 1;
 
 	Character.Name = "???";
 	animationText = Player.Name + "!";
@@ -118,7 +118,7 @@ void Cutscene_OldMan2()
 void Cutscene_GrandmaHelps()
 {
 	Cutscene = true;
-	sStatus = 2;
+	progressStatus = 2;
 
 	Character.Name = "Grandma";
 	animationText = Player.Name + "! Why is it that you look so distressed?";
@@ -167,7 +167,7 @@ void Cutscene_GrandmaHelps()
 void Cutscene_GrandmasList()
 {
 	Cutscene = true;
-	sStatus = 3;
+	progressStatus = 3;
 
 	Character.Name = "Grandma";
 	animationText = "You have returned with the items I asked you for, very\ngood.Now it is time to go to the forest and find the elder. \nBe careful and good luck!";
@@ -181,7 +181,6 @@ void Cutscene_GrandmasList()
 	animationText = "Grandma gave you the map you needed! Now you can go to the forest!";
 	Dialogue();
 
-	TravelStatus = 2;
 	Cutscene = false;
 
 }
@@ -189,7 +188,7 @@ void Cutscene_GrandmasList()
 void Cutscene_Elder1()
 {
 	Cutscene = true;
-	sStatus = 5;
+	progressStatus = 5;
 
 	Character.Name = "Elder";
 	animationText = "Hello there, we haven't had a visitor from outside the village\nin a long time. What can I do for you?";
@@ -235,7 +234,7 @@ void Cutscene_DungeonBossApproach()
 
 	//ORB ANIMATION
 	ClearScreen();
-	LoopNumber = 10;
+	loopNumber = 10;
 	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	cout << "                                   ______" << endl;
 	cout << "                                  /******\\ " << endl;
@@ -248,11 +247,11 @@ void Cutscene_DungeonBossApproach()
 	cout << "\n\n\n\n\n";
 	cout << "--------------------------------------------------------------------------------";
 	Sleep(500);
-	while (LoopNumber > 0)
+	while (loopNumber > 0)
 	{
 		ClearScreen();
 		cout << "\n\n\n\n\n\n\n\n\n\n\n";
-		switch (LoopNumber)
+		switch (loopNumber)
 		{
 			case 1:
 				cout << "\n";
@@ -292,7 +291,7 @@ void Cutscene_DungeonBossApproach()
 		cout << "                                 |********| " << endl;
 		cout << "                                  \\******/ " << endl;
 		cout << "                                   ------ \n" << endl;
-		switch (LoopNumber)
+		switch (loopNumber)
 		{
 			case 10:
 				cout << "\n\n\n";
@@ -330,7 +329,7 @@ void Cutscene_DungeonBossApproach()
 		cout << "\n\n\n\n\n";
 		cout << "--------------------------------------------------------------------------------";
 		Sleep(140);
-		LoopNumber -= 1;
+		loopNumber -= 1;
 	}
 
 	//END ORB ANIMATION
@@ -404,7 +403,7 @@ void miniScene_Hilda()
 
 void miniScene_Loni()
 {
-	sStatus = 4;
+	progressStatus = 4;
 	Room.Village = true;
 
 	Character.Name = " ";
@@ -435,7 +434,7 @@ void miniScene_Loni()
 
 void miniScene_DungeonEnter()
 {
-	sStatus = 6;
+	progressStatus = 6;
 
 	Character.Name = " ";
 	animationText = "You take a long flight of marble stairs down as you enter\nthe  Each minute that passes by it gets darker, until the\nonly light comes from the lit sconces on the walls beside you.";
@@ -489,7 +488,7 @@ void miniScene_Dam()
 	Dialogue();
 	NymphAttack = false;
 	miniscene.Dam = true;
-	Room.Boss = true;
+	Room.boss = true;
 }
 
 void miniScene_Chasm()

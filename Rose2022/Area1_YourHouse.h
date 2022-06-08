@@ -1,5 +1,5 @@
 //This file contains the code for running the "Your House" area, which is accessible at the
-//beginning of the game, and can be returned to at any point. This file includes the rooms,
+//begroomPurchaseing of the game, and can be returned to at any point. This file includes the rooms,
 //items, and actions accessible in this area.
 
 void Area_YourHouse()
@@ -138,8 +138,7 @@ void Area_YourHouse()
 			case 1:
 				cout << "Would you like to sleep?" << endl;
 				cout << "1. Yes" << endl;
-				cout << "2. No" << endl;
-				cout << endl;
+				cout << "2. No\n" << endl;
 
 				GetInput();
 
@@ -252,7 +251,7 @@ void handleArmor()
 			Character.Name = Player.Name;
 			animationText = "I got all of the things Grandma wanted me to collect! I'd better go back \nto her.";
 			Dialogue();
-			Grandmas_Items = true;
+			grandmasItems = true;
 		}
 	}
 }
@@ -266,8 +265,7 @@ void handleStove()
 	{
 		cout << "There is stew on the stove. Take some?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -307,8 +305,7 @@ void handleHouseChest()
 		cout << "There are some health elixers in the chest" << endl;
 		cout << "Take the elixers?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No " << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -345,8 +342,7 @@ void handleFireplace()
 		cout << endl;
 		cout << "Stoke the fire?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -355,7 +351,7 @@ void handleFireplace()
 			cout << "You stoked the fire. It fills you with warmth." << endl;
 			cout << "-Luck + 1-" << endl;
 			Player.Luck += 1;
-			RandomLuckValue += 1;
+			randomLuckValue += 1;
 			House.Fireplace = true;
 			Pause();
 		}
@@ -382,8 +378,7 @@ void handleDesk()
 	{
 		cout << "Look inside the desk?" << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 

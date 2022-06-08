@@ -768,7 +768,7 @@ void CalculateDisplay()
 
 	if (gPosition == 21)	//Two_MainSquare
 	{
-		dirUp = "Rockside Inn";
+		dirUp = "Rockside roomPurchase";
 		dirDown = "  Exit Town";
 		dirLeft = "   Edwins Shop";
 		dirRight = "House Path";
@@ -793,16 +793,16 @@ void CalculateDisplay()
 		dirInt = "Search bushes along path";
 	}
 
-	if (gPosition == 24)	//Two_Inn
+	if (gPosition == 24)	//Two_roomPurchase
 	{
-		dirUp = "  Inn Counter";
+		dirUp = "  roomPurchase Counter";
 		dirLeft = "   Upstairs";
 		dirRight = " ";
 		dirDown = "  Main Square";
-		dirInt = "Talk to the Innkeeper";
+		dirInt = "Talk to the roomPurchasekeeper";
 	}
 
-	if (gPosition == 25)	//Two_InnRoom
+	if (gPosition == 25)	//Two_roomPurchaseRoom
 	{
 		dirUp = "     Bed";
 		dirLeft = "      Table";
@@ -1143,7 +1143,7 @@ void CalculateDisplay()
 		dirUp = " Ground Path";
 		dirDown = "Elder's House";
 		dirLeft = "  Aida's House";
-		dirRight = "OakWood Inn";
+		dirRight = "OakWood roomPurchase";
 		dirInt = "Look Around";
 	}
 
@@ -1156,16 +1156,16 @@ void CalculateDisplay()
 		dirInt = "Look Around";
 	}
 
-	if (gPosition == 47)	//Inn
+	if (gPosition == 47)	//roomPurchase
 	{
 		dirUp = "   Upstairs";
 		dirLeft = "Treetop Bridge";
 		dirRight = "Counter";
 		dirDown = "   Bookshelf";
-		dirInt = "Talk to Innkeeper";
+		dirInt = "Talk to roomPurchasekeeper";
 	}
 
-	if (gPosition == 48)	//Inn Room
+	if (gPosition == 48)	//roomPurchase Room
 	{
 		dirUp = "  Hammock";
 		dirLeft = "     Table";

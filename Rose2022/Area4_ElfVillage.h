@@ -18,10 +18,10 @@ void Area_ElfVillage()
 	void handleKuhar();
 	void handleTiki();
 	void handleAida();
-	void handleVillageInn();
+	void handleVillageroomPurchase();
 	void handleVillageBookshelf();
-	void handleVillageInnDialogue();
-	void handleVillageInnBed();
+	void handleVillageroomPurchaseDialogue();
+	void handleVillageroomPurchaseBed();
 
 	//Village Gate
 	if (gPosition == 4)
@@ -226,13 +226,13 @@ void Area_ElfVillage()
 		}
 	}
 
-	//Oakwood Inn
+	//Oakwood roomPurchase
 	if (gPosition == 47)
 	{
 		switch (gMove)
 		{
 			case 1:
-				if (Inn == true)
+				if (roomPurchase == true)
 				{
 					gPosition = 48;
 					Debug();
@@ -249,31 +249,31 @@ void Area_ElfVillage()
 				gPosition = 45;
 				break;
 			case 3:
-				handleVillageInn();
+				handleVillageroomPurchase();
 				break;
 			case 4:
 				handleVillageBookshelf();
 				break;
 			case 5:
-				handleVillageInnDialogue();
+				handleVillageroomPurchaseDialogue();
 		}
 	}
 
-	//Oakwood Inn Room
+	//Oakwood roomPurchase Room
 	if (gPosition == 48)
 	{
 		switch (gMove)
 		{
 			case 1:
-				handleVillageInnBed();
+				handleVillageroomPurchaseBed();
 				break;
 			case 2:
-				if (Town.InnTable == false)
+				if (Town.roomPurchaseTable == false)
 				{
-					cout << "You go up to the table in the room. The Innkeeper left a meal on it for you." << endl;
+					cout << "You go up to the table in the room. The roomPurchasekeeper left a meal on it for you." << endl;
 					cout << "*Food + 2*" << endl;
 					Item.Food += 2;
-					Town.InnTable = true;
+					Town.roomPurchaseTable = true;
 				}
 				else
 				{
@@ -283,14 +283,14 @@ void Area_ElfVillage()
 				Pause();
 				break;
 			case 3:
-				cout << "Another bookshelf filled with ruins. Wonder why the Inn has\nso many.." << endl;
+				cout << "Another bookshelf filled with ruins. Wonder why the roomPurchase has\nso many.." << endl;
 				Pause();
 				break;
 			case 4:
 				cout << "You decide to go back downstairs." << endl;
-				if (Inn == false)
+				if (roomPurchase == false)
 				{
-					Character.Name = "Innkeeper";
+					Character.Name = "roomPurchasekeeper";
 					animationText = "Thank you for staying the night. Come again!";
 					Dialogue();
 				}
@@ -313,7 +313,7 @@ void Area_ElfVillage()
 				break;
 			case 2:
 				cout << "You go up to the wall, a beautifully carved staff hangs on a\ndecorative rack." << endl;
-				if (sStatus < 6)
+				if (progressStatus < 6)
 				{
 					Character.Name = Player.Name;
 					animationText = "This staff is beautiful.";
@@ -323,7 +323,7 @@ void Area_ElfVillage()
 					animationText = "Thank you. It was a gift from my people when I helped lead\nthem against enemies long ago, now it sits in decoration. I fear\nI may have to use it soon if the monsters of the dark woods approach our Item.";
 					Dialogue();
 				}
-				else if (sStatus >= 6)
+				else if (progressStatus >= 6)
 				{
 					Character.Name = "Elder";
 					animationText = "Once again a beautiful decoration, and nothing more.\nI thank you for that.";
@@ -375,7 +375,7 @@ void handleVillageShop()
 		cout << "                       2. Fira Necklace (Increases Defense) - 15 coins" << endl;
 	}
 
-	cout << "                       3. Nothing" << endl;
+	cout << "                       3. Nothing\n" << endl;
 
 	GetInput();
 
@@ -537,12 +537,12 @@ void handleLoni()
 	else if (Room.Village == true)
 	{
 		cout << "You pass by Loni as you enter the gate." << endl;
-		if (Loni < 3)
+		if (loniDialogueCount < 3)
 		{
 			cout << "He nods at you. You awkwardly nod back." << endl;
 			Pause();
 		}
-		else if (Loni < 7)
+		else if (loniDialogueCount < 7)
 		{
 			cout << "He's still here...Does he ever sleep?" << endl;
 			Pause();
@@ -553,14 +553,14 @@ void handleLoni()
 			slowText = true;
 			scrollText();
 			cout << "How long can someone sit at a gate?" << endl;
-			Loni = 0;
+			loniDialogueCount = 0;
 			Pause();
 		}
 
 		gPosition = 41;
 		Debug();
 		Move();
-		Loni += 1;
+		loniDialogueCount += 1;
 	}
 }
 
@@ -677,18 +677,18 @@ void handleAida()
 	}
 }
 
-void handleVillageInn()
+void handleVillageroomPurchase()
 {
 	void Dialogue();
 	void GetInput();
 	void Pause();
 
-	Character.Name = "Innkeeper";
+	Character.Name = "roomPurchasekeeper";
 	animationText = "Would you like to stay the night? - 5 coins";
 	Dialogue();
 	cout << endl;
 	cout << "1. Yes" << endl;
-	cout << "2. No" << endl;
+	cout << "2. No\n" << endl;
 
 	GetInput();
 
@@ -700,9 +700,9 @@ void handleVillageInn()
 				animationText = "Heres the key to your room, you'll find it upstairs.";
 				Dialogue();
 				Item.Coins -= 5;
-				Inn = true;
+				roomPurchase = true;
 			}
-			else if (Inn == true)
+			else if (roomPurchase == true)
 			{
 				cout << "You already have a room!" << endl;
 			}
@@ -752,18 +752,18 @@ void handleVillageBookshelf()
 	}
 }
 
-void handleVillageInnDialogue()
+void handleVillageroomPurchaseDialogue()
 {
 	void Dialogue();
 	void GetInput();
 	void Pause();
 
-	Character.Name = "Innkeeper";
+	Character.Name = "roomPurchasekeeper";
 	animationText = "How can I help you?";
 	Dialogue();
 	cout << "1. Know anything about the forest?" << endl;
 	cout << "2. Why do you have a gatekeeper?" << endl;
-	cout << "3. Nothing" << endl;
+	cout << "3. Nothing\n" << endl;
 
 	GetInput();
 
@@ -782,20 +782,19 @@ void handleVillageInnDialogue()
 	Pause();
 }
 
-void handleVillageInnBed()
+void handleVillageroomPurchaseBed()
 {
 	void GetInput();
 	void PlayerSleep();
 	void Pause();
 
-	if (Inn == true)
+	if (roomPurchase == true)
 	{
 		cout << "You go up to the hammock. Its woven from some kind of silk.It looks\nincredibly soft. Stay the night?" << endl;
 		cout << "(You will not be able to re-enter the room after leaving once you do)" << endl;
 		cout << endl;
 		cout << "1. Yes" << endl;
-		cout << "2. No" << endl;
-		cout << endl;
+		cout << "2. No\n" << endl;
 
 		GetInput();
 
@@ -803,8 +802,8 @@ void handleVillageInnBed()
 		{
 			case 1:
 				PlayerSleep();
-				Inn = false;
-				Town.InnTable = false;
+				roomPurchase = false;
+				Town.roomPurchaseTable = false;
 				break;
 			case 2:
 				cout << "You decide not to sleep." << endl;

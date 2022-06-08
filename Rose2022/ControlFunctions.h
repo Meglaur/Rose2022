@@ -21,144 +21,25 @@ void Save()
 	scrollText();
 	Pause();
 
-	/*      File1_Room.Boss = Room.Boss;
-	       File1_Chest = Chest;
-	       File1_Crank = Crank;
-	       File1_CrownPuzzle = CrownPuzzle;
-	       File1_Crowns = Crowns;
-	       File1_dCrown = dCrown;
-	       File1_dStatue = dStatue;
-	       File1_eCrown = eCrown;
-	       File1_Room.Dungeon = Room.Dungeon;
-	       File1_eStatue = eStatue;
-	       File1_FountainSet1 = FountainSet1;
-	       File1_FountainSet2 = FountainSet2;
-	       File1_FountainSet3 = FountainSet3;
-	       File1_LeftWing = LeftWing;
-	       File1_MainFountain = MainFountain;
-	       File1_rCrown = rCrown;
-	       File1_RightWing = RightWing;
-	       File1_rStatue = rStatue;
-	       File1_sCrown = sCrown;
-	       File1_sStatue = sStatue;
-	       File1_Wings = Wings;
-	       File1_Item.Daisy = Item.Daisy;
-	       File1_Item.Gate = Item.Gate;
-	       File1_Item.Hairpin = Item.Hairpin;
-	       File1_Item.Jewel = Item.Jewel;
-	       File1_Item.Mushrooms = Item.Mushrooms;
-	       File1.gPosition = gPosition;
-	       File1_Grandmas_Items = Grandmas_Items;
-	       File1_Kuhar = Kuhar;
-	       File1_NymphAttack = NymphAttack;
-	       File1_Item.Coins = Item.Coins;
-	       File1_Item.Elixers = Item.Elixers;
-	       File1_Item.Food = Item.Food;
-	       File1_Item.Armor = Item.Armor;
-	       File1_Player.Damage = Player.Damage;
-	       File1_Player.Defense = Player.Defense;
-	       File1_Player.Health = Player.Health;
-	       File1_Player.MaxHealth = Player.Health;
-	       File1_Item.Shield = Item.Shield;
-	       File1_Item.WoodenSword = Item.WoodenSword;
-	       File1_Player.XP = Player.XP;
-	       File1_Player.Luck = Player.Luck;
-	       File1_Player.Name = Player.Name;
-	       File1_RandomLuckValue = RandomLuckValue;
-	       File1_cutscene.Elder = cutscene.Elder;
-	       File1_cutscene.End = cutscene.End;
-	       File1_cutscene.GrandmaHelps = cutscene.GrandmaHelps;
-	       File1_cutscene.GrandmasList = cutscene.GrandmasList;
-	       File1_cutscene.OldMan1 = cutscene.OldMan1;
-	       File1_cutscene.OldMan2 = cutscene.OldMan2;
-	       File1_miniscene.Aida = miniscene.Aida;
-	       File1_miniscene.Chasm = miniscene.Chasm;
-	       File1_miniscene.Dam = miniscene.Dam;
-	       File1_miniscene.DungeonEnter = miniscene.DungeonEnter;
-	       File1_miniscene.FirstEnemy = miniscene.FirstEnemy;
-	       File1_miniscene.Kuhar = miniscene.Kuhar;
-	       File1_sStatus = sStatus;
-	       File1_Tiki = Tiki;
-	       File1_Town.Bushes = Town.Bushes;
-	       File1_Item.Chest = Item.Chest;
-	       File1_Item.Cookbook = Item.Cookbook;
-	       File1_Item.Fountain = Item.Fountain;
-	       File1_Item.Hilda = Item.Hilda;
-	       File1_Item.InnDesk = Item.InnDesk;
-	       File1_Item.InnTable = Item.InnTable;
-	       File1_Item.Paper = Item.Paper;
-	       File1_Item.Stove = Item.Stove;
-	       File1_Room.SwordRoom = Room.SwordRoom;
-	       File1_TravelStatus =  TravelStatus;
-	       File1_Item.Book = Item.Book;
-	       File1_Room.Village = Room.Village;
-	       File1_Item.InnTable = Item.InnTable;
-	       File1_Item.JewelCoins = Item.JewelCoins;
-	       File1_Item.Key = Item.Key;
-	       File1_Item.Necklace = Item.Necklace;
-	       File1_House.Chest = House.Chest;
-	       File1_House.Desk = House.Desk;
-	       File1_House.Fireplace = House.Fireplace;
-	       File1_House.Stove = House.Stove;
-
-	       File1.Used = true;
-
-	       	//fstream outFile;
-	       	//outFile.open("User_File1.dat", ios_base::out);
-
-	        ofstream outFile;
-	        outFile.open("User_File1.dat");
-
-	      	//string
-	       outFile << File1.Name << File1_Player.Name;
-	       outFile << File1.Used << File1_Crowns;
-	      	//int
-	       outFile << File1_dCrown << File1_dCrown << File1_dStatue << File1_eCrown << File1_eStatue;
-	       outFile << File1_rCrown << File1_rCrown << File1_rStatue;
-	       outFile << File1_Room.Boss << File1_Chest << File1_Crank << File1_CrownPuzzle;
-	       outFile << File1_Room.Dungeon << File1_FountainSet1 << File1_FountainSet2 << File1_FountainSet3 << File1_LeftWing << File1_MainFountain;
-	       outFile << File1_sCrown << File1_sStatue << File1_Item.Coins << File1_Item.Elixers << File1_Item.Food;
-	       outFile << File1_Player.Damage << File1_Player.Defense << File1_Player.Health << File1_Player.XP;
-	       outFile << File1_Player.MaxHealth << File1_Player.Luck << File1_RandomLuckValue << File1.gPosition;
-	      	//bool
-	       outFile << File1_RightWing << File1_Wings << File1_Item.Daisy;
-	       outFile << File1_Item.Gate << File1_Item.Hairpin << File1_Item.Jewel << File1_Item.Mushrooms;
-	       outFile <<  File1_Grandmas_Items << File1_Kuhar << File1_NymphAttack << File1_Item.Armor;
-	       outFile << File1_Item.Shield << File1_Item.WoodenSword  << File1_cutscene.Elder;
-	       outFile << File1_cutscene.End << File1_cutscene.GrandmaHelps << File1_cutscene.GrandmasList << File1_cutscene.OldMan1;
-	       outFile << File1_cutscene.OldMan2 << File1_miniscene.Aida << File1_miniscene.Chasm << File1_miniscene.Dam;
-	       outFile << File1_miniscene.DungeonEnter << File1_miniscene.FirstEnemy << File1_miniscene.Kuhar << File1_miniscene.NymphAppears;
-	       outFile << File1_sStatus << File1_Tiki << File1_Town.Bushes << File1_Item.Chest;
-	       outFile << File1_Item.Cookbook << File1_Item.Fountain << File1_Item.Hilda << File1_Item.InnDesk;
-	       outFile << File1_Item.InnTable << File1_Item.Paper << File1_Item.Stove << File1_Room.SwordRoom;
-	       outFile << File1_TravelStatus << File1_Item.Book << File1_Room.Village << File1_Item.InnTable;
-	       outFile << File1_Item.JewelCoins << File1_Item.Key << File1_Item.Necklace << File1_House.Chest;
-	       outFile << File1_House.Desk << File1_House.Fireplace << File1_House.Stove << File1.Used;
-
-	       outFile.close();
-
-	*/
-
 }
 
 void Status()
 {
 	//This Function tells the player what part of the game they are at, and what they need to do next.
-	//It's based off of the variable sStatus, which changes every time they complete something and
+	//It's based off of the variable progressStatus, which changes every time they complete something and
 	//the game progresses.
 
 	void Move();
 	void Debug();
 	void ClearScreen();
 
-	switch (sStatus)
+	switch (progressStatus)
 	{
 		case 1:
 			cout << "You just woke up to find your sister gone. You need to find\nyour Grandmother like Rose said." << endl;
 			break;
 		case 2:
-			cout << "Your Grandma told you to equip yourself with a sword, shield,\nand some armor before you leave for the Item. " << endl;
-			cout << endl;
+			cout << "Your Grandma told you to equip yourself with a sword, shield,\nand some armor before you leave for the Item. \n" << endl;
 			cout << "Items obtained:" << endl;
 			if (Item.Armor == true)
 			{
@@ -343,9 +224,7 @@ void ItemScreen()
 		cout << "            ";
 	}
 
-	cout << endl;
-	cout << endl;
-	cout << " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << endl;
+	cout << " \n\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << endl;
 	Pause();
 
 	ClearScreen();
@@ -359,6 +238,7 @@ void UseItem()
 	void Pause();
 	void Debug();
 	void Move();
+    void GetInput();
 
 	cout << "Use Item:" << endl;
 	cout << "1. Elixers" << "[" << Item.Elixers << "]" << endl;
@@ -368,22 +248,9 @@ void UseItem()
 		cout << "3. Rune Book" << endl;
 	}
 
-	cout << "0. Nothing" << endl;
-	cout << endl;
-	switch (_getch())
-	{
-		case '1':
-			decision = 1;
-			break;
-		case '2':
-			decision = 2;
-			break;
-		case '3':
-			decision = 3;
-			break;
-	}
-
-	cout << endl;
+	cout << "0. Nothing\n" << endl;
+	
+    GetInput();
 
 	switch (decision)
 	{
@@ -516,7 +383,7 @@ void CreatorCMD()
 			case 7:
 				cout << "Which area would you like access to?" << endl;
 				cout << "1. Old Man Sword Room" << endl;
-				cout << "2. Current Town's Inn" << endl;
+				cout << "2. Current Town's roomPurchase" << endl;
 				cout << "3. Dungeon" << endl;
 				cout << "4. Dungeon Cavern (Front)" << endl;
 				cout << "5. Dungeon Cavern (Back)" << endl;
@@ -529,7 +396,7 @@ void CreatorCMD()
 						Room.SwordRoom = true;
 						break;
 					case 2:
-						Inn = true;
+						roomPurchase = true;
 						break;
 					case 3:
 						Room.Dungeon = true;
@@ -541,7 +408,7 @@ void CreatorCMD()
 						Wings = true;
 						break;
 					case 6:
-						Room.Boss = true;
+						Room.boss = true;
 						break;
 				}
 
